@@ -1,26 +1,51 @@
-
+/* Header */
 .header{
-width: 100%;
-height: 100px;
-background-color: #EEEEEE;
-position: fixed;
-margin: 0px;
-border:none;
-left: 0;
-right: 0;
-top: 0;
+    width: 100%;
+    height: 100px;
+    background-color: #EEEEEE;
+    margin: 0px;
+    border:none;
+    left: 0;
+    right: 0;
+    top: 0;
 }
 
 .header-button {
-width: 80px;
-padding: 20px;
-height: 30px;
-text-align: center;
-float:right;
-
-
+    width: 80px;
+    padding: 20px;
+    height: 30px;
+    text-align: center;
+    float:right;
 }
 
+/* Game */
+.game-scherm{
+    height: 600px;
+    width: 1000px;
+    display: block;
+    margin: auto;
+    background-color: bisque;
+    position: relative;
+}
+
+.ui-balk-onder{
+    width: 100%;
+    height: 90px;
+    bottom: 0px;
+    position: absolute;
+    margin: 0px;
+    background-color: aquamarine;
+}
+.ui-balk-onder2{
+    width: 100%;
+    height: 90px;
+    bottom: 90px;
+    position: absolute;
+    margin: 0px;
+    background-color:aqua;
+}
+
+/* Footer */
 .footer{
     position:absolute;
     bottom:0;
