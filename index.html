@@ -9,7 +9,7 @@
     <title>Otto The Otter Game</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="java/java.js"></script>
+    <script type = "text/javascript" src="java/java.js"></script>  
 </head>
 
 <body>
@@ -20,13 +20,49 @@
     <a class="header-button" href="#">Scratch Course</a>
     <a class="header-button" href="#">Learn Korean</a>
 </div>
-<!-- Hier komt de game -->
-<div class="game-scherm">
-    <div class="ui-balk-onder">
-    
+<div class="test">
+
+    <div id="blok" class="white">
+
     </div>
-    <div class="ui-balk-onder2">
-        
+
+    <div id="blue-button">
+        <button onclick="changeColor('blok','blue')">Blue</button>
+    </div>
+
+    <div id="red-button">
+        <button onclick="changeColor('blok','red')">Red</button>
+    </div>
+
+</div>
+<!-- Game goes here -->
+<div id="game-area">
+    <div id="menu-area" class="hidden">
+        <button class="menu-button" onclick="SwitchArea('menu-area','map-area')">Start</button>
+        <button class="menu-button">Back to map</button>
+    </div>
+    <div id="character-area">
+        <div class="character-name">
+            <label for="fname">Name</label>
+            <input type="text" id="fname" name="char-name">
+        </div>
+        <div class="character-circle">Hats</div>
+        <div class="character-circle">Shirts</div>
+        <div class="character-circle">Assesories</div>
+        <div class="item-select">Hoi</div>
+    </div>
+    <div id="map-area" class="hidden">
+        <button class="map-circle" onclick="SwitchArea('map-area','level-area')">1</button>
+        <button class="map-circle">2</button>
+        <button class="map-circle">3</button>
+    </div>
+    <div id="level-area" class="hidden">
+        <div class="ui-screen-below">
+    
+        </div>
+        <div class="ui-screen-below2">
+            
+        </div>
     </div>
 </div>
 <!-- Footer -->
@@ -35,6 +71,9 @@
         <a href="https://www.ottiya.com/"><img class="logo"  src="images/LogoPlaceholder.jpeg" alt="Logo"></a>
     </div>
 </div>
+
+
+
 
 </body>
 
