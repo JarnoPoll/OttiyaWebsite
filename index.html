@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,9 +9,12 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type = "text/javascript" src="java/java.js"></script>  
+    <script type = "text/javascript" src="java/levelLoader.js"></script>
+    <script type = "text/javascript" src="java/CodeBlockManager.js"></script>
 </head>
 
 <body>
+
 <!-- Header -->
 <div class="header">
     <a href="https://www.ottiya.com/"><img class="logo"  src="images/LogoPlaceholder.jpeg" alt="Logo"></a>
@@ -35,13 +37,14 @@
     </div>
 
 </div>
+
 <!-- Game goes here -->
 <div id="game-area">
     <div id="menu-area" class="hidden">
         <button class="menu-button" onclick="SwitchArea('menu-area','map-area')">Start</button>
         <button class="menu-button">Back to map</button>
     </div>
-    <div id="character-area">
+    <div id="character-area" class="hidden">
         <div class="character-name">
             <label for="fname">Name</label>
             <input type="text" id="fname" name="char-name">
@@ -49,22 +52,50 @@
         <div class="character-circle">Hats</div>
         <div class="character-circle">Shirts</div>
         <div class="character-circle">Assesories</div>
-        <div class="item-select">Hoi</div>
+        <div class="item-select">
+            <button>Item 1</button>
+            <button>Item 2</button>
+            <button>Item 3</button>
+            <button>Item 4</button>
+            <button>Item 5</button>
+            <button>Item 6</button>
+        </div>
     </div>
     <div id="map-area" class="hidden">
         <button class="map-circle" onclick="SwitchArea('map-area','level-area')">1</button>
         <button class="map-circle">2</button>
         <button class="map-circle">3</button>
     </div>
-    <div id="level-area" class="hidden">
+    <div id="level-area" class="">
+        <div>
+            <button id="menu-circle" class="character-circle" onclick="SwitchArea('level-area','map-area')">Menu</button>
+        </div>
         <div class="ui-screen-below">
-    
+            
+            <div class="CodeBlocks">
+                <button class="CodeBlock CodeBlockOne" onclick="SelectNewCodeBlock(1)">Block</button>
+                <button class="CodeBlock CodeBlockTwo" onclick="SelectNewCodeBlock(2)">Block</button>
+                <button class="CodeBlock CodeBlockThree" onclick="SelectNewCodeBlock(3)">Block</button>
+                <button class="CodeBlock CodeBlockFour" onclick="SelectNewCodeBlock(4)">Block</button>
+                <button class="CodeBlock CodeBlockFive" onclick="SelectNewCodeBlock(5)">Block</button>
+            </div>   
         </div>
         <div class="ui-screen-below2">
-            
+            <div class="Taskbar">
+                <button id="TaskbarBlockOne" class="CodeBlock" onclick="RemoveCodeBlock('TaskbarBlockOne')">Block</button>
+                <button id="TaskbarBlockTwo" class="CodeBlock" onclick="RemoveCodeBlock('TaskbarBlockTwo')">Block</button>
+                <button id="TaskbarBlockThree" class="CodeBlock">Block</button>
+                <button id="TaskbarBlockFour" class="CodeBlock">Block</button>
+                <button id="TaskbarBlockFive" class="CodeBlock">slock</button>
+                <button id="TaskbarBlockSix" class="CodeBlock">Block</button>
+                <button id="TaskbarBlockSeven" class="CodeBlock">Block</button>
+                <button id="TaskbarBlockEight" class="CodeBlock">Block</button>
+                <button id="TaskbarBlockNine" class="CodeBlock">Block</button>
+            </div>
         </div>
     </div>
 </div>
+
 <!-- Footer -->
 <div class="footer">
     <div class="logo footer">

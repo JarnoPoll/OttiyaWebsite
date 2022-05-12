@@ -8,13 +8,18 @@ function SwitchArea(oldArea, newArea)
 }
 
 
+
+
+
 function changeColor(elementID, color)
 {
     //Get element
     var blok = document.getElementById(elementID);
     //Get class of element.
     var currentColorClass = blok.classList;
+    
     //Check if element has a color.
+    /*
     if (currentColorClass == "red")
     {
         blok.classList.remove("red");
@@ -52,6 +57,7 @@ function changeColor(elementID, color)
             blok.classList.add("blue");
         }
     }
+    */
     //If the color is the same as the color requested, turn white.
     //Else remove the color and add the new color.
 }

@@ -132,22 +132,19 @@
 
 /* Footer */
 .footer{
-    position:absolute;
+    position: relative;
     bottom:0;
+    margin-top: 100px;
     width: 100%;
-    height: 85px;
+    height: 80px;
     background-color: #EEEEEE;
     border: none;
-    overflow: hidden;
-    left: 0;
-    right: 0;
 }
 
 img.logo{
-    width: 90px;
-    height: 90px;
+    width: 80px;
+    height: 80px;
     float: left;
-    padding: 5px;
 
 }
 
@@ -155,9 +152,57 @@ img.logo{
     visibility: hidden;
     display: none !important;
 }
-
-.test{
+.Taskbar{
     display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.CodeBlocks{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#menu-circle{
+    margin: 30px;
+    float: right;
+    background-color: beige;
+    border: none;
+}
+
+.CodeBlockOne{
+    background-color: red;
+}
+
+.CodeBlockTwo{
+    background-color: green;
+}
+
+.CodeBlockThree{
+    background-color: yellow;
+}
+
+.CodeBlockFour{
+    background-color: orange;
+}
+
+.CodeBlockFive{
+    background-color: purple;
+}
+
+.CodeBlock
+{
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 5px;
+    height: 70px;
+    width: 70px;
+    opacity: 0.7;
+}
+
+.CodeBlock:hover{
+    transition: 0.3s;
+    opacity: 1;
 }
 /* Function test*/
 #blok
