@@ -1,3 +1,4 @@
+/*
 var counter = 1;
 
 function SelectNewCodeBlock(codeBlockID)
@@ -69,4 +70,42 @@ function RemoveCodeBlock(TaskbarBlockID)
     var taskblok = document.getElementById (TaskbarBlockID);
 
     taskblok.setAttribute('class', 'CodeBlock');
+}
+
+*/
+
+const codeBlocks = ["One","Two","Three", "Four", "Five"];
+
+function CheckAssigned(classList)
+{
+    var tempBool = false;
+    var tempClass;
+    Array.from(classList).reverse().forEach(element => 
+    {
+        if(element.includes("CodeBlock_"))
+        {
+            var codeBlockId = element.replace("CodeBlock_", "");
+            console.log(codeBlockId);
+            if(codeBlocks.includes(codeBlockId))
+            {
+                tempClass = element;
+                tempBool = true;
+            }
+        }
+    });
+
+    return [tempBool, tempClass];
+}
+
+function Test(test)
+{
+    test.outerHTML = "";
+}
+
+function TransferCodeBlockToTaskbar(element)
+{ 
+    element.setAttribute("onclick", "Test(this);");
+    var tempElement = element.outerHTML.replace("button", "il");
+   
+    return tempElement
 }

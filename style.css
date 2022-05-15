@@ -152,12 +152,28 @@ img.logo{
     visibility: hidden;
     display: none !important;
 }
-.Taskbar{
+
+#Taskbar{
     display: flex;
     align-items: center;
     justify-content: center;
+    height:80px;
+    padding: 0px;
+    margin: 0px;
 }
-.CodeBlocks{
+
+#Taskbar li{
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 5px;
+    height: 70px;
+    width: 70px;
+    opacity: 1;
+    font-size: 0;
+    list-style-type: none;
+}
+
+#CodeBlocks{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -170,23 +186,23 @@ img.logo{
     border: none;
 }
 
-.CodeBlockOne{
+.CodeBlock_One{
     background-color: red;
 }
 
-.CodeBlockTwo{
+.CodeBlock_Two{
     background-color: green;
 }
 
-.CodeBlockThree{
+.CodeBlock_Three{
     background-color: yellow;
 }
 
-.CodeBlockFour{
+.CodeBlock_Four{
     background-color: orange;
 }
 
-.CodeBlockFive{
+.CodeBlock_Five{
     background-color: purple;
 }
 

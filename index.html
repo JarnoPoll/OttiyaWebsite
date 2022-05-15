@@ -8,6 +8,7 @@
     <title>Otto The Otter Game</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script type = "text/javascript" src="java/java.js"></script>  
     <script type = "text/javascript" src="java/levelLoader.js"></script>
     <script type = "text/javascript" src="java/CodeBlockManager.js"></script>
@@ -72,29 +73,50 @@
         </div>
         <div class="ui-screen-below">
             
-            <div class="CodeBlocks">
-                <button class="CodeBlock CodeBlockOne" onclick="SelectNewCodeBlock(1)">Block</button>
-                <button class="CodeBlock CodeBlockTwo" onclick="SelectNewCodeBlock(2)">Block</button>
-                <button class="CodeBlock CodeBlockThree" onclick="SelectNewCodeBlock(3)">Block</button>
-                <button class="CodeBlock CodeBlockFour" onclick="SelectNewCodeBlock(4)">Block</button>
-                <button class="CodeBlock CodeBlockFive" onclick="SelectNewCodeBlock(5)">Block</button>
+            <div id="CodeBlocks">
+                <button class="CodeBlock CodeBlock_One">
+                <button class="CodeBlock CodeBlock_Two">
+                <button class="CodeBlock CodeBlock_Three">
+                <button class="CodeBlock CodeBlock_Four">
+                <button class="CodeBlock CodeBlock_Five">
             </div>   
         </div>
         <div class="ui-screen-below2">
-            <div class="Taskbar">
-                <button id="TaskbarBlockOne" class="CodeBlock" onclick="RemoveCodeBlock('TaskbarBlockOne')">Block</button>
-                <button id="TaskbarBlockTwo" class="CodeBlock" onclick="RemoveCodeBlock('TaskbarBlockTwo')">Block</button>
-                <button id="TaskbarBlockThree" class="CodeBlock">Block</button>
-                <button id="TaskbarBlockFour" class="CodeBlock">Block</button>
-                <button id="TaskbarBlockFive" class="CodeBlock">slock</button>
-                <button id="TaskbarBlockSix" class="CodeBlock">Block</button>
-                <button id="TaskbarBlockSeven" class="CodeBlock">Block</button>
-                <button id="TaskbarBlockEight" class="CodeBlock">Block</button>
-                <button id="TaskbarBlockNine" class="CodeBlock">Block</button>
-            </div>
+            <ol id="Taskbar">
+                
+            </ol>
         </div>
     </div>
 </div>
+
+<script>
+    $(function() 
+    {
+        $('#Taskbar').sortable({
+            'axis': 'x',
+        });
+
+        $('.CodeBlock').click( function ()
+        {
+            var duplicate = TransferCodeBlockToTaskbar(this.cloneNode());
+            $('#Taskbar').append(duplicate);
+        });
+        
+
+        
+        /*
+        $('.CodeBlock').on('mousedown', function()
+        {
+            //Check if empty
+            var isAssigned = IsAssigned(this.classList);
+            if(isAssigned[0])
+            {
+                
+            }
+        })
+        */
+    });
+</script>
 
 <!-- Footer -->
 <div class="footer">
