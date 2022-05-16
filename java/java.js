@@ -7,7 +7,71 @@ function SwitchArea(oldArea, newArea)
     newElement.classList.remove("hidden");
 }
 
+var pressed = false;
 
+function Reset(gridID, characterID)
+{
+    var grid = document.getElementById(gridID);
+    var character = document.getElementById(characterID);
+
+    grid.children[22].append(character);
+    pressed = false;
+}
+
+function PressedPlay(taskbarID, gridID, characterID)
+{
+    if(pressed) 
+        return;
+
+    pressed = true;
+    
+    var location = 0;
+    
+    //Read TaskBar
+    var taskbar = document.getElementById(taskbarID);
+
+    for (let index = 0; index < taskbar.children.length; index++) {
+        const element = taskbar.children[index];
+        element.classList.forEach(className => {
+                switch(className)
+                {
+                    case "CodeBlock_One":
+                        location += 1;
+                        break;
+                    case "CodeBlock_Two":
+                        location -= 10;
+                        break;
+                    case "CodeBlock_Three":
+                        location += 10;
+                        break;
+                    case "CodeBlock_Four":
+                        location -= 1;
+                        break;
+                    case "CodeBlock_Five":
+                        location += 2;
+                        break;
+                }
+            });
+        }
+
+    //Get all sections
+    var grid = document.getElementById(gridID);
+    var character = document.getElementById(characterID);
+    
+    for (let index = 0; index < grid.children.length; index++) {
+        const element = grid.children[index];
+        
+        if(element == character.parentElement)
+        {
+            location += index
+            break;
+        }
+    }
+
+    //Move Character
+    grid.children[location].append(character);
+
+}
 
 
 

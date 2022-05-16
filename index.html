@@ -21,29 +21,11 @@
     <a href="https://www.ottiya.com/"><img class="logo"  src="images/LogoPlaceholder.jpeg" alt="Logo"></a>
     <a class="header-button" href="#">Help</a>
     <a class="header-button" href="#">Scratch Course</a>
-    <a class="header-button" href="#">Learn Korean</a>
 </div>
-<div class="test">
-
-    <div id="blok" class="white">
-
-    </div>
-
-    <div id="blue-button">
-        <button onclick="changeColor('blok','blue')">Blue</button>
-    </div>
-
-    <div id="red-button">
-        <button onclick="changeColor('blok','red')">Red</button>
-    </div>
-
-</div>
-
 <!-- Game goes here -->
 <div id="game-area">
-    <div id="menu-area" class="hidden">
-        <button class="menu-button" onclick="SwitchArea('menu-area','map-area')">Start</button>
-        <button class="menu-button">Back to map</button>
+    <div id="menu-area" class="">
+        <button class="menu-button" onclick="SwitchArea('menu-area','map-area')">Play Demo</button>
     </div>
     <div id="character-area" class="hidden">
         <div class="character-name">
@@ -67,23 +49,59 @@
         <button class="map-circle">2</button>
         <button class="map-circle">3</button>
     </div>
-    <div id="level-area" class="">
-        <div>
-            <button id="menu-circle" class="character-circle" onclick="SwitchArea('level-area','map-area')">Menu</button>
+    <div id="level-area" class="hidden">
+        <div id="grid-container">
+            <div class="grid-item"></div>
+            <div class="grid-item"></div>
+            <div class="grid-item"></div>  
+            <div class="grid-item"></div>
+            <div class="grid-item"></div>
+            <div class="grid-item"></div>  
+            <div class="grid-item"></div>
+            <div class="grid-item">
+                <button id="menu-circle" class="character-circle" onclick="Reset('grid-container', 'character')">Reset</button>
+            </div>
+            <div class="grid-item">
+                <button id="menu-circle" class="character-circle" onclick="PressedPlay('Taskbar', 'grid-container', 'character')">Play</button>
+            </div>  
+            <div class="grid-item">
+                <button id="menu-circle" class="character-circle" onclick="SwitchArea('level-area','map-area')">Menu</button>
+            </div>
+            <div class="grid-item"></div>
+            <div class="grid-item"></div>  
+            <div class="grid-item"></div>
+            <div class="grid-item"></div>
+            <div class="grid-item"></div>  
+            <div class="grid-item"></div>
+            <div class="grid-item"></div>
+            <div class="grid-item"></div>  
+            <div class="grid-item"></div>
+            <div class="grid-item"></div>
+            <div class="grid-item"></div>
+            <div class="grid-item"></div>
+            <div class="grid-item">
+                <image id="character">
+            </div>  
+            <div class="grid-item"></div>
+            <div class="grid-item"></div>
+            <div class="grid-item"></div>  
+            <div class="grid-item"></div>
+            <div class="grid-item"></div>
+            <div class="grid-item"></div>
+            <div class="grid-item"></div>
         </div>
         <div class="ui-screen-below">
             
             <div id="CodeBlocks">
-                <button class="CodeBlock CodeBlock_One">
-                <button class="CodeBlock CodeBlock_Two">
-                <button class="CodeBlock CodeBlock_Three">
-                <button class="CodeBlock CodeBlock_Four">
-                <button class="CodeBlock CodeBlock_Five">
+                <button class="CodeBlock CodeBlock_One">Right</button>
+                <button class="CodeBlock CodeBlock_Two">Up</button>
+                <button class="CodeBlock CodeBlock_Three">Down</button>
+                <button class="CodeBlock CodeBlock_Four">Left</button>
+                <button class="CodeBlock CodeBlock_Five">Double Right</button>
             </div>   
         </div>
         <div class="ui-screen-below2">
             <ol id="Taskbar">
-                
             </ol>
         </div>
     </div>
@@ -101,20 +119,6 @@
             var duplicate = TransferCodeBlockToTaskbar(this.cloneNode());
             $('#Taskbar').append(duplicate);
         });
-        
-
-        
-        /*
-        $('.CodeBlock').on('mousedown', function()
-        {
-            //Check if empty
-            var isAssigned = IsAssigned(this.classList);
-            if(isAssigned[0])
-            {
-                
-            }
-        })
-        */
     });
 </script>
 
