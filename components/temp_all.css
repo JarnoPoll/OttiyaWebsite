@@ -1,0 +1,278 @@
+/* Header */
+.header{
+    width: 100%;
+    height: 100px;
+    background-color: #EEEEEE;
+    margin: 0px;
+    border:none;
+    left: 0;
+    right: 0;
+    top: 0;
+}
+
+.header-button {
+    width: 80px;
+    padding: 20px;
+    height: 30px;
+    text-align: center;
+    float:right;
+}
+
+/* Game */
+#game-area{
+    height: 500px;
+    width: 1000px;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    background-color: bisque;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    top: 50px;
+}
+
+#menu-area{
+    width: 300px;
+    height: 300px;
+    margin: auto;
+    background-color: blanchedalmond;
+    display: flex;
+}
+#menu-area button{
+    border-radius: 20px;
+    width: 260px;
+    height: 60px;
+    font-size: 40px;
+    padding: 0;
+    line-height: 60px;
+}
+
+.menu-button{
+    margin:auto;
+    display: flex;
+    justify-content: center;
+    background-color: pink;
+    color: black;
+    border: none;
+    height: 30px;
+    width: 100px;
+    text-align: center;
+}
+
+
+#character-area{
+    height: 500px;
+    width: 1000px;
+}
+
+
+#map-area{
+    height: 300px;
+    width: 300px;
+    /*display: flex;*/
+    margin: 20px;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+#map-area button{
+    margin: 20px;
+}
+
+.character-name{
+    height: 30px;
+    width: 150px;
+    background-color: azure;
+    margin-top: 20px;
+    margin-left: 20px;
+    padding: 20px;
+}
+
+
+
+.map-circle{
+    height: 50px;  
+    width: 50px;
+    border-radius: 100%;
+    background-color:darksalmon;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.character-circle{
+    height: 70px;  
+    width: 70px;
+    border-radius: 100%;
+    background-color:darksalmon;
+    text-align:center;
+    
+}
+
+.item-select{
+    height: 500px;
+    width: 300px;
+    margin: 40px, 300px, 0px, auto;
+}
+
+#level-area{
+    height: 500px;
+    width: 1000px;
+}
+
+
+.ui-screen-below{
+    width: 100%;
+    height: 80px;
+    bottom: 80px;
+    position: absolute;
+    margin: 0px;
+    background-color: aquamarine;
+}
+.ui-screen-below2{
+    width: 100%;
+    height: 80px;
+    bottom: 0px;
+    position: absolute;
+    margin: 0px;
+    background-color:aqua;
+}
+
+/* Footer */
+.footer{
+    position: relative;
+    bottom:0;
+    margin-top: 100px;
+    width: 100%;
+    height: 80px;
+    background-color: #EEEEEE;
+    border: none;
+}
+
+img.logo{
+    width: 80px;
+    height: 80px;
+    float: left;
+
+}
+
+.hidden{
+    visibility: hidden;
+    display: none !important;
+}
+
+#Taskbar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height:80px;
+    padding: 0px;
+    margin: 0px;
+}
+
+#Taskbar il {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 5px;
+    height: 70px;
+    width: 70px;
+    opacity: 1;
+    list-style-type: none;
+}
+
+#CodeBlocks{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#menu-circle{
+    float: right;
+    background-color: beige;
+    border: none;
+}
+
+.CodeBlock_One{
+    background-color: red;
+}
+
+.CodeBlock_Two{
+    background-color: green;
+}
+
+.CodeBlock_Three{
+    background-color: yellow;
+}
+
+.CodeBlock_Four{
+    background-color: orange;
+}
+
+.CodeBlock_Five{
+    background-color: purple;
+}
+
+.CodeBlock
+{
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 5px;
+    height: 70px;
+    width: 70px;
+    opacity: 0.7;
+}
+
+.CodeBlock:hover{
+    transition: 0.3s;
+    opacity: 1;
+}
+
+#character{
+    width: 60px;
+    height: 100px;
+    background-color: black;
+    transition: all ease-in-out 500ms;
+}
+
+#grid-container {
+    display: grid;
+    background-color: #2196F3;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 100px));
+    grid-template-rows: repeat(auto-fill, minmax(113px, 113px));
+    height: 340px;
+  }
+  
+  .grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    font-size: 10px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+/* Function test*/
+#blok
+{
+    width: 300px;
+    height: 100px;
+    border: 1px solid black;
+}
+
+.white
+{
+    background-color: white;
+}
+
+.red
+{
+    background-color: red;
+}
+
+.blue
+{
+    background-color: blue;
+}
