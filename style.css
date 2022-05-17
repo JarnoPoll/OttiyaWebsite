@@ -70,7 +70,7 @@
 #map-area{
     height: 300px;
     width: 300px;
-    display: flex;
+    /*display: flex;*/
     margin: 20px;
     justify-content: center;
     align-items: center;
@@ -233,6 +233,7 @@ img.logo{
     width: 60px;
     height: 100px;
     background-color: black;
+    transition: all ease-in-out 500ms;
 }
 
 #grid-container {

@@ -15,6 +15,7 @@ function Reset(gridID, characterID)
     var character = document.getElementById(characterID);
 
     grid.children[22].append(character);
+    character.style.transform = "scale(1)";
     pressed = false;
 }
 
@@ -29,34 +30,89 @@ function PressedPlay(taskbarID, gridID, characterID)
     
     //Read TaskBar
     var taskbar = document.getElementById(taskbarID);
+    var grid = document.getElementById(gridID);
+    var character = document.getElementById(characterID);
+    var index = taskbar.children.length;
+    character.style.transform = "translate(0px, 0px) scale(1)";
 
+    (function k()
+    {
+        if(index--)
+        {
+            const element = taskbar.children[taskbar.children.length - index - 1];
+            element.classList.forEach(className => {
+                    switch(className)
+                    {
+                        case "CodeBlock_One":
+                            var positionRaw = character.style.getPropertyValue("transform").match(/(-?[0-9\.]+)/g).toString();
+                            var position = positionRaw.split(',');
+                            character.style.setProperty("transform", "translate(" + (+position[0] + 100) + "px, " + +position[1] + "px) scale(" + +position[2] + ")");
+                            break;
+                        case "CodeBlock_Two":
+                            var positionRaw = character.style.getPropertyValue("transform").match(/(-?[0-9\.]+)/g).toString();
+                            var position = positionRaw.split(',');
+                            character.style.setProperty("transform", "translate(" + (+position[0]) + "px, " + (+position[1] - 110) + "px) scale(" + +position[2] + ")");
+                            break;
+                        case "CodeBlock_Three":
+                            break;
+                        case "CodeBlock_Four":
+                            var positionRaw = character.style.getPropertyValue("transform").match(/(-?[0-9\.]+)/g).toString();
+                            var position = positionRaw.split(',');
+                            character.style.setProperty("transform", "translate(" + (+position[0]) + "px, " + +position[1] + "px) scale(" + +position[2] * 0.5 + ")");
+                            break;
+                        case "CodeBlock_Five":
+                            var positionRaw = character.style.getPropertyValue("transform").match(/(-?[0-9\.]+)/g).toString();
+                            var position = positionRaw.split(',');
+                            character.style.setProperty("transform", "translate(" + (+position[0]) + "px, " + +position[1] + "px) scale(" + +position[2] * 2 + ")");
+                            break;
+                    }
+                });;
+
+            setTimeout(k,1000);
+        }
+    })();
+
+    /*
     for (let index = 0; index < taskbar.children.length; index++) {
         const element = taskbar.children[index];
         element.classList.forEach(className => {
                 switch(className)
                 {
                     case "CodeBlock_One":
-                        location += 1;
+                        if(index == 0)
+                        {
+                            character.style.transform = "translate(100px, 0px)";
+                            break;
+                        }
+                        var positionRaw = character.style.getPropertyValue("transform").match(/(-?[0-9\.]+)/g).toString();
+                        var position = +positionRaw.split(',');
+                        character.style.transform = "translate(" + (position[0] + 100) + "px, " + position[1] + "px)";
                         break;
                     case "CodeBlock_Two":
-                        location -= 10;
+                        if(index == 0)
+                        {
+                            character.style.transform = "translate(0px, -110px)";
+                            break;
+                        }
+                        var positionRaw = character.style.getPropertyValue("transform").match(/(-?[0-9\.]+)/g).toString();
+                        var position = positionRaw.split(',');
+                        character.style.transform = "translate(" + position[0] + "px, " + (position[1] - 110) + "px)";
                         break;
                     case "CodeBlock_Three":
-                        location += 10;
-                        break;
-                    case "CodeBlock_Four":
                         location -= 1;
                         break;
+                    case "CodeBlock_Four":
+                        character.style.transform = "scale(" + character.getBoundingClientRect().width / character.offsetWidth * 0.5 + ")";
+                        break;
                     case "CodeBlock_Five":
-                        location += 2;
+                        character.style.transform = "scale(" + character.getBoundingClientRect().width / character.offsetWidth * 2 + ")";
                         break;
                 }
             });
         }
+    */
 
     //Get all sections
-    var grid = document.getElementById(gridID);
-    var character = document.getElementById(characterID);
     
     for (let index = 0; index < grid.children.length; index++) {
         const element = grid.children[index];
@@ -69,8 +125,9 @@ function PressedPlay(taskbarID, gridID, characterID)
     }
 
     //Move Character
-    grid.children[location].append(character);
+    //grid.children[location].append(character);
 
+    console.log();
 }
 
 
