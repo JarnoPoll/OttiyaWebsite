@@ -5,6 +5,7 @@
     width: var(--width);
     height: var(--height);
     border-radius: 30px;
+    overflow: hidden;
 }
 
 .scene#main
@@ -77,4 +78,32 @@
 {
     margin: 15px;
     font-size: xx-large;
+}
+
+
+.scene#level #playfield
+{
+    display: flex;
+    flex-direction: column;
+}
+
+.scene#level #playfield #playfield-buttons
+{
+    display: flex;
+    justify-content: right;
+}
+
+.scene#level #playfield #character-holder
+{
+    margin: auto;
+    margin-bottom: 5px;
+    margin-left: 100px;
+}
+
+.scene#level #playfield .action-button
+{
+    height: 80px;
+    width: 80px;
+    margin: 15px;
+    border-radius: 100%;
 }

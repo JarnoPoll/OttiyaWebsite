@@ -1,17 +1,14 @@
 import {SceneManager} from './general.js';
+import {LevelManager} from './levelManager.js';
 
 $(document).ready(function() 
-{7
+{
     let sceneManager = new SceneManager("menu");
-    
-    $('#Taskbar').sortable({
-        'axis': 'x',
-    });
+    let levelManager = new LevelManager($('#player'));
 
-    $('.CodeBlock').click( function ()
+    $('#Taskbar').sortable(
     {
-        var duplicate = TransferCodeBlockToTaskbar(this.cloneNode());
-        $('#Taskbar').append(duplicate);
+        'axis': 'x',
     });
 
     $('.navigation-button').on("click", function()
@@ -24,5 +21,25 @@ $(document).ready(function()
         }
 
         sceneManager.SwitchScene(scene);
+    });
+
+    $('.action-button').on('click', function()
+    {
+        switch($(this).data("action"))
+        {
+            case "play":
+                levelManager.PressedPlay('Taskbar', 'grid-container', 'character'); //NIET HIER KIJKEN!
+                break;
+            case "reset":
+                //Thou shall need to grab thee taskbar and givith to reset as a object of variety.
+                var taskbar = document.getElementById("Taskbar");
+                var character = document.getElementById("character");
+                levelManager.Reset(taskbar, character);
+                break;
+            case "codeblock":
+                    var duplicate = levelManager.TransferCodeBlockToTaskbar(this.cloneNode());
+                    $('#Taskbar').append(duplicate);
+                break;
+        }
     });
 });

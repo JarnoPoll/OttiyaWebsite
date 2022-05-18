@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Otto The Otter Game</title>
+    <title>Bring Otto Home</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -48,59 +48,29 @@
         </div>
         <div id="map-level-selectors">
             <button class="navigation-button" data-scene="level" date-level="1">1</button>
-            <button class="navigation-button">2</button>
-            <button class="navigation-button">3</button>
+            <button class="navigation-button" data-scene="level" date-level="2">2</button>
+            <button class="navigation-button" data-scene="level" date-level="3">3</button>
         </div>
     </div>
     <div id="level" class="scene">
-        <div id="grid-container">
-            <div class="grid-item"></div>
-            <div class="grid-item"></div>
-            <div class="grid-item"></div>  
-            <div class="grid-item"></div>
-            <div class="grid-item"></div>
-            <div class="grid-item"></div>  
-            <div class="grid-item"></div>
-            <div class="grid-item">
-                <button id="menu-circle" class="character-circle" onclick="Reset('grid-container', 'character')">Reset</button>
+        <div id="playfield">
+            <div id="playfield-buttons">
+                <button class="action-button" data-action="reset">Reset</button>
+                <button class="action-button" data-action="play">Play</button>
+                <button class="action-button navigation-button" data-action="reset" data-scene="map">Menu</button>
             </div>
-            <div class="grid-item">
-                <button id="menu-circle" class="character-circle" onclick="PressedPlay('Taskbar', 'grid-container', 'character')">Play</button>
-            </div>  
-            <div class="grid-item">
-                <button id="menu-circle" class="character-circle" onclick="SwitchArea('level-area','map-area')">Menu</button>
-            </div>
-            <div class="grid-item"></div>
-            <div class="grid-item"></div>  
-            <div class="grid-item"></div>
-            <div class="grid-item"></div>
-            <div class="grid-item"></div>  
-            <div class="grid-item"></div>
-            <div class="grid-item"></div>
-            <div class="grid-item"></div>  
-            <div class="grid-item"></div>
-            <div class="grid-item"></div>
-            <div class="grid-item"></div>
-            <div class="grid-item"></div>
-            <div class="grid-item">
+            <div id="character-holder">
                 <image id="character"></image>
-            </div>  
-            <div class="grid-item"></div>
-            <div class="grid-item"></div>
-            <div class="grid-item"></div>  
-            <div class="grid-item"></div>
-            <div class="grid-item"></div>
-            <div class="grid-item"></div>
-            <div class="grid-item"></div>
+            </div>
         </div>
         <div class="ui-screen-below">
             
             <div id="CodeBlocks">
-                <button class="CodeBlock CodeBlock_One">Right</button>
-                <button class="CodeBlock CodeBlock_Two">Up</button>
-                <button class="CodeBlock CodeBlock_Three">Down</button>
-                <button class="CodeBlock CodeBlock_Four">Smaller</button>
-                <button class="CodeBlock CodeBlock_Five">Bigger</button>
+                <button class="action-button CodeBlock CodeBlock_One" data-action="codeblock">Right</button>
+                <button class="action-button CodeBlock CodeBlock_Two" data-action="codeblock">Up</button>
+                <button class="action-button CodeBlock CodeBlock_Three" data-action="codeblock">Down</button>
+                <button class="action-button CodeBlock CodeBlock_Four" data-action="codeblock">Smaller</button>
+                <button class="action-button CodeBlock CodeBlock_Five" data-action="codeblock">Bigger</button>
             </div>   
         </div>
         <div class="ui-screen-below2">
