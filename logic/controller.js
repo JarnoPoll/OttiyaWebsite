@@ -1,11 +1,11 @@
 import {SceneManager} from './general.js';
 import {LevelManager} from './levelManager.js';
 
+let sceneManager = new SceneManager("menu");
+let levelManager = new LevelManager($('#player'));
+
 $(document).ready(function() 
 {
-    let sceneManager = new SceneManager("menu");
-    let levelManager = new LevelManager($('#player'));
-
     $('#Taskbar').sortable(
     {
         'axis': 'x',
@@ -37,9 +37,67 @@ $(document).ready(function()
                 levelManager.Reset(taskbar, character);
                 break;
             case "codeblock":
-                    var duplicate = levelManager.TransferCodeBlockToTaskbar(this.cloneNode());
-                    $('#Taskbar').append(duplicate);
+                    //var duplicate = levelManager.TransferCodeBlockToTaskbar(this.cloneNode());
+                    //$('#Taskbar').append(duplicate);
                 break;
         }
     });
+
+    $('.CodeBlock').on("mousedown", function()
+    {
+        var element = this.cloneNode();
+        $('#Taskbar').append(element);
+        var mc = new Hammer(element);
+        mc.add( new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 0 }) );
+        mc.on("pan", handleDrag);
+        console.log(this.deltaX);
+        element.style.left = this.style.left;
+        element.style.top  = this.style.top;
+    });
+
+    /*
+    var elements = document.getElementsByClassName("CodeBlock");
+
+    for (let element of elements) 
+    {
+        var mc = new Hammer(element);
+            
+        mc.add( new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 0 }) );
+        mc.on("pan", handleDrag);
+    }
+    */
 });
+
+
+
+var lastPosX = 0;
+var lastPosY = 0;
+var isDragging = false;
+
+function handleDrag(ev) {
+
+    var elem = ev.target;
+    
+    if ( ! isDragging ) {
+        isDragging = true;
+    }
+    
+    var posX = ev.deltaX + lastPosX;
+    var posY = ev.deltaY + lastPosY;
+    
+    elem.style.left = posX + "px";
+    elem.style.top = posY + "px";
+
+    
+if (ev.isFinal) {
+        isDragging = false;
+        elem.style.left = "0px";
+        elem.style.top = "0px";
+        if(posY > 40 && posY < 150)
+        {
+            var duplicate = elem.cloneNode();
+            $('#Taskbar').append(duplicate);
+        }
+        //If valid location, spawn block.
+    }
+}

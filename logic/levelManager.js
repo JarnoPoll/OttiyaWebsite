@@ -66,7 +66,7 @@ export class LevelManager
                             case "CodeBlock_One":
                                 var positionRaw = character.style.getPropertyValue("transform").match(/(-?[0-9\.]+)/g).toString();
                                 var position = positionRaw.split(',');
-                                character.style.setProperty("transform", "translate(" + (+position[0] + 100) + "px, " + +position[1] + "px) scale(" + +position[2] + ")");
+                                character.style.setProperty("transform", "translate(" + (+position[0] + 151) + "px, " + +position[1] + "px) scale(" + +position[2] + ")");
                                 break;
                             case "CodeBlock_Two":
                                 var positionRaw = character.style.getPropertyValue("transform").match(/(-?[0-9\.]+)/g).toString();

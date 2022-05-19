@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://hammerjs.github.io/dist/hammer.js"></script>
     <script type="module" src="logic/controller.js"></script>
 </head>
 
@@ -20,6 +21,8 @@
     <a class="header-button" href="#">Help</a>
     <a class="header-button" href="#">Scratch Course</a>
 </div>
+
+<div id="CodeBlockTest"></div>
 <!-- Game goes here -->
 <div id="main" class="scene">
     <div id="menu" class="scene">
@@ -60,7 +63,13 @@
                 <button class="action-button navigation-button" data-action="reset" data-scene="map">Menu</button>
             </div>
             <div id="character-holder">
-                <image id="character"></image>
+                <div id="character"></div>
+                <image class="shell" src="assets/levels/Level_Shell_Color.png">
+                <image class="shell" src="assets/levels/Level_Shell_Color.png">
+                <image class="shell" src="assets/levels/Level_Shell_Color.png">
+            </div>
+            <div id="Ground">
+
             </div>
         </div>
         <div class="ui-screen-below">
