@@ -118,3 +118,19 @@
     padding-left: 75px;
     padding-right: 20px;
 }
+
+#gray-shells{
+    margin-top: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    margin-left: 79px;
+}
+
+.grayshell{
+    height: 70px;
+    width: 70px;
+}
+
+span + span {
+    margin-left: 36px;
+}
