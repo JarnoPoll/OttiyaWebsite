@@ -122,6 +122,16 @@
     width: 1000px;
 }
 
+#collectibles-tab{
+    height: 106px;
+    width: 450px;
+    background-color:gainsboro;
+    position: absolute;
+    right: 550px;
+    left: 380px;
+    opacity: 60%;
+}
+
 
 .ui-screen-below{
     width: 100%;

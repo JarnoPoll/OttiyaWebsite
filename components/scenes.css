@@ -1,0 +1,136 @@
+.scene
+{
+    max-width: var(--width);
+    max-height: var(--height);
+    width: var(--width);
+    height: var(--height);
+    border-radius: 30px;
+    overflow: hidden;
+}
+
+.scene#main
+{
+    background-color: black;
+    display: flex;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1%;
+}
+
+.scene#menu
+{
+    background-color: aqua;
+    display: flex;
+}
+
+.scene#menu .navigation-button
+{
+    margin:auto;
+    background-color: pink;
+    height: 100px;
+    width: 500px;
+    border-radius: 30px;
+    font-size: xx-large;
+}
+
+.scene#map
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: green;
+}
+
+.scene#map .navigation-button
+{
+    height: 80px;  
+    width: 80px;
+    border-radius: 100%;
+    background-color:darksalmon;
+}
+
+.scene#map #map-navigation
+{
+    height: 100px;
+    width: 100%;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    padding-right: 10%;
+}
+
+.scene#map #map-navigation .navigation-button
+{
+    float: right;
+    background-color: beige;
+    font-size: large;
+}
+
+.scene#map #map-level-selectors
+{
+    height: 100px;
+    margin: auto;
+    margin-top: 150px;
+}
+
+.scene#map #map-level-selectors .navigation-button
+{
+    margin: 15px;
+    font-size: xx-large;
+}
+
+
+.scene#level #playfield
+{
+    display: flex;
+    flex-direction: column;
+}
+
+.scene#level #playfield #playfield-buttons
+{
+    display: flex;
+    justify-content: right;
+}
+
+.scene#level #playfield #character-holder
+{
+    margin: auto;
+    margin-bottom: -10px;
+    margin-left: 180px;
+    display: flex;
+
+}
+
+.scene#level #playfield .action-button
+{
+    height: 80px;
+    width: 80px;
+    margin: 15px;
+    border-radius: 100%;
+}
+
+.shell{
+    height: 60px;
+    width: 60px;
+    margin: auto;
+    position: relative;
+    padding-left: 75px;
+    padding-right: 20px;
+}
+
+#grayshells-positioning{
+    margin-top: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    margin-left: 79px;
+}
+
+.grayshell{
+    height: 70px;
+    width: 70px;
+}
+
+span + span {
+    margin-left: 36px;
+}
