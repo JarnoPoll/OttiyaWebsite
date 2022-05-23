@@ -1,1 +1,19 @@
-{"Time" : true}
+{
+  "allowedblocks": [
+    {
+      "name": "movement",
+      "blocks": 
+      [
+        {
+          "function": "move-right"
+        },
+        {
+          "function": "move-up"
+        },
+        {
+          "function": "move-down"
+        }
+      ]
+    }
+  ]
+}

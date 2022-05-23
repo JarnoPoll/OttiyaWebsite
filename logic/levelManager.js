@@ -2,10 +2,12 @@ export class LevelManager
 {
     player;
     hasPlayed = false;
+    shells;
 
-    constructor(player)
+    constructor(player, shells)
     {
         this.player = player;
+        this.shells = shells;
     }
     
     StartLevel(blocks)
@@ -45,8 +47,9 @@ export class LevelManager
         var character = document.getElementById(characterID);
         var index = taskbar.children.length;
         character.style.transform = "translate(0px, 0px) scale(1)";
-
+        var shells = $('.shell');
         var varDelay = false;
+
 
         (function k()
         {
@@ -58,7 +61,6 @@ export class LevelManager
             else if(index--)
             {
                 const element = taskbar.children[taskbar.children.length - index - 1];
-                console.log("DOING STUFF!");
                 element.classList.forEach(className => {
                         switch(className)
                         {
@@ -88,6 +90,19 @@ export class LevelManager
                                 character.style.setProperty("transform", "translate(" + (+position[0]) + "px, " + (+position[1] - (character.clientHeight / 2) * position[2]) + "px) scale(" + +position[2] * 2 + ")");
                                 break;
                         }
+
+                        var playerRect = character.getBoundingClientRect();
+
+                        for (let index = 0; index < shells.length; index++) {
+                            const element = shells[index];
+                            var elementRect = element.getBoundingClientRect();
+                            if((elementRect.left - 20) < playerRect.left)
+                            {
+                                //Shell Collected
+                                console.log("Shell collected!");
+                                //Delete shell and add to collected shells
+                            }
+                        }
                     });;
 
                 setTimeout(k,1000);
@@ -97,7 +112,6 @@ export class LevelManager
 
     TransferCodeBlockToTaskbar(element)
     { 
-        //element.setAttribute("onclick", "Test(this);");
         var tempElement = element.outerHTML.replace("button", "il");
     
         return tempElement
@@ -106,13 +120,6 @@ export class LevelManager
     
 }
 
-class Taskbar
-{
-    	update()
-        {
-            $('#placeholder-codeblock').insertAfter($('#Taskbar').last());
-        }
-}
 var basePath = "./assets/levels/";
 
 /*
@@ -130,3 +137,5 @@ function CreatePath(difficulty, level)
     return basePath + `difficulty_${difficulty}/level_${level}/dataFile.json`;
 }
 */
+
+

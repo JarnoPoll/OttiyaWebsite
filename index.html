@@ -49,9 +49,9 @@
             <button class="navigation-button" data-scene="menu">Main</button>
         </div>
         <div id="map-level-selectors">
-            <button class="navigation-button" data-scene="level" date-level="1">1</button>
-            <button class="navigation-button" data-scene="level" date-level="2">2</button>
-            <button class="navigation-button" data-scene="level" date-level="3">3</button>
+            <button class="navigation-button" data-scene="level" data-level="1">1</button>
+            <button class="navigation-button" data-scene="level" data-level="2">2</button>
+            <button class="navigation-button" data-scene="level" data-level="3">3</button>
         </div>
     </div>
     <div id="level" class="scene">
@@ -81,11 +81,19 @@
         <div class="ui-screen-below">
             
             <div id="CodeBlocks">
-                <button class="action-button CodeBlock CodeBlock_One" data-action="codeblock">Right</button>
-                <button class="action-button CodeBlock CodeBlock_Two" data-action="codeblock">Up</button>
-                <button class="action-button CodeBlock CodeBlock_Three" data-action="codeblock">Down</button>
-                <button class="action-button CodeBlock CodeBlock_Four" data-action="codeblock">Smaller</button>
-                <button class="action-button CodeBlock CodeBlock_Five" data-action="codeblock">Bigger</button>
+                <div id="Category">
+                    <button class="action-button Category" data-category="movement" data-action="codeblock">Move</button>
+                    <button class="action-button Category" data-category="temp1" data-action="codeblock">Test</button>
+                    <button class="action-button Category" data-category="temp" data-action="codeblock">Test2</button>
+                </div>
+                <div id="movement-blocks">
+                    <button class="action-button CodeBlock CodeBlock_One" data-action="codeblock" data-function="move-right">Right</button>
+                    <button class="action-button CodeBlock CodeBlock_Two" data-action="codeblock" data-function="move-up">Up</button>
+                    <button class="action-button CodeBlock CodeBlock_Three" data-action="codeblock" data-function="move-down">Down</button>
+                    <button class="action-button CodeBlock CodeBlock_Four" data-action="codeblock" data-function="TempFunction">Smaller</button>
+                    <button class="action-button CodeBlock CodeBlock_Five" data-action="codeblock" data-function="TempFunction">Bigger</button>
+                </div>
+                
             </div>   
         </div>
         <div class="ui-screen-below2">

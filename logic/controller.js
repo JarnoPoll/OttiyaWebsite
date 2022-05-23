@@ -2,7 +2,7 @@ import {SceneManager} from './general.js';
 import {LevelManager} from './levelManager.js';
 
 let sceneManager = new SceneManager("menu");
-let levelManager = new LevelManager($('#player'));
+let levelManager = new LevelManager(document.getElementById("character"), $('.shell'));
 
 $(document).ready(function() 
 {
@@ -17,7 +17,8 @@ $(document).ready(function()
         
         if(scene == "level")
         {
-            sceneManager.LoadLevel($(this).data("level"));
+            console.log(+$(this).data('level'));
+            sceneManager.LoadLevel($(this).data('level'));
         }
 
         sceneManager.SwitchScene(scene);
@@ -28,10 +29,9 @@ $(document).ready(function()
         switch($(this).data("action"))
         {
             case "play":
-                levelManager.PressedPlay('Taskbar', 'grid-container', 'character'); //NIET HIER KIJKEN!
+                levelManager.PressedPlay('Taskbar', 'grid-container', 'character');
                 break;
             case "reset":
-                //Thou shall need to grab thee taskbar and givith to reset as a object of variety.
                 var taskbar = document.getElementById("Taskbar");
                 var character = document.getElementById("character");
                 levelManager.Reset(taskbar, character);
@@ -76,6 +76,7 @@ var lastPosY = 0;
 var isDragging = false;
 var placeholder;
 var taskbarBlocks;
+var placeholderPosition = 0;
 
 function handleDrag(ev) {
 
@@ -97,12 +98,38 @@ function handleDrag(ev) {
     elem.style.top = posY + "px";
 
     //Loop through list and find if is in between blocks
-    if(posY > 40)
+    if(taskbarBlocks.length > 0 && posY > 40)
     {
+        var position = -1;
+
         for (let index = 0; index < taskbarBlocks.length; index++) {
+
             const element = taskbarBlocks[index];
-            console.log(index);
-            
+
+            var elementRect = element.getBoundingClientRect();
+
+            var dragRect = elem.getBoundingClientRect();
+
+            if(elementRect.left < dragRect.left)
+                position = index;
+            else
+                break;
+        }
+
+        if(position != placeholderPosition)
+        {
+            if(position == -1)
+            {
+                placeholder.insertBefore(taskbarBlocks[0])
+                placeholderPosition = -1;
+            }
+            else
+            {
+                placeholder.insertAfter(taskbarBlocks[position])
+                placeholderPosition = position;
+            }
+        console.log(placeholderPosition);
+
         }
     }
     

@@ -125,10 +125,7 @@
 #collectibles-tab{
     height: 106px;
     width: 450px;
-    background-color:gainsboro;
-    position: absolute;
-    right: 550px;
-    left: 380px;
+    display: flex;
     opacity: 60%;
 }
 
@@ -229,7 +226,6 @@ img.logo{
     margin-top: 5px;
     height: 60px;
     width: 60px;
-    opacity: 0.7;
     left: 0px;
     top: 0px;
     position: relative;
