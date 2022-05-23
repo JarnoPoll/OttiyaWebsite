@@ -48,7 +48,6 @@ export class LevelManager
 
         var varDelay = false;
 
-
         (function k()
         {
             if(!varDelay)
@@ -103,8 +102,17 @@ export class LevelManager
     
         return tempElement
     }
+
+    
 }
 
+class Taskbar
+{
+    	update()
+        {
+            $('#placeholder-codeblock').insertAfter($('#Taskbar').last());
+        }
+}
 var basePath = "./assets/levels/";
 
 /*

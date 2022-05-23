@@ -1,0 +1,45 @@
+.scene#map
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: green;
+}
+
+.scene#map .navigation-button
+{
+    height: 80px;  
+    width: 80px;
+    border-radius: 100%;
+    background-color:darksalmon;
+}
+
+.scene#map #map-navigation
+{
+    height: 100px;
+    width: 100%;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    padding-right: 10%;
+}
+
+.scene#map #map-navigation .navigation-button
+{
+    float: right;
+    background-color: beige;
+    font-size: large;
+}
+
+.scene#map #map-level-selectors
+{
+    height: 100px;
+    margin: auto;
+    margin-top: 150px;
+}
+
+.scene#map #map-level-selectors .navigation-button
+{
+    margin: 15px;
+    font-size: xx-large;
+}

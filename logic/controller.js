@@ -43,6 +43,7 @@ $(document).ready(function()
         }
     });
 
+    /*
     $('.CodeBlock').on("mousedown", function()
     {
         var element = this.cloneNode();
@@ -54,8 +55,8 @@ $(document).ready(function()
         element.style.left = this.style.left;
         element.style.top  = this.style.top;
     });
-
-    /*
+    */
+    
     var elements = document.getElementsByClassName("CodeBlock");
 
     for (let element of elements) 
@@ -65,7 +66,7 @@ $(document).ready(function()
         mc.add( new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 0 }) );
         mc.on("pan", handleDrag);
     }
-    */
+    
 });
 
 
@@ -73,13 +74,20 @@ $(document).ready(function()
 var lastPosX = 0;
 var lastPosY = 0;
 var isDragging = false;
+var placeholder;
+var taskbarBlocks;
 
 function handleDrag(ev) {
 
     var elem = ev.target;
     
+
     if ( ! isDragging ) {
         isDragging = true;
+        console.log("Dragging!");
+        placeholder = $('#placeholder-codeblock')
+        placeholder.attr('data-status', 'enabled');
+        taskbarBlocks = $('#Taskbar button');
     }
     
     var posX = ev.deltaX + lastPosX;
@@ -88,15 +96,30 @@ function handleDrag(ev) {
     elem.style.left = posX + "px";
     elem.style.top = posY + "px";
 
+    //Loop through list and find if is in between blocks
+    if(posY > 40)
+    {
+        for (let index = 0; index < taskbarBlocks.length; index++) {
+            const element = taskbarBlocks[index];
+            console.log(index);
+            
+        }
+    }
     
-if (ev.isFinal) {
+    if (ev.isFinal) 
+    {
         isDragging = false;
         elem.style.left = "0px";
         elem.style.top = "0px";
+        console.log("Finished dragging!");
+        placeholder.attr('data-status', 'disabled');
+
         if(posY > 40 && posY < 150)
         {
             var duplicate = elem.cloneNode();
-            $('#Taskbar').append(duplicate);
+            var taskbar = $('#Taskbar');
+            taskbar.append(duplicate);
+            taskbar.append(placeholder);
         }
         //If valid location, spawn block.
     }
