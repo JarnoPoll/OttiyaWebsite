@@ -74,8 +74,8 @@ $(document).ready(function()
 var lastPosX = 0;
 var lastPosY = 0;
 var isDragging = false;
-var placeholder;
 var taskbarBlocks;
+var placeholders;
 var placeholderPosition = 0;
 
 function handleDrag(ev) {
@@ -84,11 +84,27 @@ function handleDrag(ev) {
     
 
     if ( ! isDragging ) {
+        placeholders = $('#Taskbar il:visible');
+        console.log(placeholders.length);
+        var closest;
+        for (let index = 0; index < placeholders.length; index++)
+        {
+            const elementRect = placeholders[index].getBoundingClientRect();
+            var dragRect = elem.getBoundingClientRect();
+            var distance = Math.abs(elementRect.left - dragRect.left);
+            if(index == 0)
+            {
+                closest = distance
+            }
+            else if(closest > distance)
+            {
+                placeholderPosition = index;
+                closest = distance;
+            }
+        }
+        
+        placeholders[placeholderPosition].setAttribute("data-status", "enabled");
         isDragging = true;
-        console.log("Dragging!");
-        placeholder = $('#placeholder-codeblock')
-        placeholder.attr('data-status', 'enabled');
-        taskbarBlocks = $('#Taskbar button');
     }
     
     var posX = ev.deltaX + lastPosX;
@@ -98,55 +114,67 @@ function handleDrag(ev) {
     elem.style.top = posY + "px";
 
     //Loop through list and find if is in between blocks
-    if(taskbarBlocks.length > 0 && posY > 40)
-    {
-        var position = -1;
 
-        for (let index = 0; index < taskbarBlocks.length; index++) {
+    if(posY > 40)
+    {   
+        var closest;
+        var lastPosition = placeholderPosition;
+        var customizer = 1;
+        var startingIndex = lastPosition - 1;
+        var endingIndex = lastPosition + 2;
 
-            const element = taskbarBlocks[index];
-
-            var elementRect = element.getBoundingClientRect();
-
-            var dragRect = elem.getBoundingClientRect();
-
-            if(elementRect.left < dragRect.left)
-                position = index;
-            else
-                break;
+        if(lastPosition == 0)
+        { 
+            startingIndex = lastPosition;
+        }
+        else if(lastPosition == placeholders.length - 1)
+        {
+            endingIndex = lastPosition + 1;
         }
 
-        if(position != placeholderPosition)
+        for (let index = startingIndex; index < endingIndex; index++)
         {
-            if(position == -1)
-            {
-                placeholder.insertBefore(taskbarBlocks[0])
-                placeholderPosition = -1;
-            }
-            else
-            {
-                placeholder.insertAfter(taskbarBlocks[position])
-                placeholderPosition = position;
-            }
-        console.log(placeholderPosition);
+            const elementRect = placeholders[index].getBoundingClientRect();
+            var dragRect = elem.getBoundingClientRect();
+            var distance = Math.abs(elementRect.left - dragRect.left);
 
+            if(index == startingIndex)
+            {
+                closest = distance;
+                placeholderPosition = index;
+            }
+            else if(closest > distance)
+            {
+                placeholderPosition = index;
+                closest = distance;
+            }
+        }
+
+        if(lastPosition != placeholderPosition)
+        {
+            placeholders[placeholderPosition].setAttribute("data-status", "enabled");
+            placeholders[lastPosition].setAttribute("data-status", "disabled");
         }
     }
-    
+
     if (ev.isFinal) 
     {
         isDragging = false;
         elem.style.left = "0px";
         elem.style.top = "0px";
         console.log("Finished dragging!");
-        placeholder.attr('data-status', 'disabled');
-
+        
+        placeholders[placeholderPosition].setAttribute("data-status", "disabled");
+        var duplicate = elem.cloneNode();
+        // duplicate.insertBefore(placeholders[placeholderPosition]);
+        placeholders[placeholderPosition].parentNode.insertBefore(duplicate, placeholders[placeholderPosition].nextSibling);
+        $(placeholders[placeholderPosition]).hide();
         if(posY > 40 && posY < 150)
         {
-            var duplicate = elem.cloneNode();
+            
             var taskbar = $('#Taskbar');
-            taskbar.append(duplicate);
-            taskbar.append(placeholder);
+            //taskbar.append(duplicate);
+            //taskbar.append(placeholder);
         }
         //If valid location, spawn block.
     }

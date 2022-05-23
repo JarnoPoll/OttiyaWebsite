@@ -65,7 +65,6 @@
             </div>
             <div id="playfield-buttons">
                 <button class="action-button" data-action="reset">Reset</button>
-                <button class="action-button" data-action="play">Play</button>
                 <button class="action-button navigation-button" data-action="reset" data-scene="map">Menu</button>
             </div>
             <div id="character-holder">
@@ -78,8 +77,7 @@
 
             </div>
         </div>
-        <div class="ui-screen-below">
-            
+        <div id="logic-window">
             <div id="CodeBlocks">
                 <div id="Category">
                     <button class="action-button Category" data-category="movement" data-action="codeblock">Move</button>
@@ -87,19 +85,29 @@
                     <button class="action-button Category" data-category="temp" data-action="codeblock">Test2</button>
                 </div>
                 <div id="movement-blocks">
-                    <button class="action-button CodeBlock CodeBlock_One" data-action="codeblock" data-function="move-right">Right</button>
-                    <button class="action-button CodeBlock CodeBlock_Two" data-action="codeblock" data-function="move-up">Up</button>
-                    <button class="action-button CodeBlock CodeBlock_Three" data-action="codeblock" data-function="move-down">Down</button>
-                    <button class="action-button CodeBlock CodeBlock_Four" data-action="codeblock" data-function="TempFunction">Smaller</button>
-                    <button class="action-button CodeBlock CodeBlock_Five" data-action="codeblock" data-function="TempFunction">Bigger</button>
+                    <il class="action-button CodeBlock CodeBlock_One" data-action="codeblock" data-function="move-right">Right</il>
+                    <il class="action-button CodeBlock CodeBlock_Two" data-action="codeblock" data-function="move-up">Up</il>
+                    <il class="action-button CodeBlock CodeBlock_Three" data-action="codeblock" data-function="move-down">Down</il>
+                    <il class="action-button CodeBlock CodeBlock_Four" data-action="codeblock" data-function="TempFunction">Smaller</il>
+                    <il class="action-button CodeBlock CodeBlock_Five" data-action="codeblock" data-function="TempFunction">Bigger</il>
                 </div>
                 
             </div>   
         </div>
-        <div class="ui-screen-below2">
+        <div id="execution-window">
+            <image id="trash-icon" src="assets/miscellaneous/trashcan.png"></image>
             <ol id="Taskbar">
-                <il id="placeholder-codeblock" data-status="disabled"></il>
+                <il class="placeholder-codeblock" data-status="disabled"></il>
+                <il class="placeholder-codeblock" data-status="disabled"></il>
+                <il class="placeholder-codeblock" data-status="disabled"></il>
+                <il class="placeholder-codeblock" data-status="disabled"></il>
+                <il class="placeholder-codeblock" data-status="disabled"></il>
+                <il class="placeholder-codeblock" data-status="disabled"></il>
+                <il class="placeholder-codeblock" data-status="disabled"></il>
+                <il class="placeholder-codeblock" data-status="disabled"></il>
+                <il class="placeholder-codeblock" data-status="disabled"></il>
             </ol>
+            <button class="action-button" data-action="play">Play</button>
         </div>
     </div>
 </div>

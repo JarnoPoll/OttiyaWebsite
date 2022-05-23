@@ -168,14 +168,6 @@ img.logo{
     display: none !important;
 }
 
-#Taskbar{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height:100%;
-    padding: 0px;
-    margin: 0px;
-}
 
 #Taskbar il {
     margin-left: 20px;
