@@ -56,17 +56,18 @@
     </div>
     <div id="level" class="scene">
         <div id="playfield">
-            <div id="collectibles-tab">
-                <div id="grayshells-positioning">
-                    <span><img id="testShell" class="grayshell" src="assets/levels/Level_Shell_Gray.png"></span>
-                    <span><img class="grayshell" src="assets/levels/Level_Shell_Gray.png"></span>
-                    <span><img class="grayshell" src="assets/levels/Level_Shell_Gray.png"></span>
+            <div id="ui-window">
+                <div id="shells-counter">
+                    <img id="testShell" class="grayshell" src="assets/levels/Level_Shell_Gray.png">
+                    <img class="grayshell" src="assets/levels/Level_Shell_Gray.png">
+                    <img class="grayshell" src="assets/levels/Level_Shell_Gray.png">
+                </div>
+                <div id="playfield-buttons">
+                    <button class="action-button" data-action="reset">Reset</button>
+                    <button class="action-button navigation-button" data-action="reset" data-scene="map">Menu</button>
                 </div>
             </div>
-            <div id="playfield-buttons">
-                <button class="action-button" data-action="reset">Reset</button>
-                <button class="action-button navigation-button" data-action="reset" data-scene="map">Menu</button>
-            </div>
+            
             <div id="character-holder">
                 <div id="character"></div>
                 <image id="shell1" class="shell" src="assets/levels/Level_Shell_Color.png">
@@ -94,7 +95,7 @@
             </div>   
         </div>
         <div id="execution-window">
-            <image id="trash-icon" src="assets/miscellaneous/trashcan.png"></image>
+            <image id="trash-icon" class="action-button" data-action="reset" src="assets/miscellaneous/trashcan.png"></image>
             <ol id="Taskbar">
                 <il class="placeholder-codeblock" data-status="disabled"></il>
                 <il class="placeholder-codeblock" data-status="disabled"></il>

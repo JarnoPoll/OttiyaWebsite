@@ -86,7 +86,7 @@ export class LevelManager
         var character = document.getElementById(characterID);
         var index = taskbar.children.length;
         character.style.transform = "translate(0px, 0px) scale(1)";
-        
+        var shell1 = $("#shell1");
         var varDelay = false;
 
 
@@ -106,7 +106,7 @@ export class LevelManager
                             case "CodeBlock_One":
                                 var positionRaw = character.style.getPropertyValue("transform").match(/(-?[0-9\.]+)/g).toString();
                                 var position = positionRaw.split(',');
-                                character.style.setProperty("transform", "translate(" + (+position[0] + 151) + "px, " + +position[1] + "px) scale(" + +position[2] + ")");
+                                character.style.setProperty("transform", "translate(" + (+position[0] + 150) + "px, " + +position[1] + "px) scale(" + +position[2] + ")");
                                 break;
                             case "CodeBlock_Two":
                                 var positionRaw = character.style.getPropertyValue("transform").match(/(-?[0-9\.]+)/g).toString();
@@ -131,8 +131,7 @@ export class LevelManager
                         }
 
                         var playerRect = character.getBoundingClientRect();
-                        var shell1 = $("#shell1");
-                        var rewardShell = $("#testShell");
+
                         for (let index = 0; index < shell1.length; index++) {
                             const element = shell1[index];
                             var elementRect = element.getBoundingClientRect();
@@ -141,7 +140,7 @@ export class LevelManager
                                 //Console message that the shell is collected
                                 console.log("Shell collected!");
                                 //Delete shell and add to collected shells
-                                rewardShell.replaceWith(shell1);
+                                shell1.remove();
                             }
                         }
                     });;

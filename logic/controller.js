@@ -88,10 +88,12 @@ function handleDrag(ev) {
 
     var elem = ev.target;
     
-    console.log("Draggin");
     if ( ! isDragging ) {
         placeholders = $('#Taskbar il:visible:not(.action-button)');
-        taskbarBlocks = $('#Taskbar il:visible');
+
+        if(placeholders.length == 0)
+            return;
+        taskbarBlocks = $('#Taskbar il.action-button');
 
         var closest;
 
@@ -121,6 +123,7 @@ function handleDrag(ev) {
     
     elem.style.left = posX + "px";
     elem.style.top = posY + "px";
+
     /*
         var closest;
         var lastPosition = taskbarPosition;
@@ -153,19 +156,22 @@ function handleDrag(ev) {
                 closest = distance;
             }
             
-            console.log("Index: " + index + " Current Closest: " + closest + "Distance: " + distance);
+            //console.log("Index: " + index + " Current Closest: " + closest + "Distance: " + distance);
         }
         
         if(lastPosition != taskbarPosition)
         {
-            console.log("Should move!");
+        
+            
             if(lastPosition < taskbarPosition)
             {
+                console.log("Move RIGHT");
                 if ($(placeholders[0]).not(':last-child'))
                 $(placeholders[0]).next().after($(taskbarBlocks[taskbarPosition]));
             }
             else
             {
+                console.log("Move LEFT");
                 if ($(placeholders[0]).not(':first-child'))
                 $(placeholders[0]).prev().before($(taskbarBlocks[taskbarPosition]));
             }

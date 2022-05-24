@@ -2,21 +2,37 @@
 {
     display: flex;
     flex-direction: column;
+    height: 598px;
+    width: 1194px;
+    background-image: url("../assets/levels/Background_Chapter_1.png");
 }
-
 .scene#level #playfield #playfield-buttons
 {
     display: flex;
     justify-content: right;
+    margin-left: 700px;
+}
+
+.scene#level #shells-counter{
+    width: 200px;
+    display: flex;
+    margin: 10px;
+    padding: 10px;
 }
 
 .scene#level #playfield #character-holder
 {
     margin: auto;
     margin-bottom: -10px;
-    margin-left: 180px;
+    margin-left: 37px;
+    margin-right: 37px;
     display: flex;
 
+}
+
+.scene#level #ui-window{
+    display: flex;
+    flex-direction: row;
 }
 
 .scene#level #playfield .action-button
@@ -130,6 +146,14 @@
 
 @keyframes fadeinout {
   50% { opacity: 1; }
+}
+
+.scene#level #Ground
+{
+    height: 84px;
+    background-image: url("../assets/levels/Ground_Block_Chapter_1.png");
+    background-size: 149.4px 84px;
+    background-repeat:  repeat;
 }
 
 .shell{
