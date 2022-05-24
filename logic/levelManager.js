@@ -3,11 +3,16 @@ export class LevelManager
     player;
     hasPlayed = false;
     shells;
+    currentCategory;
 
-    constructor(player, shells)
+    constructor(player, shells, categories, startingCategory)
     {
         this.player = player;
         this.shells = shells;
+        this.categories = categories;
+        this.categories.not(`[data-category="${startingCategory}"]`).hide();
+        this.currentCategory = startingCategory;
+        console.log(categories);
     }
     
     StartLevel(blocks)
@@ -18,14 +23,48 @@ export class LevelManager
         }
     }
 
-    Reset(taskbar, character)
+    Reset(taskbar, blocks, character)
     {
-        while (taskbar.firstChild) 
+        for (let index = 0; index < blocks.length; index++) 
         {
-            taskbar.removeChild(taskbar.firstChild);
+            const element = blocks[index];
+            taskbar.removeChild(element);
+        }
+
+        for (let index = 0; index < taskbar.children.length; index++) 
+        {
+            const element = taskbar.children[index];
+            
+            if(!$(element).is(':visible'))
+            {
+                $(element).show();
+            }
         }
 
         character.style.transform = "translate(0px, 0px) scale(1)";
+    }
+
+    ChangeCategory(category)
+    {
+        if(this.currentCategory != category)
+        {
+            for (let index = 0; index < this.categories.length; index++) {
+                const element = this.categories[index];
+    
+                if($(element).data("category") == this.currentCategory)
+                {
+                    console.log("Hiding Shown");
+                    $(element).hide();
+                }
+                else if($(element).data("category") == category)
+                {
+                    console.log("Showing New");
+                    $(element).show();
+                }
+            }
+            
+            this.currentCategory = category;
+        }
     }
 
     PressedPlay(taskbarID, gridID, characterID)
@@ -47,7 +86,7 @@ export class LevelManager
         var character = document.getElementById(characterID);
         var index = taskbar.children.length;
         character.style.transform = "translate(0px, 0px) scale(1)";
-        var shells = $('.shell');
+        
         var varDelay = false;
 
 
@@ -92,15 +131,17 @@ export class LevelManager
                         }
 
                         var playerRect = character.getBoundingClientRect();
-
-                        for (let index = 0; index < shells.length; index++) {
-                            const element = shells[index];
+                        var shell1 = $("#shell1");
+                        var rewardShell = $("#testShell");
+                        for (let index = 0; index < shell1.length; index++) {
+                            const element = shell1[index];
                             var elementRect = element.getBoundingClientRect();
                             if((elementRect.left - 20) < playerRect.left)
                             {
-                                //Shell Collected
+                                //Console message that the shell is collected
                                 console.log("Shell collected!");
                                 //Delete shell and add to collected shells
+                                rewardShell.replaceWith(shell1);
                             }
                         }
                     });;

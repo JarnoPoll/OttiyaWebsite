@@ -58,7 +58,7 @@
         <div id="playfield">
             <div id="collectibles-tab">
                 <div id="grayshells-positioning">
-                    <span><img class="grayshell" src="assets/levels/Level_Shell_Gray.png"></span>
+                    <span><img id="testShell" class="grayshell" src="assets/levels/Level_Shell_Gray.png"></span>
                     <span><img class="grayshell" src="assets/levels/Level_Shell_Gray.png"></span>
                     <span><img class="grayshell" src="assets/levels/Level_Shell_Gray.png"></span>
                 </div>
@@ -69,9 +69,7 @@
             </div>
             <div id="character-holder">
                 <div id="character"></div>
-                <image class="shell" src="assets/levels/Level_Shell_Color.png">
-                <image class="shell" src="assets/levels/Level_Shell_Color.png">
-                <image class="shell" src="assets/levels/Level_Shell_Color.png">
+                <image id="shell1" class="shell" src="assets/levels/Level_Shell_Color.png">
             </div>
             <div id="Ground">
 
@@ -80,18 +78,19 @@
         <div id="logic-window">
             <div id="CodeBlocks">
                 <div id="Category">
-                    <button class="action-button Category" data-category="movement" data-action="codeblock">Move</button>
-                    <button class="action-button Category" data-category="temp1" data-action="codeblock">Test</button>
-                    <button class="action-button Category" data-category="temp" data-action="codeblock">Test2</button>
+                    <button class="action-button Category" data-category="movement" data-action="category">Move</button>
+                    <button class="action-button Category" data-category="appearance" data-action="category">App</button>
+                    <button class="action-button Category" data-category="temp" data-action="category">Test2</button>
                 </div>
-                <div id="movement-blocks">
+                <div class="category-blocks" data-category="movement">
                     <il class="action-button CodeBlock CodeBlock_One" data-action="codeblock" data-function="move-right">Right</il>
                     <il class="action-button CodeBlock CodeBlock_Two" data-action="codeblock" data-function="move-up">Up</il>
                     <il class="action-button CodeBlock CodeBlock_Three" data-action="codeblock" data-function="move-down">Down</il>
-                    <il class="action-button CodeBlock CodeBlock_Four" data-action="codeblock" data-function="TempFunction">Smaller</il>
-                    <il class="action-button CodeBlock CodeBlock_Five" data-action="codeblock" data-function="TempFunction">Bigger</il>
                 </div>
-                
+                <div class="category-blocks" data-category="appearance">
+                    <il class="action-button CodeBlock CodeBlock_Four" data-action="codeblock" data-function="shrink">Smaller</il>
+                    <il class="action-button CodeBlock CodeBlock_Five" data-action="codeblock" data-function="grow">Bigger</il>
+                </div>
             </div>   
         </div>
         <div id="execution-window">

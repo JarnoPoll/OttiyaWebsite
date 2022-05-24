@@ -169,15 +169,6 @@ img.logo{
 }
 
 
-#Taskbar il {
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-top: 5px;
-    height: 70px;
-    width: 70px;
-    opacity: 1;
-    list-style-type: none;
-}
 
 #CodeBlocks{
     display: flex;
@@ -211,20 +202,24 @@ img.logo{
     background-color: purple;
 }
 
-.CodeBlock
-{
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-top: 5px;
+.category-blocks .CodeBlock{
+    margin: 10px;
     height: 60px;
     width: 60px;
     left: 0px;
     top: 0px;
     position: relative;
+    margin: 10px;
 }
 
-.CodeBlock:hover{
-    opacity: 1;
+.CodeBlock
+{
+    margin: 10px;
+    height: 60px;
+    width: 60px;
+    border-radius: 10px;
+    text-align: center;
+    line-height: 60px;
 }
 
 #character{
@@ -234,6 +229,7 @@ img.logo{
     background-size:contain;
     background-color: transparent;
     transition: all ease-in-out 750ms;
+    margin-right: 80px;
 }
 
 #Ground

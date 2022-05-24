@@ -101,7 +101,7 @@
     background-color: #CFD2D7;
 }
 
-.scene#level #movement-blocks{
+.scene#level .category-blocks{
     display: flex;
     width: 100%;
     height: 75px;
@@ -137,8 +137,6 @@
     width: 60px;
     margin: auto;
     position: relative;
-    padding-left: 75px;
-    padding-right: 20px;
 }
 
 #grayshells-positioning{

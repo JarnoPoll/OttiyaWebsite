@@ -2,14 +2,15 @@ import {SceneManager} from './general.js';
 import {LevelManager} from './levelManager.js';
 
 let sceneManager = new SceneManager("menu");
-let levelManager = new LevelManager(document.getElementById("character"), $('.shell'));
+let levelManager = new LevelManager(document.getElementById("character"), $('.shell'), $('.category-blocks'),"movement");
 
 $(document).ready(function() 
 {
     $('#Taskbar').sortable(
-    {
-        'axis': 'x',
-    });
+        {
+            'axis': 'x',
+            items: "il:not(.placeholder-codeblock)"
+        }).disableSelection();
 
     $('.navigation-button').on("click", function()
     {
@@ -34,11 +35,16 @@ $(document).ready(function()
             case "reset":
                 var taskbar = document.getElementById("Taskbar");
                 var character = document.getElementById("character");
-                levelManager.Reset(taskbar, character);
+                var blocks = $('#Taskbar il.action-button')
+                levelManager.Reset(taskbar, blocks, character);
                 break;
             case "codeblock":
                     //var duplicate = levelManager.TransferCodeBlockToTaskbar(this.cloneNode());
                     //$('#Taskbar').append(duplicate);
+                break;
+            case "category":
+                console.log("Attempting to set category to: " + $(this).data("category"));
+                levelManager.ChangeCategory($(this).data("category"));
                 break;
         }
     });
@@ -62,7 +68,7 @@ $(document).ready(function()
     for (let element of elements) 
     {
         var mc = new Hammer(element);
-            
+        console.log("added");
         mc.add( new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 0 }) );
         mc.on("pan", handleDrag);
     }
@@ -75,18 +81,20 @@ var lastPosX = 0;
 var lastPosY = 0;
 var isDragging = false;
 var taskbarBlocks;
+var taskbarPosition;
 var placeholders;
-var placeholderPosition = 0;
 
 function handleDrag(ev) {
 
     var elem = ev.target;
     
-
+    console.log("Draggin");
     if ( ! isDragging ) {
-        placeholders = $('#Taskbar il:visible');
-        console.log(placeholders.length);
+        placeholders = $('#Taskbar il:visible:not(.action-button)');
+        taskbarBlocks = $('#Taskbar il:visible');
+
         var closest;
+
         for (let index = 0; index < placeholders.length; index++)
         {
             const elementRect = placeholders[index].getBoundingClientRect();
@@ -95,15 +103,16 @@ function handleDrag(ev) {
             if(index == 0)
             {
                 closest = distance
+                taskbarPosition = index;
             }
             else if(closest > distance)
             {
-                placeholderPosition = index;
+                taskbarPosition = index;
                 closest = distance;
             }
         }
         
-        placeholders[placeholderPosition].setAttribute("data-status", "enabled");
+        placeholders[0].setAttribute("data-status", "enabled");
         isDragging = true;
     }
     
@@ -112,14 +121,9 @@ function handleDrag(ev) {
     
     elem.style.left = posX + "px";
     elem.style.top = posY + "px";
-
-    //Loop through list and find if is in between blocks
-
-    if(posY > 40)
-    {   
+    /*
         var closest;
-        var lastPosition = placeholderPosition;
-        var customizer = 1;
+        var lastPosition = taskbarPosition;
         var startingIndex = lastPosition - 1;
         var endingIndex = lastPosition + 2;
 
@@ -127,36 +131,51 @@ function handleDrag(ev) {
         { 
             startingIndex = lastPosition;
         }
-        else if(lastPosition == placeholders.length - 1)
+        else if(lastPosition == taskbarBlocks.length - 1)
         {
             endingIndex = lastPosition + 1;
         }
 
         for (let index = startingIndex; index < endingIndex; index++)
         {
-            const elementRect = placeholders[index].getBoundingClientRect();
+            const elementRect = taskbarBlocks[index].getBoundingClientRect();
             var dragRect = elem.getBoundingClientRect();
             var distance = Math.abs(elementRect.left - dragRect.left);
 
             if(index == startingIndex)
             {
+                taskbarPosition = index;
                 closest = distance;
-                placeholderPosition = index;
             }
             else if(closest > distance)
             {
-                placeholderPosition = index;
+                taskbarPosition = index;
                 closest = distance;
             }
+            
+            console.log("Index: " + index + " Current Closest: " + closest + "Distance: " + distance);
         }
-
-        if(lastPosition != placeholderPosition)
+        
+        if(lastPosition != taskbarPosition)
         {
-            placeholders[placeholderPosition].setAttribute("data-status", "enabled");
-            placeholders[lastPosition].setAttribute("data-status", "disabled");
-        }
-    }
+            console.log("Should move!");
+            if(lastPosition < taskbarPosition)
+            {
+                if ($(placeholders[0]).not(':last-child'))
+                $(placeholders[0]).next().after($(taskbarBlocks[taskbarPosition]));
+            }
+            else
+            {
+                if ($(placeholders[0]).not(':first-child'))
+                $(placeholders[0]).prev().before($(taskbarBlocks[taskbarPosition]));
+            }
+            
 
+            
+            //placeholders[0].parentNode.insertBefore(taskbarBlocks[taskbarPosition], placeholders[0].nextSibling);
+            taskbarBlocks = $('#Taskbar il:visible');
+        }
+    */
     if (ev.isFinal) 
     {
         isDragging = false;
@@ -164,18 +183,10 @@ function handleDrag(ev) {
         elem.style.top = "0px";
         console.log("Finished dragging!");
         
-        placeholders[placeholderPosition].setAttribute("data-status", "disabled");
+        placeholders[0].setAttribute("data-status", "disabled");
         var duplicate = elem.cloneNode();
-        // duplicate.insertBefore(placeholders[placeholderPosition]);
-        placeholders[placeholderPosition].parentNode.insertBefore(duplicate, placeholders[placeholderPosition].nextSibling);
-        $(placeholders[placeholderPosition]).hide();
-        if(posY > 40 && posY < 150)
-        {
-            
-            var taskbar = $('#Taskbar');
-            //taskbar.append(duplicate);
-            //taskbar.append(placeholder);
-        }
-        //If valid location, spawn block.
+        duplicate.style = "";
+        placeholders[0].parentNode.insertBefore(duplicate, placeholders[0].nextSibling);
+        $(placeholders[0]).hide();
     }
 }
