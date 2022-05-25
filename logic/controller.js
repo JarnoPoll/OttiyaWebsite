@@ -41,6 +41,7 @@ $(document).ready(function()
             case "codeblock":
                     //var duplicate = levelManager.TransferCodeBlockToTaskbar(this.cloneNode());
                     //$('#Taskbar').append(duplicate);
+                    
                 break;
             case "category":
                 console.log("Attempting to set category to: " + $(this).data("category"));
@@ -70,7 +71,9 @@ $(document).ready(function()
         var mc = new Hammer(element);
         console.log("added");
         mc.add( new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 0 }) );
+        mc.add(new Hammer.Press);
         mc.on("pan", handleDrag);
+        mc.on("press", handlePressed);
     }
     
 });
@@ -83,7 +86,16 @@ var isDragging = false;
 var taskbarBlocks;
 var taskbarPosition;
 var placeholders;
+var isFlickering;
 
+function handlePressed(ev)
+{
+    var duplicate = ev.target.cloneNode();
+    duplicate.style = "";
+    var placeholders = $('#Taskbar il:visible:not(.action-button)');
+    placeholders[0].parentNode.insertBefore(duplicate, placeholders[0].nextSibling);
+    $(placeholders[0]).hide();
+}
 function handleDrag(ev) {
 
     var elem = ev.target;
@@ -115,6 +127,7 @@ function handleDrag(ev) {
         }
         
         placeholders[0].setAttribute("data-status", "enabled");
+        isFlickering = true;
         isDragging = true;
     }
     
@@ -124,6 +137,19 @@ function handleDrag(ev) {
     elem.style.left = posX + "px";
     elem.style.top = posY + "px";
 
+    if(posY > 40 && posY < 200)
+    {
+        if(!isFlickering)
+        {
+            placeholders[0].setAttribute("data-status", "enabled");
+            isFlickering = true;
+        }
+    }
+    else if(isFlickering)
+    {
+        placeholders[0].setAttribute("data-status", "disabled");
+        isFlickering = false;
+    }
     /*
         var closest;
         var lastPosition = taskbarPosition;
@@ -182,6 +208,7 @@ function handleDrag(ev) {
             taskbarBlocks = $('#Taskbar il:visible');
         }
     */
+
     if (ev.isFinal) 
     {
         isDragging = false;
@@ -189,10 +216,14 @@ function handleDrag(ev) {
         elem.style.top = "0px";
         console.log("Finished dragging!");
         
-        placeholders[0].setAttribute("data-status", "disabled");
-        var duplicate = elem.cloneNode();
-        duplicate.style = "";
-        placeholders[0].parentNode.insertBefore(duplicate, placeholders[0].nextSibling);
-        $(placeholders[0]).hide();
+        if(posY > 40 && posY < 200)
+        {
+            placeholders[0].setAttribute("data-status", "disabled");
+            isFlickering = false;
+            var duplicate = elem.cloneNode();
+            duplicate.style = "";
+            placeholders[0].parentNode.insertBefore(duplicate, placeholders[0].nextSibling);
+            $(placeholders[0]).hide();
+        }
     }
 }

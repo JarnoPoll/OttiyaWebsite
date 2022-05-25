@@ -23,7 +23,7 @@ export class LevelManager
         }
     }
 
-    Reset(taskbar, blocks, character)
+    Reset(taskbar, blocks, character, shells)
     {
         for (let index = 0; index < blocks.length; index++) 
         {
@@ -42,6 +42,11 @@ export class LevelManager
         }
 
         character.style.transform = "translate(0px, 0px) scale(1)";
+
+        $("#shell1").show(); //Return collected shells back to original spots
+
+        //Return shells in tab back to gray
+        $("#grayshell1").attr("src","assets/levels/Level_Shell_Gray.png");
     }
 
     ChangeCategory(category)
@@ -89,9 +94,12 @@ export class LevelManager
         var shell1 = $("#shell1");
         var varDelay = false;
 
+       
 
         (function k()
         {
+            var characterRect = character.getBoundingClientRect();
+            console.log("CharacterLeft: " + characterRect.left + " CharacterBottom: " + characterRect.bottom);
             if(!varDelay)
             {
                 setTimeout(k,1000);
@@ -104,19 +112,42 @@ export class LevelManager
                         switch(className)
                         {
                             case "CodeBlock_One":
-                                var positionRaw = character.style.getPropertyValue("transform").match(/(-?[0-9\.]+)/g).toString();
-                                var position = positionRaw.split(',');
-                                character.style.setProperty("transform", "translate(" + (+position[0] + 150) + "px, " + +position[1] + "px) scale(" + +position[2] + ")");
-                                break;
+                                //Check for obstable.
+                                var obstacle = document.getElementsByClassName('obstacle')[0];
+                                var obstacleRect = obstacle.getBoundingClientRect();
+                                var characterRect = character.getBoundingClientRect();
+                                var distance = obstacleRect.left - Math.abs(characterRect.left);
+                                console.log("Obstacle Check: ObstacleLeft-" + obstacleRect.left + "CharacterLeft-" + characterRect.left);
+                                if(distance > 0 && distance < 150)
+                                {
+                                    console.log("Obstacle Height Check");
+                                    console.log("Obstacle Height Check: ObstacleTop-" + obstacleRect.top + "CharacterBottom-" + Math.abs(characterRect.bottom) + 20);
+                                    //Check height
+                                    if(obstacleRect.top > Math.abs(characterRect.top) + (character.clientHeight / 2))
+                                    {
+                                        //Move
+                                        var positionRaw = character.style.getPropertyValue("transform").match(/(-?[0-9\.]+)/g).toString();
+                                        var position = positionRaw.split(',');
+                                        character.style.setProperty("transform", "translate(" + (+position[0] + 150) + "px, " + +position[1] + "px) scale(" + +position[2] + ")");
+                                        
+                                    }
+                                }
+                                else
+                                {
+                                    var positionRaw = character.style.getPropertyValue("transform").match(/(-?[0-9\.]+)/g).toString();
+                                    var position = positionRaw.split(',');
+                                    character.style.setProperty("transform", "translate(" + (+position[0] + 150) + "px, " + +position[1] + "px) scale(" + +position[2] + ")");
+                                }
+                               break;
                             case "CodeBlock_Two":
                                 var positionRaw = character.style.getPropertyValue("transform").match(/(-?[0-9\.]+)/g).toString();
                                 var position = positionRaw.split(',');
-                                character.style.setProperty("transform", "translate(" + (+position[0]) + "px, " + (+position[1] - 110) + "px) scale(" + +position[2] + ")");
+                                character.style.setProperty("transform", "translate(" + (+position[0]) + "px, " + (+position[1] - 84) + "px) scale(" + +position[2] + ")");
                                 break;
                             case "CodeBlock_Three":
                                 var positionRaw = character.style.getPropertyValue("transform").match(/(-?[0-9\.]+)/g).toString();
                                 var position = positionRaw.split(',');
-                                character.style.setProperty("transform", "translate(" + (+position[0]) + "px, " + (+position[1] + 110) + "px) scale(" + +position[2] + ")");
+                                character.style.setProperty("transform", "translate(" + (+position[0]) + "px, " + (+position[1] + 84) + "px) scale(" + +position[2] + ")");
                                 break;
                             case "CodeBlock_Four":
                                 var positionRaw = character.style.getPropertyValue("transform").match(/(-?[0-9\.]+)/g).toString();
@@ -131,8 +162,9 @@ export class LevelManager
                         }
 
                         var playerRect = character.getBoundingClientRect();
-
-                        for (let index = 0; index < shell1.length; index++) {
+                        
+                        for (let index = 0; index < shell1.length; index++) 
+                        {
                             const element = shell1[index];
                             var elementRect = element.getBoundingClientRect();
                             if((elementRect.left - 20) < playerRect.left)
@@ -140,12 +172,14 @@ export class LevelManager
                                 //Console message that the shell is collected
                                 console.log("Shell collected!");
                                 //Delete shell and add to collected shells
-                                shell1.remove();
+                                shell1.hide(); //Hide the shell, now to test!
+
+                                $("#grayshell1").attr("src","assets/levels/Level_Shell_Color.png");
                             }
                         }
-                    });;
+                    });
 
-                setTimeout(k,1000);
+                setTimeout (k,1000);
             }
         })();
     }
@@ -156,7 +190,6 @@ export class LevelManager
     
         return tempElement
     }
-
     
 }
 

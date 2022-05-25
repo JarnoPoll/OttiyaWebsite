@@ -215,11 +215,15 @@ img.logo{
 .CodeBlock
 {
     margin: 10px;
-    height: 60px;
+    height: 65.5px;
     width: 60px;
-    border-radius: 10px;
     text-align: center;
     line-height: 60px;
+}
+
+#shell1{
+    margin-left: 295px;
+    margin-top: -50px;
 }
 
 #character{
