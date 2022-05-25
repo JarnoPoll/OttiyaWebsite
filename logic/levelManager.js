@@ -43,10 +43,15 @@ export class LevelManager
 
         character.style.transform = "translate(0px, 0px) scale(1)";
 
-        $("#shell1").show(); //Return collected shells back to original spots
+        //Return collected shells back to original spots
+        $("#shell1").show();
+        $("#shell2").show();
+        $("#shell3").show();
 
         //Return shells in tab back to gray
         $("#grayshell1").attr("src","assets/levels/Level_Shell_Gray.png");
+        $("#grayshell2").attr("src","assets/levels/Level_Shell_Gray.png");
+        $("#grayshell3").attr("src","assets/levels/Level_Shell_Gray.png");
     }
 
     ChangeCategory(category)
@@ -92,6 +97,8 @@ export class LevelManager
         var index = taskbar.children.length;
         character.style.transform = "translate(0px, 0px) scale(1)";
         var shell1 = $("#shell1");
+        var shell2 = $("#shell2");
+        var shell3 = $("#shell3");
         var varDelay = false;
 
        
@@ -165,16 +172,33 @@ export class LevelManager
                         
                         for (let index = 0; index < shell1.length; index++) 
                         {
-                            const element = shell1[index];
-                            var elementRect = element.getBoundingClientRect();
-                            if((elementRect.left - 20) < playerRect.left)
+                            const element1 = shell1[index];
+                            var element1Rect = element1.getBoundingClientRect();
+                            if((element1Rect.left - 20) < playerRect.left)
                             {
                                 //Console message that the shell is collected
                                 console.log("Shell collected!");
-                                //Delete shell and add to collected shells
-                                shell1.hide(); //Hide the shell, now to test!
+                                
+                                //Hide the shell, now to test!
+                                $("#shell1").hide();
 
                                 $("#grayshell1").attr("src","assets/levels/Level_Shell_Color.png");
+                            }
+                        }
+
+                        for (let index = 0; index < shell2.length; index++) 
+                        {
+                            const element2 = shell2[index];
+                            var element2Rect = element2.getBoundingClientRect();
+                            if((element2Rect.left - 20) < playerRect.left)
+                            {
+                                //Console message that the shell is collected
+                                console.log("Shell collected!");
+                                
+                                //Hide the shell, now to test!
+                                $("#shell2").hide();
+
+                                $("#grayshell2").attr("src","assets/levels/Level_Shell_Color.png");
                             }
                         }
                     });

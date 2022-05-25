@@ -90,7 +90,7 @@ var isFlickering;
 
 function handlePressed(ev)
 {
-    var duplicate = ev.target.cloneNode();
+    var duplicate = ev.target.cloneNode(true);
     duplicate.style = "";
     var placeholders = $('#Taskbar il:visible:not(.action-button)');
     placeholders[0].parentNode.insertBefore(duplicate, placeholders[0].nextSibling);
@@ -220,7 +220,7 @@ function handleDrag(ev) {
         {
             placeholders[0].setAttribute("data-status", "disabled");
             isFlickering = false;
-            var duplicate = elem.cloneNode();
+            var duplicate = elem.cloneNode(true);
             duplicate.style = "";
             placeholders[0].parentNode.insertBefore(duplicate, placeholders[0].nextSibling);
             $(placeholders[0]).hide();

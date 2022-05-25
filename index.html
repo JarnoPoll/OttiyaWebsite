@@ -25,7 +25,7 @@
 <!-- Game goes here -->
 <div id="main" class="scene">
     <div id="menu" class="scene">
-        <button class="navigation-button" data-scene="map">Play Demo</button>
+        <button class="navigation-button" data-scene="map">Start Demo</button>
     </div>
     <div id="character-area" class="scene">
         <div class="character-name">
@@ -59,6 +59,7 @@
             <div id="ui-window">
                 <div id="shells-counter">
                     <img id="grayshell1" class="grayshell" src="assets/levels/Level_Shell_Gray.png">
+                    <img id="grayshell2" class="grayshell" src="assets/levels/Level_Shell_Gray.png">
                 </div>
                 <div id="playfield-buttons">
                     <button class="action-button" data-action="reset">Reset</button>
@@ -66,9 +67,12 @@
                 </div>
             </div>
             
+            <image id="ladder-one" src="assets/miscellaneous/ladder.png"></image>
+            <image id="ladder-two" src="assets/miscellaneous/ladder.png"></image>
             <div id="character-holder">
                 <div id="character"></div>
                 <image id="shell1" class="shell" src="assets/levels/Level_Shell_Color.png">
+                <image id="shell2" class="shell" src="assets/levels/Level_Shell_Color.png">
                 <image class="obstacle" src="../assets/levels/Ground_Block_Chapter_1.png"></image>
             </div>
             <div id="Ground">
@@ -78,18 +82,32 @@
         <div id="logic-window">
             <div id="CodeBlocks">
                 <div id="Category">
-                    <button class="action-button Category" data-category="movement" data-action="category">Move</button>
-                    <button class="action-button Category" data-category="appearance" data-action="category">App</button>
+                    <div class="action-button Category" data-category="movement" data-action="category">
+                        <image src="assets/blocks/movement/block_movement_category_icon.png"></image>
+                    </div>
+                    <div class="action-button Category" data-category="appearance" data-action="category">
+                        <image src="assets/blocks/appearance/block_appearance_category_icon.png"></image>
+                    </div>
                     <button class="action-button Category" data-category="temp" data-action="category">Test2</button>
                 </div>
                 <div class="category-blocks" data-category="movement">
-                    <il class="action-button CodeBlock CodeBlock_One" data-action="codeblock" data-function="move-right">Right</il>
-                    <il class="action-button CodeBlock CodeBlock_Two" data-action="codeblock" data-function="move-up">Up</il>
-                    <il class="action-button CodeBlock CodeBlock_Three" data-action="codeblock" data-function="move-down">Down</il>
+                    <il class="action-button CodeBlock CodeBlock_One" data-action="codeblock" data-function="move-right">
+                        <image class="codeblock-background" src="assets/blocks/movement/block_movement_category_right.png">
+                    </il>
+                    <il class="action-button CodeBlock CodeBlock_Two" data-action="codeblock" data-function="move-up">
+                        <image class="codeblock-background" src="assets/blocks/movement/block_movement_category_up.png"></image>
+                    </il>
+                    <il class="action-button CodeBlock CodeBlock_Three" data-action="codeblock" data-function="move-down">
+                        <image class="codeblock-background" src="assets/blocks/movement/block_movement_category_down.png"></image>
+                    </il>
                 </div>
                 <div class="category-blocks" data-category="appearance">
-                    <il class="action-button CodeBlock CodeBlock_Four" data-action="codeblock" data-function="shrink">Smaller</il>
-                    <il class="action-button CodeBlock CodeBlock_Five" data-action="codeblock" data-function="grow">Bigger</il>
+                    <il class="action-button CodeBlock CodeBlock_Five" data-action="codeblock" data-function="grow">
+                        <image class="codeblock-background" src="assets/blocks/appearance/block_appearance_grow.png"></image>
+                    </il>
+                    <il class="action-button CodeBlock CodeBlock_Four" data-action="codeblock" data-function="shrink">
+                        <image class="codeblock-background" src="assets/blocks/appearance/block_appearance_shrink.png"></image>
+                    </il>
                 </div>
             </div>   
         </div>

@@ -183,23 +183,23 @@ img.logo{
 }
 
 .CodeBlock_One{
-    background-color: red;
+    background-color: transparent;
 }
 
 .CodeBlock_Two{
-    background-color: green;
+    background-color: transparent;
 }
 
 .CodeBlock_Three{
-    background-color: yellow;
+    background-color: transparent;
 }
 
 .CodeBlock_Four{
-    background-color: orange;
+    background-color: transparent;
 }
 
 .CodeBlock_Five{
-    background-color: purple;
+    background-color: transparent;
 }
 
 .category-blocks .CodeBlock{
@@ -212,18 +212,20 @@ img.logo{
     margin: 10px;
 }
 
-.CodeBlock
-{
-    margin: 10px;
-    height: 65.5px;
-    width: 60px;
-    text-align: center;
-    line-height: 60px;
+#ladder-one{
+    position: absolute;
+    left: 700px;
+    top: 540px;
+    height: 100px;
+    width: 100px;
 }
 
-#shell1{
-    margin-left: 295px;
-    margin-top: -50px;
+#ladder-two{
+    position: absolute;
+    left: 955px;
+    top: 540px;
+    height: 100px;
+    width: 100px;
 }
 
 #character{

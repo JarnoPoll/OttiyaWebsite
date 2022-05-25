@@ -103,6 +103,29 @@
     width: 50px;
     height: 50px;
     border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.scene#level .Category[data-category="movement"]{
+    background-image: url("../assets/blocks/movement/block_movement_category_background.png");
+    background-size: cover;
+    width: 65px;
+    height: 65px;
+}
+
+.scene#level .Category[data-category="appearance"]{
+    background-image: url("../assets/blocks/appearance/block_appearance_category_background.png");
+    background-size: cover;
+    width: 65px;
+    height: 65px;
+}
+
+.scene#level .Category[data-category="movement"] img{
+    width: 40px;
+    height: 40px;
+    
 }
 
 .scene#level #Category{
@@ -127,11 +150,22 @@
     background-color: #4B8DC0;
 }
 
+.CodeBlock{
+    
+    text-align: center;
+    line-height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 75px;
+    height: 75px;
+}
 
-.scene#level .category-blocks .CodeBlock .movement-arrow
+.codeblock-background
 {
-    width: 40px;
-    height: 40px;
+    width: 70px;
+    height: 70px;
+    pointer-events: none;
 }
 
 .scene#level .placeholder-codeblock[data-status="enabled"] 
@@ -176,7 +210,22 @@
     height: 60px;
     width: 60px;
     margin: auto;
-    position: relative;
+    position: absolute;
+}
+
+#shell1{
+    left: 820px;
+    top: 494px;
+}
+
+#shell2{
+    left: 1120px;
+    top: 575px;
+}
+
+#shell3{
+    left: 1420px;
+    top: 573px;
 }
 
 #grayshells-positioning{
