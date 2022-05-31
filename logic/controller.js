@@ -1,11 +1,13 @@
 import {SceneManager} from './general.js';
 import {LevelManager} from './levelManager.js';
 
-let sceneManager = new SceneManager("menu");
-let levelManager = new LevelManager(document.getElementById("character"), $("#item-holder img"), $('.category-blocks'),"movement");
+
 
 $(document).ready(function() 
 {
+    let sceneManager = new SceneManager("menu");
+    let levelManager = new LevelManager(document.getElementById("character"), $("#item-holder img"), $('.category-blocks'),"movement");
+
     $('#Taskbar').sortable(
         {
             'axis': 'x',

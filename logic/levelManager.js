@@ -1,23 +1,33 @@
-export class LevelManager
+class LevelData
 {
     player;
     hasPlayed = false;
     items;
     currentCategory;
     itemData;
+    obstacleCount = 0;
+    shellCount = 0;
+    ladderCount = 0;
+    stepSizeHorizontal = 149.4;
+    stepSizeVertical = 84;
+}
+
+export class LevelManager
+{
+   LevelData = new LevelData();
 
     constructor(player, items, categories, startingCategory)
     {
-        this.player = player;
-        this.items = items;
-        this.categories = categories;
-        this.categories.not(`[data-category="${startingCategory}"]`).hide();
-        this.currentCategory = startingCategory;
+        this.LevelData.player = player;
+        this.LevelData.items = items;
+        this.LevelData.categories = categories;
+        this.LevelData.categories.not(`[data-category="${startingCategory}"]`).hide();
+        this.LevelData.currentCategory = startingCategory;
     }
     
     StartLevel(blocks)
     {
-        if(this.played)
+        if(this.LevelData.played)
         {
             return;
         }
@@ -215,17 +225,13 @@ export class LevelManager
     SetItems(itemData)
     {
         this.itemData = itemData;
-
-        itemData.then(function(result, player)
+        var localData = this.LevelData;
+        itemData.then(function(result)
         {
             for (let vertical = 0; vertical < result.length; vertical++) 
         {
             const tempArray = result[vertical];
-            var stepSizeHorizontal = 150;
-            var stepSizeVertical = 84;
-            var obstacleCount = 0;
-            var shellCount = 0;
-            var ladderCount = 0;
+            
 
             tempArray.forEach(function(value, index)
             {
@@ -233,9 +239,10 @@ export class LevelManager
                 {
                     case 1:
                         //player
-                        var character = document.getElementById("character");
+                        //var character = document.getElementById("character");
                         console.log(vertical);
-                        character.style.transform = `translate(${index * stepSizeHorizontal}px, ${(3 - vertical) * -stepSizeVertical}px) scale(1)`;
+                        
+                        localData.player.style.transform = `translate(${index * localData.stepSizeHorizontal}px, ${(3 - vertical) * -localData.stepSizeVertical}px) scale(1)`;
                         break;
                     case 2:
                         //obstacle
