@@ -24,27 +24,16 @@
 <div id="CodeBlockTest"></div>
 <!-- Game goes here -->
 <div id="main" class="scene">
+    <div id="loading" class="scene">
+
+    </div>
     <div id="menu" class="scene">
-        <button class="navigation-button" data-scene="map">Start Demo</button>
+        <button class="navigation-button" data-scene="chapter-overview">Start Demo</button>
     </div>
-    <div id="character-area" class="scene">
-        <div class="character-name">
-            <label for="fname">Name</label>
-            <input type="text" id="fname" name="char-name">
-        </div>
-        <div class="character-circle">Hats</div>
-        <div class="character-circle">Shirts</div>
-        <div class="character-circle">Assesories</div>
-        <div class="item-select">
-            <button>Item 1</button>
-            <button>Item 2</button>
-            <button>Item 3</button>
-            <button>Item 4</button>
-            <button>Item 5</button>
-            <button>Item 6</button>
-        </div>
+    <div id="chapter-overview" class="scene">
+        <button class="navigation-button" data-scene="level-overview">Go to levels</button>
     </div>
-    <div id="map" class="scene">
+    <div id="level-overview" class="scene">
         <div id="map-navigation">
             <button class="navigation-button" data-scene="menu">Main</button>
         </div>
@@ -66,17 +55,21 @@
                     <button class="action-button navigation-button" data-action="reset" data-scene="map">Menu</button>
                 </div>
             </div>
-            
-            <image id="ladder-one" src="assets/miscellaneous/ladder.png"></image>
-            <image id="ladder-two" src="assets/miscellaneous/ladder.png"></image>
             <div id="character-holder">
                 <div id="character"></div>
-                <image id="shell1" class="shell" src="assets/levels/Level_Shell_Color.png">
-                <image id="shell2" class="shell" src="assets/levels/Level_Shell_Color.png">
+            </div>
+            <div id="item-holder">
                 <image class="obstacle" src="../assets/levels/Ground_Block_Chapter_1.png"></image>
+                <image class="obstacle" src="../assets/levels/Ground_Block_Chapter_1.png"></image>
+                <image class="obstacle" src="../assets/levels/Ground_Block_Chapter_1.png"></image>
+                <image class="shell" src="assets/levels/Level_Shell_Color.png"></image>
+                <image class="shell" src="assets/levels/Level_Shell_Color.png"></image>
+                <image class="shell" src="assets/levels/Level_Shell_Color.png"></image>
+                <image class="ladder" src="assets/miscellaneous/ladder.png"></image>
+                <image class="ladder" src="assets/miscellaneous/ladder.png"></image>
             </div>
             <div id="Ground">
-                
+
             </div>
         </div>
         <div id="logic-window">

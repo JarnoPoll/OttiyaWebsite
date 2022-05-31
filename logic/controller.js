@@ -2,7 +2,7 @@ import {SceneManager} from './general.js';
 import {LevelManager} from './levelManager.js';
 
 let sceneManager = new SceneManager("menu");
-let levelManager = new LevelManager(document.getElementById("character"), $('.shell'), $('.category-blocks'),"movement");
+let levelManager = new LevelManager(document.getElementById("character"), $("#item-holder img"), $('.category-blocks'),"movement");
 
 $(document).ready(function() 
 {
@@ -19,7 +19,9 @@ $(document).ready(function()
         if(scene == "level")
         {
             console.log(+$(this).data('level'));
-            sceneManager.LoadLevel($(this).data('level'));
+            var itemData = sceneManager.LoadLevel($(this).data('level'));
+            levelManager.ResetItems($("#item-holder img"));
+            levelManager.SetItems(itemData);
         }
 
         sceneManager.SwitchScene(scene);
@@ -50,20 +52,6 @@ $(document).ready(function()
         }
     });
 
-    /*
-    $('.CodeBlock').on("mousedown", function()
-    {
-        var element = this.cloneNode();
-        $('#Taskbar').append(element);
-        var mc = new Hammer(element);
-        mc.add( new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 0 }) );
-        mc.on("pan", handleDrag);
-        console.log(this.deltaX);
-        element.style.left = this.style.left;
-        element.style.top  = this.style.top;
-    });
-    */
-    
     var elements = document.getElementsByClassName("CodeBlock");
 
     for (let element of elements) 

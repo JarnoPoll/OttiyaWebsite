@@ -1,8 +1,9 @@
 /* Importing used components. */
 @import "components/temp_all.css";
 @import "components/menu.css";
-@import "components/map.css";
+@import "components/level-overview.css";
 @import "components/level.css";
+@import "components/chapters.css";
 
 /* Global Variables */
 :root{

@@ -38,6 +38,8 @@ export class SceneManager
 
     LoadLevel(level)
     {
+        var itemLocations = [];
+
         fetch(`./assets/levels/difficulty_${1}/level_${level}/dataFile.json`).then(response => { return response.json(); }).then( data =>
         {
             var categoriesRaw = "";
@@ -47,6 +49,18 @@ export class SceneManager
                 categoriesRaw += (element.name + ",");
             }
 
+            for (let y = 0; y < data.itemsVertical.length; y++) {
+                const vertical = data.itemsVertical[y];
+
+                var tempArray = [];
+                for (let x = 0; x < vertical.itemsHorizontal.length; x++) {
+                    const horizontal = vertical.itemsHorizontal[x]
+                    
+                    tempArray.push(horizontal);
+                }
+                itemLocations.push(tempArray)
+            }
+            
             var categories = categoriesRaw.split(',');
 
             $(".Category").each(function()
@@ -82,12 +96,15 @@ export class SceneManager
                     element.hide();
                 }
             });
+            console.log(itemLocations);
         });
-    }
 
-    
+        console.log(itemLocations.next());
+        return itemLocations;
+    }
 
     SwitchCategory(category)
     {
+        
     }
 }

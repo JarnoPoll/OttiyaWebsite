@@ -2,17 +2,17 @@ export class LevelManager
 {
     player;
     hasPlayed = false;
-    shells;
+    items;
     currentCategory;
+    itemData;
 
-    constructor(player, shells, categories, startingCategory)
+    constructor(player, items, categories, startingCategory)
     {
         this.player = player;
-        this.shells = shells;
+        this.items = items;
         this.categories = categories;
         this.categories.not(`[data-category="${startingCategory}"]`).hide();
         this.currentCategory = startingCategory;
-        console.log(categories);
     }
     
     StartLevel(blocks)
@@ -53,7 +53,7 @@ export class LevelManager
         $("#grayshell2").attr("src","assets/levels/Level_Shell_Gray.png");
         $("#grayshell3").attr("src","assets/levels/Level_Shell_Gray.png");
     }
-
+    
     ChangeCategory(category)
     {
         if(this.currentCategory != category)
@@ -79,15 +79,10 @@ export class LevelManager
 
     PressedPlay(taskbarID, gridID, characterID)
     {
-        if(this.hasPlayed)
-        {
-            var character = document.getElementById(characterID);
+        var character = document.getElementById(characterID);
 
-            character.style.transform = "translate(0px, 0px) scale(1)";
-        }
+            
 
-        this.hasPlayed = true;
-        
         var location = 0;
         
         //Read TaskBar
@@ -208,11 +203,57 @@ export class LevelManager
         })();
     }
 
+    ResetItems(items)
+    {
+        items.each(function(index, img)
+        {
+            var item = $(img);
+            item.hide();
+        });
+    }
+
+    SetItems(itemData)
+    {
+        this.itemData = itemData;
+        console.log(itemData);
+        for (let vertical = 0; vertical < itemData.length; vertical++) 
+        {
+            const tempArray = itemData[vertical];
+            obstacleCount = 0;
+            shellCount = 0;
+            ladderCount = 0;
+            console.log(tempArray);
+            tempArray.forEach(function(value)
+            {
+                switch(value)
+                {
+                    case 1:
+                        
+                        console.log("HELLO MY FRIEND");
+                        //player
+                        //player.style.transform = "translate(0px, 0px) scale(1)";
+                        break;
+                    case 2:
+                        //obstacle
+                        break;
+                    case 3:
+                        //shell
+                        break;
+                    case 3:
+                        //ladder
+                        break;
+                    default:
+                        break;
+                }
+            });
+        }
+    }
+
     TransferCodeBlockToTaskbar(element)
     { 
         var tempElement = element.outerHTML.replace("button", "il");
     
-        return tempElement
+        return tempElement;
     }
     
 }

@@ -1,4 +1,4 @@
-.scene#map
+.scene#level-overview
 {
     display: flex;
     justify-content: center;
@@ -7,7 +7,7 @@
     background-color: green;
 }
 
-.scene#map .navigation-button
+.scene#level-overview .navigation-button
 {
     height: 80px;  
     width: 80px;
@@ -15,7 +15,7 @@
     background-color:darksalmon;
 }
 
-.scene#map #map-navigation
+.scene#level-overview #map-navigation
 {
     height: 100px;
     width: 100%;
@@ -24,21 +24,21 @@
     padding-right: 10%;
 }
 
-.scene#map #map-navigation .navigation-button
+.scene#level-overview #map-navigation .navigation-button
 {
     float: right;
     background-color: beige;
     font-size: large;
 }
 
-.scene#map #map-level-selectors
+.scene#level-overview #map-level-selectors
 {
     height: 100px;
     margin: auto;
     margin-top: 150px;
 }
 
-.scene#map #map-level-selectors .navigation-button
+.scene#level-overview #map-level-selectors .navigation-button
 {
     margin: 15px;
     font-size: xx-large;
