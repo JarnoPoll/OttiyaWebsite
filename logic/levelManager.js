@@ -215,23 +215,27 @@ export class LevelManager
     SetItems(itemData)
     {
         this.itemData = itemData;
-        console.log(itemData);
-        for (let vertical = 0; vertical < itemData.length; vertical++) 
+
+        itemData.then(function(result, player)
         {
-            const tempArray = itemData[vertical];
-            obstacleCount = 0;
-            shellCount = 0;
-            ladderCount = 0;
-            console.log(tempArray);
-            tempArray.forEach(function(value)
+            for (let vertical = 0; vertical < result.length; vertical++) 
+        {
+            const tempArray = result[vertical];
+            var stepSizeHorizontal = 150;
+            var stepSizeVertical = 84;
+            var obstacleCount = 0;
+            var shellCount = 0;
+            var ladderCount = 0;
+
+            tempArray.forEach(function(value, index)
             {
                 switch(value)
                 {
                     case 1:
-                        
-                        console.log("HELLO MY FRIEND");
                         //player
-                        //player.style.transform = "translate(0px, 0px) scale(1)";
+                        var character = document.getElementById("character");
+                        console.log(vertical);
+                        character.style.transform = `translate(${index * stepSizeHorizontal}px, ${(3 - vertical) * -stepSizeVertical}px) scale(1)`;
                         break;
                     case 2:
                         //obstacle
@@ -247,6 +251,7 @@ export class LevelManager
                 }
             });
         }
+        });
     }
 
     TransferCodeBlockToTaskbar(element)

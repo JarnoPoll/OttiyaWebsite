@@ -35,15 +35,13 @@ export class SceneManager
                 }
         });
     }
-
     LoadLevel(level)
     {
-        var itemLocations = [];
-
-        fetch(`./assets/levels/difficulty_${1}/level_${level}/dataFile.json`).then(response => { return response.json(); }).then( data =>
+        return fetch(`./assets/levels/difficulty_${1}/level_${level}/dataFile.json`).then(response => { return response.json(); }).then( data =>
         {
+            var itemLocations = [];
             var categoriesRaw = "";
-            
+
             for (let index = 0; index < data.allowedblocks.length; index++) {
                 const element = data.allowedblocks[index];
                 categoriesRaw += (element.name + ",");
@@ -96,15 +94,12 @@ export class SceneManager
                     element.hide();
                 }
             });
-            console.log(itemLocations);
+            return  itemLocations;
         });
-
-        console.log(itemLocations.next());
-        return itemLocations;
     }
 
     SwitchCategory(category)
     {
-        
+
     }
 }
