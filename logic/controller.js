@@ -34,7 +34,7 @@ $(document).ready(function()
         switch($(this).data("action"))
         {
             case "play":
-                levelManager.PressedPlay('Taskbar', 'grid-container', 'character');
+                levelManager.PressedPlay($('#Taskbar'));
                 break;
             case "reset":
                 var taskbar = document.getElementById("Taskbar");

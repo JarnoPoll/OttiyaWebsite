@@ -20,16 +20,149 @@
 
 .scene#menu
 {
-    background-color: aqua;
+    background-color: #7B69DC;
     display: flex;
 }
 
 .scene#menu .navigation-button
 {
-    margin:auto;
+    position: relative;
     background-color: pink;
     height: 100px;
     width: 500px;
     border-radius: 30px;
     font-size: xx-large;
+    top: 501px;
+    right: 321px;
+}
+
+.scene#chapter-overview
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #7B69DC;
+}
+
+.scene #chapters
+{
+    position: relative; 
+    top: 109px;
+}
+
+.gametitle-chapters
+{
+    color: white;
+    font-weight: 900;
+    font-size: 48px;
+    font-family: 'Crete Round', serif;
+    position: relative; 
+    top: 100px;
+}
+
+.gametitle-levels
+{
+    color: white;
+    font-weight: 900;
+    font-size: 48px;
+    margin-left: 390px;
+    font-family: 'Crete Round', serif;
+    position: relative; 
+}
+
+.agameby
+{
+    color: white;
+    font-family: 'Crete Round', serif;
+    font-weight: 400;
+    position: relative; 
+    top: 212px;
+    left: 120px;
+}
+
+.chapter-name
+{
+    color: white;
+    font-family: 'Crete Round', serif;
+    font-weight: 400;
+    position: relative; 
+}
+
+.scene #chapter-selection
+{
+    color: white;
+    font-family: 'Crete Round', serif;
+    font-weight: 400;
+    position: relative;
+    top: 76px;
+}
+
+.Ottiyalogo-transparent
+{
+    height: 150px;
+    width: 150px;
+    position: relative;
+    top: 304px;
+    left: -4px;
+}
+
+.gametitlescreen
+{
+    color: white;
+    font-weight: 900;
+    font-size: 48px;
+    font-family: 'Crete Round', serif;
+    position: relative; 
+    top: 127px;
+    left: 396px;
+}
+
+.Otto-startmenupose
+{
+    position: relative; 
+    bottom: -146px;
+    left: -426px;
+}
+
+.Otto-menupose
+{
+    position: relative; 
+    bottom: -146px;
+    left: -426px;
+}
+
+.Otto-levelpose
+{
+    position: relative; 
+    bottom: -231px;
+    left: -426px;
+}
+
+.Play
+{
+    position: relative; 
+    bottom: 55px;
+    right: -484px;
+}
+
+.Settings
+{
+    position: relative; 
+    top: -846px;
+    right: -515px;
+}
+
+.backarrow
+{
+    position: relative;
+    top: 177px;
+    left: -524px;
+}
+
+.level-buttons
+{
+    margin: 15px;
+    height: 175px;
+    width: 175px;
 }

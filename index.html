@@ -28,19 +28,28 @@
 
     </div>
     <div id="menu" class="scene">
+        <h1 class="gametitlescreen">BRING OTTO HOME</h1>
+        <h2 class="agameby">A game by</h2>
+        <image class="Ottiyalogo-transparent" src="../assets/miscellaneous/Logo Ottiya Transparent.png"></image>
         <button class="navigation-button" data-scene="chapter-overview">Start Demo</button>
     </div>
     <div id="chapter-overview" class="scene">
+        <div id="totitlescreen">
+            <img class="backarrow navigation-button" data-scene="menu" src="../assets/miscellaneous/Vector.png">
+        </div>
         <div id="title">
-            <image id="title" class="gametitle" src="../assets/miscellaneous/Game title.png"></image>
+            <h1 class="gametitle-chapters">BRING OTTO HOME</h1>
+        </div>
+        <div id="chapter">
+            <h2 id="chapter-selection">Chapters</h2>
         </div>
         <div id="chapters">
-        <image id="chapter1" class="chapter-bubbles navigation-button" data-scene="level-overview" src="../assets/miscellaneous/Chapter card - chapter 1 selected.png"></image>
-        <image id="chapter2" class="chapter-bubbles navigation-button" src="../assets/miscellaneous/Chapter card - chapter 2 selected.png"></image>
-        <image id="chapter3" class="chapter-bubbles navigation-button" src="../assets/miscellaneous/Chapter card - chapter 3.png"></image>
+        <image id="chapter1" class="navigation-button" data-scene="level-overview" src="../assets/miscellaneous/Chapter card - chapter 1 selected.png"></image>
+        <image id="chapter2" class="navigation-button" src="../assets/miscellaneous/Chapter card - chapter 2 selected.png"></image>
+        <image id="chapter3" class="navigation-button" src="../assets/miscellaneous/Chapter card - chapter 3.png"></image>
         </div>
         <div id="Otto">
-            <image class="Otto-chapters" src="../assets/miscellaneous/Otto - chapter pose.png"></image>
+            <image class="Otto-menupose" src="../assets/miscellaneous/Otto - chapter pose.png"></image>
         </div>
         <div id="Play-button">
             <image class="Play" src="../assets/miscellaneous/Play button.png"></image>
@@ -52,12 +61,18 @@
     </div>
     <div id="level-overview" class="scene">
         <div id="map-navigation">
-            <button class="navigation-button" data-scene="menu">Main</button>
+            <image class="navigation-button" data-scene="chapter-overview" src="../assets/miscellaneous/Vector.png"></image>
+            <h1 class="gametitle-levels">BRING OTTO HOME</h1>
+        </div>
+        <div id="chapter name">
+            <h2 class="chapter-name">Chapter 1</h2>
         </div>
         <div id="map-level-selectors">
-            <button class="navigation-button" data-scene="level" data-level="1">1</button>
-            <button class="navigation-button" data-scene="level" data-level="2">2</button>
-            <button class="navigation-button" data-scene="level" data-level="3">3</button>
+            <img class="level-buttons navigation-button" src="../assets/miscellaneous/Level 1.png" data-scene="level" data-level="1"></img>
+            <img class="level-buttons navigation-button" src="../assets/miscellaneous/Level 2.png" data-scene="level" data-level="2"></button>
+        </div>
+        <div id="Otto">
+            <image class="Otto-levelpose" src="../assets/miscellaneous/Otto - chapter pose.png"></image>
         </div>
     </div>
     <div id="level" class="scene">
@@ -79,11 +94,11 @@
                 <image class="obstacle" src="../assets/levels/Ground_Block_Chapter_1.png"></image>
                 <image class="obstacle" src="../assets/levels/Ground_Block_Chapter_1.png"></image>
                 <image class="obstacle" src="../assets/levels/Ground_Block_Chapter_1.png"></image>
-                <image class="shell" src="assets/levels/Level_Shell_Color.png"></image>
-                <image class="shell" src="assets/levels/Level_Shell_Color.png"></image>
-                <image class="shell" src="assets/levels/Level_Shell_Color.png"></image>
                 <image class="ladder" src="assets/miscellaneous/ladder.png"></image>
                 <image class="ladder" src="assets/miscellaneous/ladder.png"></image>
+                <image class="shell" src="assets/levels/Level_Shell_Color.png"></image>
+                <image class="shell" src="assets/levels/Level_Shell_Color.png"></image>
+                <image class="shell" src="assets/levels/Level_Shell_Color.png"></image>
             </div>
             <div id="Ground">
 

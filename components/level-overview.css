@@ -1,10 +1,9 @@
 .scene#level-overview
 {
     display: flex;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: green;
+    background-color: #7B69DC;
 }
 
 .scene#level-overview .navigation-button
@@ -12,13 +11,13 @@
     height: 80px;  
     width: 80px;
     border-radius: 100%;
-    background-color:darksalmon;
 }
 
 .scene#level-overview #map-navigation
 {
     height: 100px;
     width: 100%;
+    display: flex;
     margin-top: 60px;
     margin-bottom: 60px;
     padding-right: 10%;
@@ -26,20 +25,22 @@
 
 .scene#level-overview #map-navigation .navigation-button
 {
-    float: right;
-    background-color: beige;
+    position: relative;
+    left: 117px;
     font-size: large;
 }
-
+/*
 .scene#level-overview #map-level-selectors
 {
     height: 100px;
     margin: auto;
     margin-top: 150px;
 }
-
+*/
+/*
 .scene#level-overview #map-level-selectors .navigation-button
 {
     margin: 15px;
     font-size: xx-large;
 }
+*/

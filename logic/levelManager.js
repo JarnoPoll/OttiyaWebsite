@@ -8,26 +8,29 @@ class LevelData
     obstacleCount = 0;
     shellCount = 0;
     ladderCount = 0;
-    stepSizeHorizontal = 149.4;
+    stepSizeHorizontal = 149;
     stepSizeVertical = 84;
+    actionsRemaining = 0;
+    actionIntervalID;
+    playerPosition = {x: 0, y: 0, size: 1, currentAction: 0};
 }
 
 export class LevelManager
 {
-   LevelData = new LevelData();
+    levelData = new LevelData();
 
     constructor(player, items, categories, startingCategory)
     {
-        this.LevelData.player = player;
-        this.LevelData.items = items;
-        this.LevelData.categories = categories;
-        this.LevelData.categories.not(`[data-category="${startingCategory}"]`).hide();
-        this.LevelData.currentCategory = startingCategory;
+        this.levelData.player = player;
+        this.levelData.items = items;
+        this.levelData.categories = categories;
+        this.levelData.categories.not(`[data-category="${startingCategory}"]`).hide();
+        this.levelData.currentCategory = startingCategory;
     }
     
     StartLevel(blocks)
     {
-        if(this.LevelData.played)
+        if(this.levelData.played)
         {
             return;
         }
@@ -35,6 +38,8 @@ export class LevelManager
 
     Reset(taskbar, blocks, character, shells)
     {
+        this.levelData.playerPosition = {x: 0, y: 0, size: 1};
+
         for (let index = 0; index < blocks.length; index++) 
         {
             const element = blocks[index];
@@ -51,7 +56,7 @@ export class LevelManager
             }
         }
 
-        character.style.transform = "translate(0px, 0px) scale(1)";
+        this.MovePlayer();
 
         //Return collected shells back to original spots
         $("#shell1").show();
@@ -87,27 +92,17 @@ export class LevelManager
         }
     }
 
-    PressedPlay(taskbarID, gridID, characterID)
+    PressedPlay()
     {
-        var character = document.getElementById(characterID);
-
-            
-
         var location = 0;
+        var taskbarChildren = document.getElementById("Taskbar").children;
+        var actions = $(taskbarChildren).filter(".CodeBlock");
+
+        this.levelData.actionsRemaining = actions.length;
         
+        this.levelData.actionIntervalID = setInterval(this.CheckAction.bind(this), 1000, actions)
         //Read TaskBar
-        var taskbar = document.getElementById(taskbarID);
-        var grid = document.getElementById(gridID);
-        var character = document.getElementById(characterID);
-        var index = taskbar.children.length;
-        character.style.transform = "translate(0px, 0px) scale(1)";
-        var shell1 = $("#shell1");
-        var shell2 = $("#shell2");
-        var shell3 = $("#shell3");
-        var varDelay = false;
-
-       
-
+        /*
         (function k()
         {
             var characterRect = character.getBoundingClientRect();
@@ -211,6 +206,126 @@ export class LevelManager
                 setTimeout (k,1000);
             }
         })();
+        */
+    }
+
+    CheckItems()
+    {
+
+    }
+
+    MovePlayer()
+    {
+        var localData = this.levelData;
+        var succes = true;
+        return localData.itemData.then(function(result)
+        {
+            for (let vertical = 0; vertical < result.length; vertical++) 
+            {
+                const tempArray = result[vertical];
+                
+                tempArray.forEach(function(value, index)
+                {
+                    if(value == 1)
+                    {
+                        switch(localData.playerPosition.currentAction)
+                        {
+                            case 0:
+                                console.log("Nothing");
+                                break;
+                            case 1: 
+                                console.log("Current: " + (index + localData.playerPosition.x - 1) + "Next Value: " + tempArray[index + localData.playerPosition.x]);
+                                if((index + localData.playerPosition.x) < tempArray.length && result[vertical - localData.playerPosition.y][index + localData.playerPosition.x] == 2)
+                                {
+                                    succes = false;
+                                }
+                                break;
+                            case 2: 
+                                console.log("left");
+                                if(index > 0 && tempArray[index - 1] == 1)
+                                {
+                                    return;
+                                }
+                                break;
+                            case 3:
+                                console.log("up");
+                                if(result[vertical - 1][index] != 4)
+                                {
+                                }
+                                break;
+                            case 4:
+                                console.log("down");
+                                if(result[vertical + 1][index] != 4)
+                                {
+                                    return;
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                        if(succes)
+                        {
+                            localData.player.style.transform = `translate(${(index + localData.playerPosition.x) * localData.stepSizeHorizontal}px, ${(3 - (vertical - localData.playerPosition.y)) * -localData.stepSizeVertical}px) scale(1)`;
+                        }
+                        return true;
+                    }
+                });
+            }
+
+            return succes;
+        });
+    }
+
+    CheckAction(actions)
+    {
+        var task = actions[actions.length - this.levelData.actionsRemaining];
+
+        task.classList.forEach(className => {
+            switch(className)
+            {
+                case "CodeBlock_One":
+                    this.levelData.playerPosition.x++;
+                    this.levelData.playerPosition.currentAction = 1;
+                    console.log("Set to [1]");
+                    break;
+                case "CodeBlock_Two":
+                    this.levelData.playerPosition.y++;
+                    this.levelData.playerPosition.currentAction = 3;
+                    console.log("Set to [3]");
+                    break;
+                case "CodeBlock_Three":
+                    this.levelData.playerPosition.y--;
+                    this.levelData.playerPosition.currentAction = 4;
+                    console.log("Set to [4]");
+                    break;
+                case "CodeBlock_Four":
+                    this.levelData.playerPosition.size *= 2;
+                    this.levelData.playerPosition.currentAction = 0;
+                    break;
+                case "CodeBlock_Five":
+                    this.levelData.playerPosition.size /= 2;
+                    this.levelData.playerPosition.currentAction = 0;
+                    break;
+            }
+        });
+        
+        var result = this.MovePlayer();
+
+        var intervalID = this.levelData.actionIntervalID;
+        result.then(function(result)
+        {
+            console.log(result);
+            if(result == false)
+            {
+                clearInterval(intervalID);
+            }
+        });
+
+        this.levelData.actionsRemaining--;
+        if(this.levelData.actionsRemaining <= 0)
+        {
+            clearInterval(this.levelData.actionIntervalID);
+        }
     }
 
     ResetItems(items)
@@ -224,40 +339,49 @@ export class LevelManager
 
     SetItems(itemData)
     {
-        this.itemData = itemData;
-        var localData = this.LevelData;
+        this.levelData.itemData = itemData;
+        var localData = this.levelData;
         itemData.then(function(result)
         {
             for (let vertical = 0; vertical < result.length; vertical++) 
-        {
-            const tempArray = result[vertical];
-            
-
-            tempArray.forEach(function(value, index)
             {
-                switch(value)
+                const tempArray = result[vertical];
+                
+                tempArray.forEach(function(value, index)
                 {
-                    case 1:
-                        //player
-                        //var character = document.getElementById("character");
-                        console.log(vertical);
-                        
-                        localData.player.style.transform = `translate(${index * localData.stepSizeHorizontal}px, ${(3 - vertical) * -localData.stepSizeVertical}px) scale(1)`;
-                        break;
-                    case 2:
-                        //obstacle
-                        break;
-                    case 3:
-                        //shell
-                        break;
-                    case 3:
-                        //ladder
-                        break;
-                    default:
-                        break;
-                }
-            });
-        }
+                    switch(value)
+                    {
+                        case 1:
+                            //player
+                            localData.player.style.transform = `translate(${index * localData.stepSizeHorizontal}px, ${(3 - vertical) * -localData.stepSizeVertical}px) scale(1)`;
+                            break;
+                        case 2:
+                            //obstacle
+                            var item = $(localData.items).filter('.obstacle')[localData.obstacleCount];
+                            item.style.transform = `translate(${index * localData.stepSizeHorizontal}px, ${((3 - vertical) + 1) * -localData.stepSizeVertical}px) scale(1)`;
+                            $(item).show();
+                            localData.obstacleCount++;
+                            break;
+                        case 3:
+                            //shell
+                            var item = $(localData.items).filter('.shell')[localData.shellCount];
+                            console.log(item);
+                            item.style.transform = `translate(${index * localData.stepSizeHorizontal}px, ${((3 - vertical) + 1) * -localData.stepSizeVertical}px) scale(1)`;
+                            $(item).show();
+                            localData.shellCount++;
+                            break;
+                        case 4:
+                            //ladder
+                            var item = $(localData.items).filter('.ladder')[localData.ladderCount];
+                            item.style.transform = `translate(${index * localData.stepSizeHorizontal}px, ${((3 - vertical) + 1) * -localData.stepSizeVertical}px) scale(1)`;
+                            $(item).show();
+                            localData.ladderCount++;
+                            break;
+                        default:
+                            break;
+                    }
+                });
+            }
         });
     }
 
