@@ -3,6 +3,7 @@ class LevelData
     player;
     hasPlayed = false;
     items;
+    shells;
     currentCategory;
     itemData;
     obstacleCount = 0;
@@ -19,13 +20,15 @@ export class LevelManager
 {
     levelData = new LevelData();
 
-    constructor(player, items, categories, startingCategory)
+    constructor(player, items, categories, startingCategory, shells)
     {
         this.levelData.player = player;
         this.levelData.items = items;
         this.levelData.categories = categories;
         this.levelData.categories.not(`[data-category="${startingCategory}"]`).hide();
         this.levelData.currentCategory = startingCategory;
+        this.levelData.shells = shells;
+        this.levelData.shells.hide();
     }
     
     StartLevel(blocks)
@@ -57,16 +60,6 @@ export class LevelManager
         }
 
         this.MovePlayer();
-
-        //Return collected shells back to original spots
-        $("#shell1").show();
-        $("#shell2").show();
-        $("#shell3").show();
-
-        //Return shells in tab back to gray
-        $("#grayshell1").attr("src","assets/levels/Level_Shell_Gray.png");
-        $("#grayshell2").attr("src","assets/levels/Level_Shell_Gray.png");
-        $("#grayshell3").attr("src","assets/levels/Level_Shell_Gray.png");
     }
     
     ChangeCategory(category)
@@ -218,6 +211,7 @@ export class LevelManager
     {
         var localData = this.levelData;
         var succes = true;
+
         return localData.itemData.then(function(result)
         {
             for (let vertical = 0; vertical < result.length; vertical++) 
@@ -234,7 +228,6 @@ export class LevelManager
                                 console.log("Nothing");
                                 break;
                             case 1: 
-                                console.log("Current: " + (index + localData.playerPosition.x - 1) + "Next Value: " + tempArray[index + localData.playerPosition.x]);
                                 if((index + localData.playerPosition.x) < tempArray.length && result[vertical - localData.playerPosition.y][index + localData.playerPosition.x] == 2)
                                 {
                                     succes = false;
@@ -244,20 +237,51 @@ export class LevelManager
                                 console.log("left");
                                 if(index > 0 && tempArray[index - 1] == 1)
                                 {
-                                    return;
+                                    succes = false;
                                 }
                                 break;
                             case 3:
                                 console.log("up");
-                                if(result[vertical - 1][index] != 4)
-                                {
-                                }
+                                //if(result[vertical - 1][index + localData.playerPosition.x] != 4)
+                                //{
+                                //    console.log("Vertical: " + (vertical - 1) + " Horizontal: " + index + " Value: " + result[vertical - 1][index]);
+                                //    succes = false;
+                                //}
+                                //else
+                                //{
+                                    var gravity = -15;
+
+                                    localData.player.style.transform = `translate(${(index + (localData.playerPosition.x - 1)) * localData.stepSizeHorizontal}px, ${(3 - (vertical - localData.playerPosition.y)) * -localData.stepSizeVertical}px) scale(1)`;
+
+                                    function k()
+                                    {
+                                        var x = ((index + (localData.playerPosition.x)) * localData.stepSizeHorizontal) - ((localData.stepSizeHorizontal / 30) * (gravity - 15));
+                                        var y;
+                                        if(gravity < 0)
+                                        {
+                                            y = ((3 - (vertical - localData.playerPosition.y)) * - localData.stepSizeVertical) + (10 * gravity);
+                                        }
+                                        else
+                                        {
+                                            y = ((3 - (vertical - localData.playerPosition.y)) * - localData.stepSizeVertical) - (10 * (-15 + gravity));;
+                                        }
+                                        console.log(y);
+                                        localData.player.style.transform = `translate(${x}px, ${y}px) scale(1)`;
+                                        gravity++;
+                                        if(gravity < 15)
+                                        {
+                                            setTimeout(k, 100);
+                                        }
+                                    }
+                                    
+                                    setTimeout(k, 1000);
+                                //}
                                 break;
                             case 4:
                                 console.log("down");
                                 if(result[vertical + 1][index] != 4)
                                 {
-                                    return;
+                                    succes = false;
                                 }
                                 break;
                             default:
@@ -265,7 +289,7 @@ export class LevelManager
                         }
                         if(succes)
                         {
-                            localData.player.style.transform = `translate(${(index + localData.playerPosition.x) * localData.stepSizeHorizontal}px, ${(3 - (vertical - localData.playerPosition.y)) * -localData.stepSizeVertical}px) scale(1)`;
+                            //localData.player.style.transform = `translate(${(index + localData.playerPosition.x) * localData.stepSizeHorizontal}px, ${(3 - (vertical - localData.playerPosition.y)) * -localData.stepSizeVertical}px) scale(1)`;
                         }
                         return true;
                     }
@@ -289,12 +313,13 @@ export class LevelManager
                     console.log("Set to [1]");
                     break;
                 case "CodeBlock_Two":
-                    this.levelData.playerPosition.y++;
+                    this.levelData.playerPosition.y += 1;
+                    this.levelData.playerPosition.x++;
                     this.levelData.playerPosition.currentAction = 3;
                     console.log("Set to [3]");
                     break;
                 case "CodeBlock_Three":
-                    this.levelData.playerPosition.y--;
+                    this.levelData.playerPosition.y -= 2;
                     this.levelData.playerPosition.currentAction = 4;
                     console.log("Set to [4]");
                     break;
@@ -368,6 +393,9 @@ export class LevelManager
                             console.log(item);
                             item.style.transform = `translate(${index * localData.stepSizeHorizontal}px, ${((3 - vertical) + 1) * -localData.stepSizeVertical}px) scale(1)`;
                             $(item).show();
+                            var shell = $(localData.shells)[localData.shellCount];
+                            console.log(shell);
+                            $(shell).show();
                             localData.shellCount++;
                             break;
                         case 4:

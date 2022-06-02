@@ -28,11 +28,12 @@
 
     </div>
     <div id="menu" class="scene">
-        <h1 class="gametitlescreen">BRING OTTO HOME</h1>
-        <h2 class="agameby">A game by</h2>
-        <image class="Ottiyalogo-transparent" src="../assets/miscellaneous/Logo Ottiya Transparent.png"></image>
-        <button class="navigation-button" data-scene="chapter-overview">Start Demo</button>
+    <h1 class="gametitlescreen">BRING OTTO HOME</h1>
+    <h2 class="agameby">A game by</h2>
+    <image class="Ottiyalogo-transparent" src="../assets/miscellaneous/Logo Ottiya Transparent.png"></image>
+    <button class="navigation-button" data-scene="chapter-overview">Start Demo</button>
     </div>
+
     <div id="chapter-overview" class="scene">
         <div id="totitlescreen">
             <img class="backarrow navigation-button" data-scene="menu" src="../assets/miscellaneous/Vector.png">
@@ -49,7 +50,7 @@
         <image id="chapter3" class="navigation-button" src="../assets/miscellaneous/Chapter card - chapter 3.png"></image>
         </div>
         <div id="Otto">
-            <image class="Otto-menupose" src="../assets/miscellaneous/Otto - chapter pose.png"></image>
+            <image class="Otto-chapterpose" src="../assets/miscellaneous/Otto - chapter pose.png"></image>
         </div>
         <div id="Play-button">
             <image class="Play-chapters" src="../assets/miscellaneous/Play button.png"></image>
@@ -60,13 +61,16 @@
 
     </div>
     <div id="level-overview" class="scene">
+
         <div id="map-navigation">
             <image class="navigation-button" data-scene="chapter-overview" src="../assets/miscellaneous/Vector.png"></image>
             <h1 class="gametitle-levels">BRING OTTO HOME</h1>
         </div>
+
         <div id="chapter name">
             <h2 class="chapter-name">Chapter 1</h2>
         </div>
+
         <div id="shellcounter-level1">
             <img id="grayshell1" class="grayshell" src="assets/levels/Level_Shell_Gray.png">
             <img id="grayshell1" class="grayshell" src="assets/levels/Level_Shell_Gray.png">
@@ -76,22 +80,27 @@
             <img class="level-buttons" src="../assets/miscellaneous/Level 1.png" data-scene="level" data-level="1"></img>
             <img class="level-buttons" src="../assets/miscellaneous/Level 2.png" data-scene="level" data-level="2"></button>
         </div>
+
         <div id="Otto">
             <image class="Otto-levelpose" src="../assets/miscellaneous/Otto - chapter pose.png"></image>
         </div>
+
         <div id="Play-button">
             <image class="Play-levels" src="../assets/miscellaneous/Play button.png"></image>
         </div>
+
         <div id="Settings-button">
             <image class="Settings-levels" src="../assets/miscellaneous/Settings button.png"></image>
         </div>
+
     </div>
     <div id="level" class="scene">
         <div id="playfield">
             <div id="ui-window">
                 <div id="shells-counter">
-                    <img id="grayshell1" class="grayshell" src="assets/levels/Level_Shell_Gray.png">
-                    <img id="grayshell2" class="grayshell" src="assets/levels/Level_Shell_Gray.png">
+                    <img class="shellcounter" src="assets/levels/Level_Shell_Gray.png">
+                    <img class="shellcounter" src="assets/levels/Level_Shell_Gray.png">
+                    <img class="shellcounter" src="assets/levels/Level_Shell_Gray.png">
                 </div>
                 <div id="playfield-buttons">
                     <button class="action-button" data-action="reset">Reset</button>

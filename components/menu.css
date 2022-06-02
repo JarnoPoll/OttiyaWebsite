@@ -36,6 +36,38 @@
     right: 321px;
 }
 
+/*Title screen*/
+.Ottiyalogo-transparent
+{
+    height: 150px;
+    width: 150px;
+    position: relative;
+    top: 304px;
+    left: -4px;
+}
+
+.gametitlescreen
+{
+    color: white;
+    font-weight: 900;
+    font-size: 48px;
+    font-family: 'Crete Round', serif;
+    position: relative; 
+    top: 127px;
+    left: 396px;
+}
+
+.agameby
+{
+    color: white;
+    font-family: 'Crete Round', serif;
+    font-weight: 400;
+    position: relative; 
+    top: 212px;
+    left: 120px;
+}
+
+/*Chapter selection screen*/
 .scene#chapter-overview
 {
     display: flex;
@@ -71,16 +103,6 @@
     position: relative; 
 }
 
-.agameby
-{
-    color: white;
-    font-family: 'Crete Round', serif;
-    font-weight: 400;
-    position: relative; 
-    top: 212px;
-    left: 120px;
-}
-
 .chapter-name
 {
     color: white;
@@ -98,47 +120,6 @@
     top: 76px;
 }
 
-.Ottiyalogo-transparent
-{
-    height: 150px;
-    width: 150px;
-    position: relative;
-    top: 304px;
-    left: -4px;
-}
-
-.gametitlescreen
-{
-    color: white;
-    font-weight: 900;
-    font-size: 48px;
-    font-family: 'Crete Round', serif;
-    position: relative; 
-    top: 127px;
-    left: 396px;
-}
-
-.Otto-startmenupose
-{
-    position: relative; 
-    bottom: -146px;
-    left: -426px;
-}
-
-.Otto-menupose
-{
-    position: relative; 
-    bottom: -140px;
-    left: -426px;
-}
-
-.Otto-levelpose
-{
-    position: relative; 
-    bottom: -95px;
-    left: -426px;
-}
-
 .Play-chapters
 {
     position: relative; 
@@ -146,11 +127,11 @@
     right: -484px;
 }
 
-.Play-levels
+.Otto-chapterpose
 {
     position: relative; 
-    bottom: 98px;
-    right: -484px;
+    bottom: -140px;
+    left: -426px;
 }
 
 .Settings-chapters
@@ -158,6 +139,21 @@
     position: relative; 
     top: -846px;
     right: -515px;
+}
+
+/*Level selection screen*/
+.Otto-levelpose
+{
+    position: relative; 
+    bottom: -95px;
+    left: -426px;
+}
+
+.Play-levels
+{
+    position: relative; 
+    bottom: 98px;
+    right: -484px;
 }
 
 .Settings-levels

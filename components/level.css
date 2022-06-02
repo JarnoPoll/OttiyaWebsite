@@ -23,8 +23,8 @@
 .scene#level #playfield #character-holder
 {
     margin: auto;
-    margin-bottom: -10px;
-    margin-left: 37px;
+    margin-bottom: -7px;
+    margin-left: 27px;
     margin-right: 37px;
     display: flex;
 
@@ -223,18 +223,13 @@
     position: absolute;
 }
 
-#grayshells-positioning{
-    margin-top: 20px;
-    margin-right: 20px;
-    margin-bottom: 20px;
-    margin-left: 79px;
+#shell-counter{
+    display: flex;
+    align-content: center;
 }
 
-.grayshell{
+.shellcounter{
     height: 60px;
     width: 60px;
-}
-
-span + span {
-    margin-left: 36px;
+    margin: 0px 5px;
 }

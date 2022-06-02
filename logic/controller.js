@@ -6,7 +6,7 @@ import {LevelManager} from './levelManager.js';
 $(document).ready(function() 
 {
     let sceneManager = new SceneManager("menu");
-    let levelManager = new LevelManager(document.getElementById("character"), $("#item-holder img"), $('.category-blocks'),"movement");
+    let levelManager = new LevelManager(document.getElementById("character"), $("#item-holder img"), $('.category-blocks'),"movement", $("#shells-counter .shellcounter"));
 
     $('#Taskbar').sortable(
         {
