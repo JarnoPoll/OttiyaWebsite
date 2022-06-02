@@ -128,28 +128,42 @@
 .Otto-menupose
 {
     position: relative; 
-    bottom: -146px;
+    bottom: -140px;
     left: -426px;
 }
 
 .Otto-levelpose
 {
     position: relative; 
-    bottom: -231px;
+    bottom: -95px;
     left: -426px;
 }
 
-.Play
+.Play-chapters
 {
     position: relative; 
     bottom: 55px;
     right: -484px;
 }
 
-.Settings
+.Play-levels
+{
+    position: relative; 
+    bottom: 98px;
+    right: -484px;
+}
+
+.Settings-chapters
 {
     position: relative; 
     top: -846px;
+    right: -515px;
+}
+
+.Settings-levels
+{
+    position: relative; 
+    top: -890px;
     right: -515px;
 }
 
@@ -163,6 +177,14 @@
 .level-buttons
 {
     margin: 15px;
-    height: 175px;
-    width: 175px;
+    padding-top: 64px;
+    height: 170px;  
+    width: 170px;
+}
+
+.scene #shellcounter-level1
+{
+    position: relative;
+    bottom: -76px;
+    left: -100px;
 }

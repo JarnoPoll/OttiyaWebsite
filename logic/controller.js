@@ -29,6 +29,21 @@ $(document).ready(function()
         sceneManager.SwitchScene(scene);
     });
 
+    $('.level-buttons').on("click", function()
+    {
+        var scene = $(this).data("scene");
+        
+        if(scene == "level")
+        {
+            console.log(+$(this).data('level'));
+            var itemData = sceneManager.LoadLevel($(this).data('level'));
+            levelManager.ResetItems($("#item-holder img"));
+            levelManager.SetItems(itemData);
+        }
+
+        sceneManager.SwitchScene(scene);
+    });
+
     $('.action-button').on('click', function()
     {
         switch($(this).data("action"))
