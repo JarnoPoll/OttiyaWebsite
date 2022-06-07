@@ -45,9 +45,7 @@
             <h2 id="chapter-selection">Chapters</h2>
         </div>
         <div id="chapters">
-        <image id="chapter1" class="navigation-button" data-scene="level-overview" src="../assets/miscellaneous/Chapter card - chapter 1 selected.png"></image>
-        <image id="chapter2" class="navigation-button" src="../assets/miscellaneous/Chapter card - chapter 2 selected.png"></image>
-        <image id="chapter3" class="navigation-button" src="../assets/miscellaneous/Chapter card - chapter 3.png"></image>
+            <image class="chapterTemplate navigation-button" data-scene="level-overview" src=""></image>
         </div>
         <div id="Otto">
             <image class="Otto-chapterpose" src="../assets/miscellaneous/Otto - chapter pose.png"></image>
@@ -70,23 +68,25 @@
         <div id="chapter name">
             <h2 class="chapter-name">Chapter 1</h2>
         </div>
-
-        <div id="shellcounter-level1">
-            <img id="grayshell1" class="grayshell" src="assets/levels/Level_Shell_Gray.png">
-            <img id="grayshell1" class="grayshell" src="assets/levels/Level_Shell_Gray.png">
-            <img id="grayshell1" class="grayshell" src="assets/levels/Level_Shell_Gray.png">
+        <div class="grid-levels">
+            <div class="levelHolder">
+                <div class="levelTemplate"  data-level="">
+                    <div class="levelTemplate-shells ">
+                        <img class="levelTemplate-shell" src="">
+                        <img class="levelTemplate-shell" src="">
+                        <img class="levelTemplate-shell" src="">
+                    </div>
+                    <img class="levelTemplate-button" src="../assets/miscellaneous/level_overview/level_unlocked.png"></img>
+                    <p></p>
+                </div>
+            </div>
         </div>
-        <div id="map-level-selectors">
-            <img class="level-buttons" src="../assets/miscellaneous/Level 1.png" data-scene="level" data-level="1"></img>
-            <img class="level-buttons" src="../assets/miscellaneous/Level 2.png" data-scene="level" data-level="2"></button>
-        </div>
-
         <div id="Otto">
             <image class="Otto-levelpose" src="../assets/miscellaneous/Otto - chapter pose.png"></image>
         </div>
 
         <div id="Play-button">
-            <image class="Play-levels" src="../assets/miscellaneous/Play button.png"></image>
+            <image class="level-buttons Play-levels" src="../assets/miscellaneous/Play button.png" data-level="1" data-scene="level"></image>
         </div>
 
         <div id="Settings-button">
@@ -114,11 +114,12 @@
                 <image class="obstacle" src="../assets/levels/Ground_Block_Chapter_1.png"></image>
                 <image class="obstacle" src="../assets/levels/Ground_Block_Chapter_1.png"></image>
                 <image class="obstacle" src="../assets/levels/Ground_Block_Chapter_1.png"></image>
+                <image class="obstacle" src="../assets/levels/Ground_Block_Chapter_1.png"></image>
                 <image class="ladder" src="assets/miscellaneous/ladder.png"></image>
                 <image class="ladder" src="assets/miscellaneous/ladder.png"></image>
-                <image class="shell" src="assets/levels/Level_Shell_Color.png"></image>
-                <image class="shell" src="assets/levels/Level_Shell_Color.png"></image>
-                <image class="shell" src="assets/levels/Level_Shell_Color.png"></image>
+                <image class="shell" src="assets/levels/Level_Shell_Color.png" data-position=""></image>
+                <image class="shell" src="assets/levels/Level_Shell_Color.png" data-position=""></image>
+                <image class="shell" src="assets/levels/Level_Shell_Color.png" data-position=""></image>
             </div>
             <div id="Ground">
 

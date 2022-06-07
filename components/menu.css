@@ -152,7 +152,7 @@
 .Play-levels
 {
     position: relative; 
-    bottom: 98px;
+    bottom: 140px;
     right: -484px;
 }
 
@@ -168,14 +168,6 @@
     position: relative;
     top: 177px;
     left: -524px;
-}
-
-.level-buttons
-{
-    margin: 15px;
-    padding-top: 64px;
-    height: 170px;  
-    width: 170px;
 }
 
 .scene #shellcounter-level1

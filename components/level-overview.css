@@ -29,6 +29,62 @@
     left: 117px;
     font-size: large;
 }
+
+.levelHolder {
+    position: relative;
+    width: 100%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    transition: all 0.2s;
+    transform: scale(0.98);
+    will-change: transform;
+    user-select: none;
+    cursor: pointer;
+}
+
+.levelHolder.active {
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
+    transform: scale(1);
+  }
+
+.levelTemplate {
+    display: inline-block;
+    margin: 2em 1em;
+    overflow: hidden;
+    height: 300px;
+}
+
+.levelTemplate p{
+    font-size: 180px;
+    position: relative;
+    color: white;
+    top: -350px;
+    text-align: center;
+    font-family: 'Grandstander', serif;
+    margin-bottom: 300px;
+}
+
+.levelTemplate-button{
+    background-size: cover;
+    width: 200px;
+    height: 200px;
+}
+
+.levelHolder::-webkit-scrollbar {
+    display: none;
+  }
+.grid-levels{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    color: lighten(gray, 25%);
+    background-color: lighten(skyblue, 60%);
+    grid-area: main;
+    padding: 0;
+}
+
 /*
 .scene#level-overview #map-level-selectors
 {

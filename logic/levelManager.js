@@ -230,7 +230,29 @@ export class LevelManager
                             case 1: 
                                 if((index + localData.playerPosition.x) < tempArray.length && result[vertical - localData.playerPosition.y][index + localData.playerPosition.x] == 2)
                                 {
+                                    
                                     succes = false;
+                                }
+                                else((index + localData.playerPosition.x) < tempArray.length && result[vertical - localData.playerPosition.y][index + localData.playerPosition.x] == 3)
+                                {
+
+                                    console.log("Collect Shell");
+                                    var shells = $(localData.items.children).find(".shell");
+                                    
+                                    for (let i = 0; i < shells.length; i++) {
+                                        const shell = shells[i];
+                                        var positionRaw = $(shell).attr("data-position");
+                                        var position = positionRaw.split(',')
+                                        if(position.length > 0)
+                                        {
+                                            if(vertical == position[0] && index == (position[1] - 1))
+                                            {
+                                                $(shell).hide();
+                                                $(localData.shells[0]).attr("src", "assets/levels/Level_Shell_Color.png")
+                                            }
+                                        }
+                                        console.log(position);
+                                    }
                                 }
                                 break;
                             case 2: 
@@ -289,7 +311,8 @@ export class LevelManager
                         }
                         if(succes)
                         {
-                            //localData.player.style.transform = `translate(${(index + localData.playerPosition.x) * localData.stepSizeHorizontal}px, ${(3 - (vertical - localData.playerPosition.y)) * -localData.stepSizeVertical}px) scale(1)`;
+                            localData.player.style.transform = `translate(${(index + localData.playerPosition.x) * localData.stepSizeHorizontal}px, ${(3 - (vertical - localData.playerPosition.y)) * -localData.stepSizeVertical}px) scale(1)`;
+
                         }
                         return true;
                     }
@@ -391,6 +414,7 @@ export class LevelManager
                             //shell
                             var item = $(localData.items).filter('.shell')[localData.shellCount];
                             console.log(item);
+                            $(item).attr("data-position", `${vertical},${index}`);
                             item.style.transform = `translate(${index * localData.stepSizeHorizontal}px, ${((3 - vertical) + 1) * -localData.stepSizeVertical}px) scale(1)`;
                             $(item).show();
                             var shell = $(localData.shells)[localData.shellCount];
@@ -419,8 +443,9 @@ export class LevelManager
     
         return tempElement;
     }
-    
 }
+
+
 
 var basePath = "./assets/levels/";
 

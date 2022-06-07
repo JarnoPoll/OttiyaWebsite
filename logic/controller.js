@@ -1,4 +1,4 @@
-import {SceneManager} from './general.js';
+import {SceneManager} from './sceneManager.js';
 import {LevelManager} from './levelManager.js';
 
 
@@ -31,8 +31,17 @@ $(document).ready(function()
 
     $('.level-buttons').on("click", function()
     {
-        var scene = $(this).data("scene");
-        
+        if(selectedLevel != null)
+        {
+            var level = $(selectedLevel).data("level");
+
+            var itemData = sceneManager.LoadLevel(level);
+            levelManager.ResetItems($("#item-holder img"));
+            levelManager.SetItems(itemData);
+
+            sceneManager.SwitchScene("level");
+        }
+        /*
         if(scene == "level")
         {
             console.log(+$(this).data('level'));
@@ -40,8 +49,9 @@ $(document).ready(function()
             levelManager.ResetItems($("#item-holder img"));
             levelManager.SetItems(itemData);
         }
-
         sceneManager.SwitchScene(scene);
+        
+        */
     });
 
     $('.action-button').on('click', function()
@@ -50,6 +60,7 @@ $(document).ready(function()
         {
             case "play":
                 levelManager.PressedPlay($('#Taskbar'));
+                console.log(document.cookie);
                 break;
             case "reset":
                 var taskbar = document.getElementById("Taskbar");
@@ -57,10 +68,20 @@ $(document).ready(function()
                 var blocks = $('#Taskbar il.action-button')
                 levelManager.Reset(taskbar, blocks, character);
                 break;
-            case "codeblock":
+            case "level":
                     //var duplicate = levelManager.TransferCodeBlockToTaskbar(this.cloneNode());
                     //$('#Taskbar').append(duplicate);
-                    
+                    console.log("Hello");
+                    if(selectedLevel != null)
+                    {
+                        var level = $(selectedLevel).data("level");
+            
+                        var itemData = sceneManager.LoadLevel(level);
+                        levelManager.ResetItems($("#item-holder img"));
+                        levelManager.SetItems(itemData);
+            
+                        sceneManager.SwitchScene(level);
+                    }
                 break;
             case "category":
                 console.log("Attempting to set category to: " + $(this).data("category"));
@@ -80,7 +101,7 @@ $(document).ready(function()
         mc.on("pan", handleDrag);
         mc.on("press", handlePressed);
     }
-    
+    sceneManager.LoadChapters(document.getElementsByClassName('chapterTemplate'), document.getElementsByClassName('levelTemplate'));    
 });
 
 
@@ -101,8 +122,8 @@ function handlePressed(ev)
     placeholders[0].parentNode.insertBefore(duplicate, placeholders[0].nextSibling);
     $(placeholders[0]).hide();
 }
-function handleDrag(ev) {
 
+function handleDrag(ev) {
     var elem = ev.target;
     
     if ( ! isDragging ) {
@@ -232,3 +253,54 @@ function handleDrag(ev) {
         }
     }
 }
+
+const slider = document.querySelector('.levelHolder');
+var isDown = false;
+var moved = false;
+var startX;
+var scrollLeft;
+var selectedLevel;
+
+slider.addEventListener('mousedown', (e) => {
+  isDown = true;
+  startX = e.pageX - slider.offsetLeft;
+  scrollLeft = slider.scrollLeft;
+});
+slider.addEventListener('mouseleave', () => {
+  isDown = false;
+  moved = false;
+  slider.classList.remove('active');
+});
+slider.addEventListener('mouseup', () => {
+  isDown = false;
+  if(!moved)
+  {
+    var levelElement = $(document.querySelectorAll( ".levelTemplate:hover" ));
+    if(levelElement != null && levelElement != selectedLevel)
+    {
+        $(selectedLevel).find('img:last').attr("src", `../assets/miscellaneous/level_overview/level_unlocked.png`);
+        selectedLevel = levelElement;
+        $(levelElement).find('img:last').attr("src", `../assets/miscellaneous/level_overview/level_selected.png`);
+    }
+    
+  }
+  else
+  {
+    moved = false;
+  }
+  slider.classList.remove('active');
+});
+slider.addEventListener('mousemove', (e) => {
+  if(!isDown) return;
+  
+  e.preventDefault();
+  const x = e.pageX - slider.offsetLeft;
+  const walk = (x - startX) * 3; //scroll-fast
+  slider.scrollLeft = scrollLeft - walk;
+  if(!moved && Math.abs(walk) > 40)
+  {
+    slider.classList.add('active');
+    moved = true;
+  }
+  console.log(walk);
+});
