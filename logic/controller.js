@@ -292,6 +292,8 @@ if(!levelSlider.moved)
         {
             levelSlider.selected[0].classList.remove('selected');
             levelSlider.selected = null;
+            levelSlider.selected = levelElement;
+            levelSlider.selected[0].classList.add('selected');
         }
         else if(!$(levelElement).hasClass('locked'))
         {
@@ -346,7 +348,9 @@ chapterSlider.slider.addEventListener('mouseup', () => {
             {
                 var chapterName = $(chapterSlider.selected).attr("data-chapter");
                 chapterSlider.selected[0].classList.remove('selected');
-                chapterSlider.selected = null;
+                chapterSlider.selected = chapterElement;
+                chapterSlider.selected[0].classList.add('selected');
+                chapterName = $(chapterSlider.selected).attr("data-chapter");
             }
             else if(!$(chapterElement).hasClass('locked'))
             {
