@@ -33,11 +33,37 @@
         },
         {
           "starAmount": "3"
+        }
+      ]
+    },
+    {
+      "name": "2",
+      "levels": 
+      [
+        {
+          "starAmount": "1"
         },
         {
-          "starAmount": "3"
+          "starAmount": "1"
+        },
+        {
+          "starAmount": "2"
         }
-        
+      ]
+    },
+    {
+      "name": "3",
+      "levels": 
+      [
+        {
+          "starAmount": "1"
+        },
+        {
+          "starAmount": "1"
+        },
+        {
+          "starAmount": "2"
+        }
       ]
     }
   ]

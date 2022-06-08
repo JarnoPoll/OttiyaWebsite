@@ -3,6 +3,8 @@
 @import "components/menu.css";
 @import "components/level-overview.css";
 @import "components/level.css";
+@import "components/pause.css";
+@import "components/chapter-overview.css";
 @import url('https://fonts.googleapis.com/css2?family=Crete+Round&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Grandstander:wght@900&display=swap');
 

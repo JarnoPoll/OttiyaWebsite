@@ -12,6 +12,7 @@ class LevelData
     stepSizeHorizontal = 149;
     stepSizeVertical = 84;
     actionsRemaining = 0;
+    isPaused = false;
     actionIntervalID;
     playerPosition = {x: 0, y: 0, size: 1, currentAction: 0};
 }
@@ -42,7 +43,7 @@ export class LevelManager
     Reset(taskbar, blocks, character, shells)
     {
         this.levelData.playerPosition = {x: 0, y: 0, size: 1};
-
+        clearInterval(this.levelData.actionIntervalID);
         for (let index = 0; index < blocks.length; index++) 
         {
             const element = blocks[index];
@@ -54,6 +55,22 @@ export class LevelManager
             const element = taskbar.children[index];
             
             if(!$(element).is(':visible'))
+            {
+                $(element).show();
+            }
+        }
+
+        for (let index = 0; index < this.levelData.shells.length; index++) {
+            const element = this.levelData.shells[index];
+            $(element).attr("src", "assets/levels/Level_Shell_Gray.png");
+        }
+
+        var pickups = $(this.levelData.items).filter(".shell");
+
+        for (let index = 0; index < pickups.length; index++) {
+            const element = pickups[index];
+            var positionRaw = $(element).attr("data-position");
+            if(positionRaw != "")
             {
                 $(element).show();
             }
@@ -87,12 +104,11 @@ export class LevelManager
 
     PressedPlay()
     {
-        var location = 0;
         var taskbarChildren = document.getElementById("Taskbar").children;
         var actions = $(taskbarChildren).filter(".CodeBlock");
 
         this.levelData.actionsRemaining = actions.length;
-        
+        this.levelData.shellCount = 0;
         this.levelData.actionIntervalID = setInterval(this.CheckAction.bind(this), 1000, actions)
         //Read TaskBar
         /*
@@ -202,11 +218,6 @@ export class LevelManager
         */
     }
 
-    CheckItems()
-    {
-
-    }
-
     MovePlayer()
     {
         var localData = this.levelData;
@@ -237,7 +248,8 @@ export class LevelManager
                                 {
 
                                     console.log("Collect Shell");
-                                    var shells = $(localData.items.children).find(".shell");
+                                    
+                                    var shells = $(localData.items).filter(".shell");
                                     
                                     for (let i = 0; i < shells.length; i++) {
                                         const shell = shells[i];
@@ -245,14 +257,18 @@ export class LevelManager
                                         var position = positionRaw.split(',')
                                         if(position.length > 0)
                                         {
-                                            if(vertical == position[0] && index == (position[1] - 1))
+                                            if(vertical == position[0] && index + localData.playerPosition.x == (position[1]))
                                             {
                                                 $(shell).hide();
-                                                $(localData.shells[0]).attr("src", "assets/levels/Level_Shell_Color.png")
+                                                console.log(localData.shellCount);
+                                                $(localData.shells[localData.shellCount]).attr("src", "assets/levels/Level_Shell_Color.png")
+                                                localData.shellCount++;
                                             }
                                         }
+                                        console.log(vertical + " " + index);
                                         console.log(position);
                                     }
+                                    
                                 }
                                 break;
                             case 2: 
@@ -323,8 +339,34 @@ export class LevelManager
         });
     }
 
+    TogglePause()
+    {
+        console.log("ActionsRemaining on Pause: " + this.levelData.actionsRemaining);
+        if(this.levelData.isPaused)
+        {
+            if(this.levelData.actionsRemaining > 0)
+            {
+                var taskbarChildren = document.getElementById("Taskbar").children;
+                var actions = $(taskbarChildren).filter(".CodeBlock");
+                this.levelData.actionIntervalID = setInterval(this.CheckAction.bind(this), 1000, actions)
+                this.levelData.isPaused = false;
+            }
+            else
+            {
+                this.levelData.isPaused = false;
+            }
+        }
+        else
+        {
+            console.log("IsPausing");
+            this.levelData.isPaused = true;
+            clearInterval(this.levelData.actionIntervalID);
+        }
+    }
+
     CheckAction(actions)
     {
+        console.log("Actions Length: " + actions.length + " Actions Remaining: " + this.levelData.actionsRemaining);
         var task = actions[actions.length - this.levelData.actionsRemaining];
 
         task.classList.forEach(className => {
@@ -362,7 +404,6 @@ export class LevelManager
         var intervalID = this.levelData.actionIntervalID;
         result.then(function(result)
         {
-            console.log(result);
             if(result == false)
             {
                 clearInterval(intervalID);
@@ -389,6 +430,16 @@ export class LevelManager
     {
         this.levelData.itemData = itemData;
         var localData = this.levelData;
+        localData.shellCount = 0;
+        localData.obstacleCount = 0;
+        localData.ladderCount = 0;
+
+        for (let index = 0; index < localData.shells.length; index++) {
+            const element = localData.shells[index];
+            $(element).attr("src", "assets/levels/Level_Shell_Gray.png")
+            $(element).hide();
+        }
+
         itemData.then(function(result)
         {
             for (let vertical = 0; vertical < result.length; vertical++) 

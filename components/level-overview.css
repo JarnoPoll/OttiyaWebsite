@@ -56,6 +56,10 @@
     height: 300px;
 }
 
+.levelTemplate.selected {
+    height: 360px;
+}
+
 .levelTemplate p{
     font-size: 180px;
     position: relative;

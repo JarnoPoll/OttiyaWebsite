@@ -34,13 +34,13 @@
       "itemsHorizontal": [0,0,0,0,0,0,0,0]
     },
     {
-      "itemsHorizontal": [0,2,2,2,2,2,0,0]
+      "itemsHorizontal": [0,2,2,2,2,2,2,2]
     },
     {
-      "itemsHorizontal": [0,2,2,2,2,2,0,0]
+      "itemsHorizontal": [0,2,2,2,2,2,2,2]
     },
     {
-      "itemsHorizontal": [0,2,3,2,2,2,0,3]
+      "itemsHorizontal": [1,2,2,3,2,2,3,2]
     }
   ],
   "characterFacing": "right"

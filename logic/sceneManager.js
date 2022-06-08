@@ -1,7 +1,13 @@
+class CookieData
+{
+    chapterCompletion = [];
+    levelCompletion = [];
+    starCompletion = [];
+}
 export class SceneManager
 {
     activeScene = "";
-
+    cookieData = new CookieData();
     constructor(startingScene)
     {
         this.activeScene = startingScene;
@@ -41,6 +47,43 @@ export class SceneManager
         return fetch(`./assets/levels/chapterData.json`).then(response => { return response.json(); }).then( data =>
             {
                 var categoriesRaw = "";
+                var completionDataRaw = this.GetCookie("completionData");
+                var completionData;
+                if(completionDataRaw == "")
+                {
+                    console.log("Data is null");
+                    completionData = new CookieData();
+                    completionData.chapterCompletion = [];
+                    for (let index = 0; index < data.chapters.length; index++) 
+                    {
+                        const chapter = data.chapters[index];
+                        var levelArray = [];
+                        var starArray = [];
+                        for (let i = 0; i < chapter.levels.length; i++)
+                        {
+                            levelArray.push(false);
+                            starArray.push(0);
+                        }
+
+                        completionData.chapterCompletion.push(false);
+                        completionData.levelCompletion.push(levelArray);
+                        completionData.starCompletion.push(starArray);
+                    }
+
+                    document.cookie = "completionData=" + JSON.stringify(completionData);
+                    console.log(completionData);
+                }
+                else
+                {
+                    completionData = JSON.parse(completionDataRaw);
+
+
+                    //THIS IS TESTING
+                    console.log(completionData);
+                    completionData.starCompletion[0][0] = 3;
+                    completionData.starCompletion[0][1] = 1;
+                    completionData.levelCompletion[0][0] = true;
+                }
 
                 for (let index = 0; index < data.chapters.length; index++) {
                     const chapter = data.chapters[index];
@@ -49,37 +92,100 @@ export class SceneManager
                     if(index != 0)
                     {
                         var clone = $(chapterTemplate).first().clone(true);
-                        clone.attr("src", `../assets/levels/chapter_${chapter.name}/chapter_backgrounds/chapter_unlocked.png`);
-                        $(chapterTemplate).after(clone);
-                    }
-                    else
-                    {
-                        $(chapterTemplate).attr("src", `../assets/levels/chapter_${chapter.name}/chapter_backgrounds/chapter_unlocked.png`);
-                    }
-
-                    //check completed status using cookies.
-                    for (let i = 0; i < chapter.levels.length; i++) {
-                        const level = chapter.levels[i];
-                        
-                        if(i != 0)
+                        if(completionData.chapterCompletion[index])
                         {
-                            console.log("ONCE");
-                            var clone = $(levelTemplate).first().clone(true);
-                            clone.find('img:last').attr("src", `../assets/miscellaneous/level_overview/level_unlocked.png`);
-                            clone.find('p:last').text(i + 1);
-                            clone.attr("data-level", i + 1);
-                            $(levelTemplate).last().after(clone);
-                            
+                            clone.attr("src", `../assets/levels/chapter_${chapter.name}/chapter_backgrounds/chapter_completed.png`);
+                        }
+                        else if(completionData.chapterCompletion[index - 1])
+                        {
+                            clone.attr("src", `../assets/levels/chapter_${chapter.name}/chapter_backgrounds/chapter_unlocked.png`);
                         }
                         else
                         {
-                            $(levelTemplate).find('img:last').attr("src", `../assets/miscellaneous/level_overview/level_unlocked.png`);
-                            $(levelTemplate).find('p:last').text(i + 1);
-                            $(levelTemplate).attr("data-level", i + 1);
+                            clone.attr("src", `../assets/levels/chapter_${chapter.name}/chapter_backgrounds/chapter_locked.png`);
+                            clone[0].classList.add('locked');
                         }
+                       
+                        clone.attr("data-chapter", (index + 1));
+                        $(chapterTemplate).last().after(clone);
+                        
                     }
+                    else
+                    {
+                        $(chapterTemplate).attr("data-chapter", (index + 1));
+                        if(completionData.chapterCompletion[index])
+                        {
+                            $(chapterTemplate).attr("src", `../assets/levels/chapter_${chapter.name}/chapter_backgrounds/chapter_completed.png`);
+                        }
+                        else
+                        {
+                            $(chapterTemplate).attr("src", `../assets/levels/chapter_${chapter.name}/chapter_backgrounds/chapter_unlocked.png`);
+                        }
+                        
+                    }
+
+                    //check completed status using cookies.
+                    //Create instance for each level.
+
+                    var levelHolder = $(".levelHolder").last();
+
+                    if(index == 0)
+                    {
+                        levelHolder.attr("data-chapter", (index + 1));
+                    }
+                    else
+                    {
+                        var clone = levelHolder[0].cloneNode();
+                        $(clone).attr("data-chapter", (index + 1));
+                        $(levelHolder).last().after(clone);
+                        levelHolder = $(".levelHolder").last();
+                    }
+
+                    for (let i = 0; i < chapter.levels.length; i++) {
+                        const level = chapter.levels[i];
+                        
+                        console.log("Calling");
+                        var clone = $(levelTemplate).first().clone(true);
+                        if(completionData.levelCompletion[index][i])
+                        {
+                            clone.find('img:last').attr("src", `../assets/miscellaneous/level_overview/level_completed.png`);
+                            clone.find('.levelTemplate-shell').attr("src", `../assets/levels/Level_Shell_Color.png`);
+                            //Set max amount of stars.
+                        }
+                        else if(i != 0 && !completionData.levelCompletion[index][i - 1])
+                        {
+                            clone.find('img:last').attr("src", `../assets/miscellaneous/level_overview/level_locked.png`);
+                            clone.find('.levelTemplate-shell').attr("src", `../assets/levels/Level_Shell_Gray.png`);
+                            clone[0].classList.add('locked');
+                        }
+                        else
+                        {
+                            //Set amount of stars equal to completion.
+                            clone.find('img:last').attr("src", `../assets/miscellaneous/level_overview/level_unlocked.png`);
+                            var shells = clone.find('.levelTemplate-shell');
+                            for (let j = 0; j < shells.length; j++) {
+                                const shell = shells[j];
+                                if((completionData.starCompletion[index][i] - 1) >= j)
+                                {
+                                    $(shell).attr("src", `../assets/levels/Level_Shell_Color.png`);
+                                }
+                                else
+                                {
+                                    $(shell).attr("src", `../assets/levels/Level_Shell_Gray.png`);
+                                }
+                            }
+                            
+                        }
+                        //clone.find('img:last').attr("src", `../assets/miscellaneous/level_overview/level_unlocked.png`);
+                        clone.find('p:last').text(i + 1);
+                        clone.attr("data-level", index + 1);
+                        levelHolder.append(clone);
+                    }
+
+                    $(levelHolder).hide();
                 }
 
+                $(levelTemplate).first().hide();
             });
     }
 
@@ -145,4 +251,20 @@ export class SceneManager
             return  itemLocations;
         });
     }
+
+    GetCookie(cname) {
+        let name = cname + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for(let i = 0; i <ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+      }
 }

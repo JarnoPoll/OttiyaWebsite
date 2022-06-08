@@ -1,0 +1,123 @@
+#pause-window
+{
+    background-color:rgba(0, 0, 0, 0.541);
+    max-width: var(--width);
+    max-height: var(--height);
+    width: var(--width);
+    height: var(--height);
+    border-radius: 30px;
+    position: relative;
+    align-content: center;
+    margin-top: calc(-1 * var(--height));
+}
+
+#pause-screen
+{
+    position: absolute;
+    width: 422px;
+    height: 563px;
+    left: 386px;
+    top: 103px;
+    background: #6D59D9;
+    border: 6px solid #F5F5F5;
+    border-radius: 30px;
+}
+
+.pause-text
+{
+    padding-top: 21px;
+    font-family: 'Grandstander';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 65px;
+    line-height: 65px;
+    align-items: center;
+    text-align: center;
+    color: #FFFFFF;
+    text-shadow: 0px 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+#pause-shells
+{
+    padding-left: 49px;
+    padding-top: 10px;
+}
+
+.pause-shell[data-position="left"]
+{
+    width: 90.49px;
+    height: 77.52px;
+    left: 0%;
+    right: 0%;
+    top: 20.27%;
+    bottom: -20.27%;
+    transform: rotate(-10deg);
+}
+
+.pause-shell[data-position="center"]
+{
+    width: 114.18px;
+    height: 97.81px;
+    left: 0%;
+    right: 0%;
+    top: 0%;
+    bottom: 0%;
+    margin-left: 10px;
+}
+
+.pause-shell[data-position="right"]
+{
+    width: 90.49px;
+    height: 77.52px;
+    left: 14.88%;
+    right: -14.88%;
+    top: 0%;
+    bottom: 0%;
+    margin-left: 10px;
+    transform: rotate(10deg);
+    
+}
+
+#pause-buttons
+{
+    padding-top: 105px;
+    padding-left: 45px;
+}
+
+.Home
+{
+    width: 100px;
+    height: 100px;
+    width: 90px;
+    height: 90px;
+    left: 426px;
+    top: 556px;
+    filter: drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.5));
+}
+
+.Play
+{
+    width: 140px;
+    height: 140px;
+    left: 0.7%;
+    right: 0.7%;
+    top: 0.7%;
+    bottom: 0.7%;
+}
+
+.Replay
+{
+    width: 90px;
+    height: 90px;
+    width: 90px;
+    height: 90px;
+    left: 677px;
+    top: 556px;
+}
+
+.Otto-pausepose
+{
+    position: relative;
+    top: 637px;
+    left: 100px;
+}

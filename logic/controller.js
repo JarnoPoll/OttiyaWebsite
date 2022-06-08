@@ -25,33 +25,37 @@ $(document).ready(function()
             levelManager.ResetItems($("#item-holder img"));
             levelManager.SetItems(itemData);
         }
+        else if(scene == "level-overview")
+        {
+            if(chapterSlider.selected == null)
+            {
+                return;
+            }
+
+            var chapter = $(chapterSlider.selected).data("chapter");
+            var holders = $(".levelHolder");
+            console.log(holders);
+            $(holders).hide();
+            var levelHolder = $(".levelHolder[data-chapter='" + chapter + "']").first();
+            $(levelHolder).show();
+
+        }
 
         sceneManager.SwitchScene(scene);
     });
 
     $('.level-buttons').on("click", function()
     {
-        if(selectedLevel != null)
+        if(levelSlider.selected != null)
         {
-            var level = $(selectedLevel).data("level");
-
+            var level = $(levelSlider.selected).data("level");
+            var scene = $(this).data("scene");
             var itemData = sceneManager.LoadLevel(level);
             levelManager.ResetItems($("#item-holder img"));
             levelManager.SetItems(itemData);
 
-            sceneManager.SwitchScene("level");
+            sceneManager.SwitchScene(scene);
         }
-        /*
-        if(scene == "level")
-        {
-            console.log(+$(this).data('level'));
-            var itemData = sceneManager.LoadLevel($(this).data('level'));
-            levelManager.ResetItems($("#item-holder img"));
-            levelManager.SetItems(itemData);
-        }
-        sceneManager.SwitchScene(scene);
-        
-        */
     });
 
     $('.action-button').on('click', function()
@@ -68,25 +72,22 @@ $(document).ready(function()
                 var blocks = $('#Taskbar il.action-button')
                 levelManager.Reset(taskbar, blocks, character);
                 break;
-            case "level":
-                    //var duplicate = levelManager.TransferCodeBlockToTaskbar(this.cloneNode());
-                    //$('#Taskbar').append(duplicate);
-                    console.log("Hello");
-                    if(selectedLevel != null)
-                    {
-                        var level = $(selectedLevel).data("level");
-            
-                        var itemData = sceneManager.LoadLevel(level);
-                        levelManager.ResetItems($("#item-holder img"));
-                        levelManager.SetItems(itemData);
-            
-                        sceneManager.SwitchScene(level);
-                    }
-                break;
             case "category":
                 console.log("Attempting to set category to: " + $(this).data("category"));
                 levelManager.ChangeCategory($(this).data("category"));
                 break;
+            case "pause":
+                var pauseWindow = document.getElementById("pause-window");
+                levelManager.TogglePause();
+                if($(pauseWindow).is(":visible"))
+                {
+                    $(pauseWindow).hide();
+                }
+                else
+                {
+                    $(pauseWindow).show();
+                }
+                break;    
         }
     });
 
@@ -101,7 +102,7 @@ $(document).ready(function()
         mc.on("pan", handleDrag);
         mc.on("press", handlePressed);
     }
-    sceneManager.LoadChapters(document.getElementsByClassName('chapterTemplate'), document.getElementsByClassName('levelTemplate'));    
+    sceneManager.LoadChapters(document.getElementsByClassName('chapter-template'), document.getElementsByClassName('levelTemplate'));    
 });
 
 
@@ -254,53 +255,125 @@ function handleDrag(ev) {
     }
 }
 
-const slider = document.querySelector('.levelHolder');
-var isDown = false;
-var moved = false;
-var startX;
-var scrollLeft;
-var selectedLevel;
 
-slider.addEventListener('mousedown', (e) => {
-  isDown = true;
-  startX = e.pageX - slider.offsetLeft;
-  scrollLeft = slider.scrollLeft;
+
+
+class SliderData
+{
+    slider;
+    isDown = false;
+    moved = false;
+    startX;
+    scrollLeft;
+    selected;
+}
+
+var levelSlider = new SliderData();
+levelSlider.slider = document.querySelector('.levelHolder');
+
+levelSlider.slider.addEventListener('mousedown', (e) => {
+    levelSlider.isDown = true;
+    levelSlider.startX = e.pageX - levelSlider.slider.offsetLeft;
+    levelSlider.scrollLeft = levelSlider.slider.scrollLeft;
 });
-slider.addEventListener('mouseleave', () => {
-  isDown = false;
-  moved = false;
-  slider.classList.remove('active');
+levelSlider.slider.addEventListener('mouseleave', () => {
+    levelSlider.isDown = false;
+    levelSlider.moved = false;
+    levelSlider.slider.classList.remove('active');
 });
-slider.addEventListener('mouseup', () => {
-  isDown = false;
-  if(!moved)
-  {
+levelSlider.slider.addEventListener('mouseup', () => {
+    levelSlider.isDown = false;
+if(!levelSlider.moved)
+{
     var levelElement = $(document.querySelectorAll( ".levelTemplate:hover" ));
-    if(levelElement != null && levelElement != selectedLevel)
+    if(levelElement.length != 0 && levelElement != levelSlider.selected)
     {
-        $(selectedLevel).find('img:last').attr("src", `../assets/miscellaneous/level_overview/level_unlocked.png`);
-        selectedLevel = levelElement;
-        $(levelElement).find('img:last').attr("src", `../assets/miscellaneous/level_overview/level_selected.png`);
+        if(levelSlider.selected != null)
+        {
+            levelSlider.selected[0].classList.remove('selected');
+            levelSlider.selected = null;
+        }
+        else if(!$(levelElement).hasClass('locked'))
+        {
+            levelSlider.selected = levelElement;
+            levelSlider.selected[0].classList.add('selected');
+        }
     }
     
-  }
-  else
-  {
-    moved = false;
-  }
-  slider.classList.remove('active');
+}
+else
+{
+    levelSlider.moved = false;
+}
+levelSlider.slider.classList.remove('active');
 });
-slider.addEventListener('mousemove', (e) => {
-  if(!isDown) return;
-  
-  e.preventDefault();
-  const x = e.pageX - slider.offsetLeft;
-  const walk = (x - startX) * 3; //scroll-fast
-  slider.scrollLeft = scrollLeft - walk;
-  if(!moved && Math.abs(walk) > 40)
-  {
-    slider.classList.add('active');
-    moved = true;
-  }
-  console.log(walk);
+levelSlider.slider.addEventListener('mousemove', (e) => {
+if(!levelSlider.isDown) return;
+
+e.preventDefault();
+const x = e.pageX - levelSlider.slider.offsetLeft;
+const walk = (x - levelSlider.startX) * 3; //scroll-fast
+levelSlider.slider.scrollLeft = levelSlider.scrollLeft - walk;
+if(!levelSlider.moved && Math.abs(walk) > 40)
+{
+    levelSlider.slider.classList.add('active');
+    levelSlider.moved = true;
+}
+});
+
+
+var chapterSlider = new SliderData();
+chapterSlider.slider = document.querySelector('#chapter-holder');
+
+chapterSlider.slider.addEventListener('mousedown', (e) => {
+    chapterSlider.isDown = true;
+    chapterSlider.startX = e.pageX - chapterSlider.slider.offsetLeft;
+    chapterSlider.scrollLeft = chapterSlider.slider.scrollLeft;
+});
+chapterSlider.slider.addEventListener('mouseleave', () => {
+    chapterSlider.isDown = false;
+    chapterSlider.moved = false;
+    chapterSlider.slider.classList.remove('active');
+});
+chapterSlider.slider.addEventListener('mouseup', () => {
+    chapterSlider.isDown = false;
+    if(!chapterSlider.moved)
+    {
+        var chapterElement = $(document.querySelectorAll( ".chapter-template:hover" ));
+        if(chapterElement.length != 0 && chapterElement != chapterSlider.selected)
+        {
+            if(chapterSlider.selected != null)
+            {
+                var chapterName = $(chapterSlider.selected).attr("data-chapter");
+                chapterSlider.selected[0].classList.remove('selected');
+                chapterSlider.selected = null;
+            }
+            else if(!$(chapterElement).hasClass('locked'))
+            {
+                chapterSlider.selected = chapterElement;
+                chapterSlider.selected[0].classList.add('selected');
+                chapterName = $(chapterSlider.selected).attr("data-chapter");
+            }
+        }
+        
+    }
+    else
+    {
+        chapterSlider.moved = false;
+    }
+    chapterSlider.slider.classList.remove('active');
+});
+chapterSlider.slider.addEventListener('mousemove', (e) => {
+if(!chapterSlider.isDown) return;
+
+e.preventDefault();
+const x = e.pageX - chapterSlider.slider.offsetLeft;
+const walk = (x - chapterSlider.startX) * 3; //scroll-fast
+chapterSlider.slider.scrollLeft = chapterSlider.scrollLeft - walk;
+if(!chapterSlider.moved && Math.abs(walk) > 40)
+{
+    chapterSlider.slider.classList.add('active');
+    chapterSlider.moved = true;
+}
+console.log(walk);
 });

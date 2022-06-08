@@ -44,14 +44,16 @@
         <div id="chapter">
             <h2 id="chapter-selection">Chapters</h2>
         </div>
-        <div id="chapters">
-            <image class="chapterTemplate navigation-button" data-scene="level-overview" src=""></image>
+        <div id="grid-chapters">
+            <div id="chapter-holder">
+                <image class="chapter-template" data-chapter="" src=""></image>
+            </div>
         </div>
         <div id="Otto">
             <image class="Otto-chapterpose" src="../assets/miscellaneous/Otto - chapter pose.png"></image>
         </div>
         <div id="Play-button">
-            <image class="Play-chapters" src="../assets/miscellaneous/Play button.png"></image>
+            <image class="Play-chapters navigation-button" data-scene="level-overview" src="../assets/miscellaneous/Play button.png"></image>
         </div>
         <div id="Settings-button">
             <image class="Settings-chapters" src="../assets/miscellaneous/Settings button.png"></image>
@@ -69,7 +71,7 @@
             <h2 class="chapter-name">Chapter 1</h2>
         </div>
         <div class="grid-levels">
-            <div class="levelHolder">
+            <div class="levelHolder" data-chapter="1">
                 <div class="levelTemplate"  data-level="">
                     <div class="levelTemplate-shells ">
                         <img class="levelTemplate-shell" src="">
@@ -104,6 +106,7 @@
                 </div>
                 <div id="playfield-buttons">
                     <button class="action-button" data-action="reset">Reset</button>
+                    <button class="action-button" data-action="pause">Pause</button>
                     <button class="action-button navigation-button" data-action="reset" data-scene="level-overview">Menu</button>
                 </div>
             </div>
@@ -171,6 +174,22 @@
                 <il class="placeholder-codeblock" data-status="disabled"></il>
             </ol>
             <button class="action-button" data-action="play">Play</button>
+        </div>
+    </div>
+    <div id="pause-window" style="display: none;">
+        <image class="Otto-pausepose" src="../assets/miscellaneous/Otto - chapter pose.png"></image>
+        <div id="pause-screen" class="action-button" data-action="pause">
+            <h1 class="pause-text">Pause</h1>
+            <div id="pause-shells">
+                <img class="pause-shell" data-position="left" src="assets/levels/Level_Shell_Gray.png">
+                <img class="pause-shell" data-position="center" src="assets/levels/Level_Shell_Gray.png">
+                <img class="pause-shell" data-position="right" src="assets/levels/Level_Shell_Gray.png">
+            </div>
+            <div id="pause-buttons">
+                <img class="Home" src="assets/miscellaneous/Home button.png">
+                <img class="Play" src="assets/miscellaneous/Playlevel button.png">
+                <img class="Replay" src="assets/miscellaneous/Replay button.png">
+            </div>
         </div>
     </div>
 </div>
