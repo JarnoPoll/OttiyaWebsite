@@ -14,6 +14,10 @@
 #results-screen
 {
     position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     width: 422px;
     height: 563px;
     left: 386px;
@@ -21,6 +25,11 @@
     background: #6D59D9;
     border: 6px solid #F5F5F5;
     border-radius: 30px;
+}
+
+#results-screen div
+{
+    margin-top: 40px;
 }
 
 .results-text
@@ -71,12 +80,6 @@
     margin-top: 30px;
     transform: rotate(10deg);
     
-}
-
-#pause-buttons
-{
-    padding-top: 105px;
-    padding-left: 45px;
 }
 
 .Home

@@ -10,14 +10,17 @@ $(document).ready(function()
     var currentCategoryButton = $(`#Category img[data-category=movement]`);
 
     
+    console.log(document.cookie);
     currentCategoryButton[0].style.setProperty("transform", "scale(1.3)");
 
+    console.log(document.cookie);
     $('#Taskbar').sortable(
         {
             'axis': 'x',
             items: "il:not(.placeholder-codeblock)"
         }).disableSelection();
 
+        console.log(document.cookie);
     $('.navigation-button').on("click", function()
     {
         var scene = $(this).data("scene");
@@ -30,6 +33,7 @@ $(document).ready(function()
             levelManager.SetItems(itemData);
         }
         else if(scene == "level-overview")
+
         {
             if(chapterSlider.selected == null)
             {
@@ -48,6 +52,7 @@ $(document).ready(function()
         sceneManager.SwitchScene(scene);
     });
 
+    console.log(document.cookie);
     $('.level-buttons').on("click", function()
     {
         if(levelSlider.selected != null)
@@ -57,25 +62,30 @@ $(document).ready(function()
             var scene = $(this).data("scene");
             var itemData = sceneManager.LoadLevel(chapter, level);
             levelManager.ResetItems($("#item-holder img"));
+            
+            console.log(itemData);
             levelManager.SetItems(itemData, chapter, level);
 
             sceneManager.SwitchScene(scene);
         }
     });
 
+    console.log(document.cookie);
     $('.action-button').on('click', function()
     {
         switch($(this).data("action"))
         {
             case "play":
                 levelManager.PressedPlay($('#Taskbar'));
-                console.log(document.cookie);
                 break;
             case "reset":
                 var taskbar = document.getElementById("Taskbar");
                 var character = document.getElementById("character");
                 var blocks = $('#Taskbar il.action-button')
                 levelManager.Reset(taskbar, blocks, character);
+                var resultWindow = document.getElementById("results-window");
+                $(resultWindow).hide();
+
                 break;
             case "category":
                 console.log("Attempting to set category to: " + $(this).data("category"));
@@ -116,6 +126,7 @@ $(document).ready(function()
         }
     });
 
+    console.log(document.cookie);
     var elements = document.getElementsByClassName("CodeBlock");
 
     for (let element of elements) 
@@ -127,6 +138,7 @@ $(document).ready(function()
         mc.on("pan", handleDrag);
         mc.on("press", handlePressed);
     }
+    
     sceneManager.LoadChapters(document.getElementsByClassName('chapter-template'), document.getElementsByClassName('levelTemplate'));    
 });
 

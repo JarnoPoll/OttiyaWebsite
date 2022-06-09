@@ -14,7 +14,9 @@ class LevelData
     actionsRemaining = 0;
     isPaused = false;
     actionIntervalID;
-    playerPosition = {x: 0, y: 0, size: 1, currentAction: 0};
+    levelMap = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]];
+    playerPosition = {x: 0, y: 0, scale: 1, direction: 0};
+    playerStartingPosition = {x: 0, y: 0, scale: 1, direction: 0};
     chapterNumber;
     levelNumber;
 }
@@ -44,9 +46,11 @@ export class LevelManager
 
     Reset(taskbar, blocks, character, shells)
     {
-        this.levelData.playerPosition = {x: 0, y: 0, size: 1};
+        this.levelData.player.style.transform = `translate(${this.levelData.playerStartingPosition.x * this.levelData.stepSizeHorizontal}px, ${(3 - this.levelData.playerStartingPosition.y) * -this.levelData.stepSizeVertical}px) scale(${this.levelData.playerStartingPosition.scale}) scaleX(${this.levelData.playerStartingPosition.direction})`;
         this.collectedShells = 0;
+
         clearInterval(this.levelData.actionIntervalID);
+
         for (let index = 0; index < blocks.length; index++) 
         {
             const element = blocks[index];
@@ -79,7 +83,23 @@ export class LevelManager
             }
         }
 
-        this.MovePlayer();
+        var resultWindow = document.getElementById("results-window");
+        var resultShells = $(resultWindow).find(".results-shell");
+        var resultText = $(resultWindow).find(".results-text").first();
+        var pauseButtons = $(resultWindow).find("#pause-buttons");
+        var completedButtons = $(resultWindow).find("#completed-buttons");
+        var failedButtons = $(resultWindow).find("#failed-buttons");
+
+        for (let index = 0; index < resultShells.length; index++) 
+        {
+            $(resultShells[index]).attr("src", "assets/levels/Level_Shell_Gray.png");
+        }
+
+        resultText.text("Pause");
+
+        pauseButtons.show();
+        completedButtons.hide();
+        failedButtons.hide();
     }
     
     ChangeCategory(category)
@@ -118,115 +138,8 @@ export class LevelManager
 
         this.levelData.actionsRemaining = actions.length;
         this.levelData.shellCount = 0;
-        this.levelData.actionIntervalID = setInterval(this.CheckAction.bind(this), 1000, actions)
-    }
-
-    MovePlayer()
-    {
-        var localData = this.levelData;
-        var succes = true;
-
-        return localData.itemData.then(function(result)
-        {
-            for (let vertical = 0; vertical < result.length; vertical++) 
-            {
-                const tempArray = result[vertical];
-                
-                tempArray.forEach(function(value, index)
-                {
-                    if(value == 1)
-                    {
-                        switch(localData.playerPosition.currentAction)
-                        {
-                            case "MovementRight": 
-                                if((index + localData.playerPosition.x) < tempArray.length && result[vertical - localData.playerPosition.y][index + localData.playerPosition.x] == 2)
-                                {
-                                    
-                                    succes = false;
-                                }
-                                else((index + localData.playerPosition.x) < tempArray.length && result[vertical - localData.playerPosition.y][index + localData.playerPosition.x] == 3)
-                                {
-
-                                    console.log("Collect Shell");
-                                    
-                                    var shells = $(localData.items).filter(".shell");
-                                    
-                                    for (let i = 0; i < shells.length; i++) {
-                                        const shell = shells[i];
-                                        var positionRaw = $(shell).attr("data-position");
-                                        var position = positionRaw.split(',')
-                                        if(position.length > 0)
-                                        {
-                                            if(vertical == position[0] && index + localData.playerPosition.x == (position[1]))
-                                            {
-                                                $(shell).hide();
-                                                $(localData.shells[localData.shellCount]).attr("src", "assets/levels/Level_Shell_Color.png")
-                                                $(localData.shells[localData.shellCount]).attr("data-collected", "true")
-                                                localData.shellCount++;
-                                            }
-                                        }
-                                        console.log(vertical + " " + index);
-                                        console.log(position);
-                                    }
-                                    
-                                }
-                                break;
-                            case "MovementLeft": 
-                                console.log("left");
-                                if(index > 0 && tempArray[index - 1] == 1)
-                                {
-                                    succes = false;
-                                }
-                                break;
-                            case "MovementUp":
-                                /*
-                                var gravity = -15;
-
-                                localData.player.style.transform = `translate(${(index + (localData.playerPosition.x - 1)) * localData.stepSizeHorizontal}px, ${(3 - (vertical - localData.playerPosition.y)) * -localData.stepSizeVertical}px) scale(1)`;
-
-                                function k()
-                                {
-                                    var x = ((index + (localData.playerPosition.x)) * localData.stepSizeHorizontal) - ((localData.stepSizeHorizontal / 30) * (gravity - 15));
-                                    var y;
-                                    if(gravity < 0)
-                                    {
-                                        y = ((3 - (vertical - localData.playerPosition.y)) * - localData.stepSizeVertical) + (10 * gravity);
-                                    }
-                                    else
-                                    {
-                                        y = ((3 - (vertical - localData.playerPosition.y)) * - localData.stepSizeVertical) - (10 * (-15 + gravity));;
-                                    }
-                                    console.log(y);
-                                    localData.player.style.transform = `translate(${x}px, ${y}px) scale(1)`;
-                                    gravity++;
-                                    if(gravity < 15)
-                                    {
-                                        setTimeout(k, 100);
-                                    }
-                                }
-                                
-                                setTimeout(k, 1000);
-                                */
-                                break;
-                            case "MovementDown":
-                                break;
-                            case "MovementJump":
-                                break;
-                            default:
-                                break;
-                        }
-                        if(succes)
-                        {
-                            localData.player.style.transform = `translate(${(index + localData.playerPosition.x) * localData.stepSizeHorizontal}px, ${(3 - (vertical - localData.playerPosition.y)) * -localData.stepSizeVertical}px) scale(1)`;
-
-                        }
-                        return true;
-                    }
-                });
-            }
-
-            return succes;
-        });
+        var actionController = new ActionController();
+        this.levelData.actionIntervalID = setInterval(this.CheckAction.bind(this), 1000, actions, actionController)
     }
 
     TogglePause()
@@ -254,28 +167,16 @@ export class LevelManager
         }
     }
 
-    runAction(name)
-    {
-        var sections = name.split('-');
-        var finalName = "";
-        for (let index = 0; index < sections.length; index++) {
-            const element = sections[index];
-            
-            finalName += element.charAt(0).toUpperCase() + element.substring(1);
-        }
-
-        this.levelData.playerPosition.currentAction = finalName;
-
-        this[finalName]();
-    }
-
-    CheckAction(actions)
+    CheckAction(actions, actionController)
     {
         console.log("Actions Length: " + actions.length + " Actions Remaining: " + this.levelData.actionsRemaining);
         var task = actions[actions.length - this.levelData.actionsRemaining];
 
-        this.runAction($(task).data("function"));
+        //this.runAction($(task).data("function"));
         
+        actionController.CallAction($(task).data("function"), this.levelData);
+
+        /*
         var result = this.MovePlayer();
 
         var intervalID = this.levelData.actionIntervalID;
@@ -286,6 +187,7 @@ export class LevelManager
                 clearInterval(intervalID);
             }
         });
+        */
 
         this.levelData.actionsRemaining--;
         if(this.levelData.actionsRemaining <= 0)
@@ -309,6 +211,9 @@ export class LevelManager
         var resultWindow = document.getElementById("results-window");
         var resultShells = $(resultWindow).find(".results-shell");
         var resultText = $(resultWindow).find(".results-text").first();
+        var pauseButtons = $(resultWindow).find("#pause-buttons");
+        var completedButtons = $(resultWindow).find("#completed-buttons");
+        var failedButtons = $(resultWindow).find("#failed-buttons");
 
         var count = collectedShells.length;
 
@@ -316,6 +221,7 @@ export class LevelManager
         {
             if($(resultShells[index]).css('display') != 'none' && count > 0)
             {
+                console.log("FOUND COLLECTED SHELL");
                 $(resultShells[index]).attr("src", "assets/levels/Level_Shell_Color.png");
                 count--;
             }
@@ -331,6 +237,10 @@ export class LevelManager
         {
             //won
             resultText.text("Congratulations!");
+            pauseButtons.hide();
+            failedButtons.hide();
+            completedButtons.show();
+
             cookieData.starCompletion[this.levelData.chapterNumber][this.levelData.levelNumber] = collectedShells.length;
             cookieData.levelCompletion[this.levelData.chapterNumber][this.levelData.levelNumber] = true;
             if(cookieData.levelCompletion[this.levelData.chapterNumber].length == this.levelData.levelNumber)
@@ -342,12 +252,15 @@ export class LevelManager
         {
             //lost
             resultText.text("Oh no...");
+            pauseButtons.hide();
+            completedButtons.hide();
+            failedButtons.show();
             cookieData.starCompletion[this.levelData.chapterNumber][this.levelData.levelNumber] = collectedShells.length;
         }
         
         $(resultWindow).show();
-
         document.cookie = "completionData=" + JSON.stringify(cookieData);
+        console.log(cookieData);
     }
 
     ResetItems(items)
@@ -363,7 +276,8 @@ export class LevelManager
     {
         this.levelData.itemData = itemData;
         this.levelData.chapterNumber = chapter - 1;
-        this.levelData.levelNumber= level - 1;
+        this.levelData.levelNumber = level - 1;
+
         var localData = this.levelData;
         localData.shellCount = 0;
         localData.obstacleCount = 0;
@@ -377,9 +291,9 @@ export class LevelManager
 
         itemData.then(function(result)
         {
-            for (let vertical = 0; vertical < result.length; vertical++) 
+            for (let vertical = 0; vertical < result[0].length; vertical++) 
             {
-                const tempArray = result[vertical];
+                const tempArray = result[0][vertical];
                 
                 tempArray.forEach(function(value, index)
                 {
@@ -387,7 +301,11 @@ export class LevelManager
                     {
                         case 1:
                             //player
-                            localData.player.style.transform = `translate(${index * localData.stepSizeHorizontal}px, ${(3 - vertical) * -localData.stepSizeVertical}px) scale(1)`;
+                            localData.playerStartingPosition.x = index;
+                            localData.playerStartingPosition.y = vertical;
+                            localData.playerStartingPosition.direction = result[1];
+                            localData.playerStartingPosition.scale = 1;
+                            localData.player.style.transform = `translate(${index * localData.stepSizeHorizontal}px, ${(3 - vertical) * -localData.stepSizeVertical}px) scale(${localData.playerStartingPosition.scale}) scaleX(${localData.playerStartingPosition.direction})`;
                             break;
                         case 2:
                             //obstacle
@@ -435,6 +353,8 @@ export class LevelManager
                     break;
             }
         });
+
+        this.levelData.playerStartingPosition = localData.playerStartingPosition;
     }
 
     GetCookie(cname) 
@@ -455,33 +375,188 @@ export class LevelManager
         return "";
     }
 
-    MovementRight()
+    
+}
+
+class ActionController
+{
+    levelData;
+
+    CallAction(name, data)
     {
-        this.levelData.playerPosition.x++;
+        var sections = name.split('-');
+        var finalName = "";
+        for (let index = 0; index < sections.length; index++) {
+            const element = sections[index];
+            
+            finalName += element.charAt(0).toUpperCase() + element.substring(1);
+        }
+
+        var classReference = this;
+
+        data.itemData.then(function(result)
+        {
+            if(classReference.levelData == null)
+            {
+                for (let i = 0; i < result[0].length; i++) 
+                {
+                    for (let j = 0; j < result[0][i].length; j++) 
+                    {
+                        data.levelMap[i][j] = result[0][i][j];
+                        if(result[0][i][j] == 1)
+                        {
+                            data.playerPosition.x = j;
+                            data.playerPosition.y = i;
+                            data.playerPosition.direction = data.playerStartingPosition.direction;
+                            data.playerPosition.scale = data.playerStartingPosition.scale;
+                        }
+                    }
+                }
+                classReference.levelData = data;
+            }
+            classReference[finalName](result[0]);
+        });
+    }
+
+    //1 player
+    //2 obstacle
+    //3 shell
+    //4 ladder
+
+    CollectShell(targetPos)
+    {
+        var shells = $(this.levelData.items).filter(".shell");
+            
+        for (let i = 0; i < shells.length; i++) 
+        {
+            const shell = shells[i];
+            var positionRaw = $(shell).attr("data-position");
+            var position = positionRaw.split(',')
+            if(position.length > 0)
+            {
+                if(position[1] == targetPos[0] && position[0] == targetPos[1])
+                {
+                    $(shell).hide();
+                    $(this.levelData.shells[this.levelData.shellCount]).attr("src", "assets/levels/Level_Shell_Color.png")
+                    $(this.levelData.shells[this.levelData.shellCount]).attr("data-collected", "true")
+                    this.levelData.shellCount++;
+                }
+            }
+        }
+    }
+
+    Clamp(num, min, max) 
+    {
+        return Math.min(Math.max(num, min), max);
+    } 
+
+    MovementRight(test)
+    {
+        var playerPos = [this.levelData.playerPosition.x, this.levelData.playerPosition.y]
+        var targetPos = [this.Clamp((playerPos[0] + 1), 0, 7), this.Clamp((playerPos[1]), 0, 3)]
+
+        switch(this.levelData.levelMap[targetPos[1]][targetPos[0]])
+        {
+            case 2:
+                console.log("Fail");
+                return;
+            case 3:
+                this.CollectShell(targetPos);
+                break;
+        }
+        
+        this.levelData.player.style.transform = `translate(${targetPos[0] * this.levelData.stepSizeHorizontal}px, ${(3 - targetPos[1]) * -this.levelData.stepSizeVertical}px) scale(${this.levelData.playerPosition.scale}) scaleX(${this.levelData.playerPosition.direction}`;
+        
+        this.levelData.playerPosition.x = targetPos[0];
+        this.levelData.playerPosition.y = targetPos[1];
     }
 
     MovementLeft()
     {
-        this.levelData.playerPosition.x--;
+        var playerPos = [this.levelData.playerPosition.x, this.levelData.playerPosition.y]
+        var targetPos = [this.Clamp((playerPos[0] - 1), 0, 7), this.Clamp((playerPos[1]), 0, 3)]
+        switch(this.levelData.levelMap[targetPos[1]][targetPos[0]])
+        {
+            case 2:
+                console.log("Fail");
+                return;
+            case 3:
+                this.CollectShell(targetPos);
+                break;
+        }
+
+        if(playerPos[1] < 3)
+        {
+            if(this.levelData.levelMap[this.Clamp((playerPos[1] + 1), 0, 3)][targetPos[0]] != 2)
+            {
+                console.log("FLOATING");
+                return;
+            }
+        }
+
+        this.levelData.player.style.transform = `translate(${targetPos[0] * this.levelData.stepSizeHorizontal}px, ${(3 - targetPos[1]) * -this.levelData.stepSizeVertical}px) scale(${this.levelData.playerPosition.scale}) scaleX(${this.levelData.playerPosition.direction}`;
+        
+        this.levelData.playerPosition.x = targetPos[0];
+        this.levelData.playerPosition.y = targetPos[1];
     }
 
     MovementUp()
     {
-        this.levelData.playerPosition.y += 2;
+        var playerPos = [this.levelData.playerPosition.x, this.levelData.playerPosition.y]
+        var targetPos = [this.Clamp((playerPos[0]), 0, 7), this.Clamp((playerPos[1] - 2), 0, 3)]
+
+        if(this.levelData.levelMap[targetPos[1]][targetPos[0]] != 4)
+        {
+            console.log("Fail");
+            return;
+        }
+
+        this.levelData.player.style.transform = `translate(${targetPos[0] * this.levelData.stepSizeHorizontal}px, ${(3 - targetPos[1]) * -this.levelData.stepSizeVertical}px) scale(${this.levelData.playerPosition.scale}) scaleX(${this.levelData.playerPosition.direction}`;
+        
+        this.levelData.playerPosition.x = targetPos[0];
+        this.levelData.playerPosition.y = targetPos[1];
     }
 
     MovementDown()
     {
-        this.levelData.playerPosition.y -= 2;
+        var playerPos = [this.levelData.playerPosition.x, this.levelData.playerPosition.y]
+        var targetPos = [this.Clamp((playerPos[0]), 0, 7), this.Clamp((playerPos[1] + 2), 0, 3)]
+
+        if(this.levelData.levelMap[targetPos[1]][targetPos[0]] != 4)
+        {
+            console.log("Fail");
+            return;
+        }
+
+        this.levelData.player.style.transform = `translate(${targetPos[0] * this.levelData.stepSizeHorizontal}px, ${(3 - targetPos[1]) * -this.levelData.stepSizeVertical}px) scale(${this.levelData.playerPosition.scale}) scaleX(${this.levelData.playerPosition.direction}`;
+        
+        this.levelData.playerPosition.x = targetPos[0];
+        this.levelData.playerPosition.y = targetPos[1];
     }
 
     MovementJump()
     {
-        this.levelData.playerPosition.y += 1;
-        this.levelData.playerPosition.x++;
+        var playerPos = [this.levelData.playerPosition.x, this.levelData.playerPosition.y];
+        var direction = (this.levelData.levelMap[playerPos[1]][playerPos[0] + (1 * this.levelData.playerPosition.direction)] == 2 ? -1 : 1);
+
+        var targetPos = [this.Clamp((playerPos[0] + (1 * this.levelData.playerPosition.direction)), 0, 7), this.Clamp((playerPos[1] + (1 * direction)), 0, 3)];
+        //console.log("X: " + targetPos[0] + " Y: " + targetPos[1]);
+        switch(this.levelData.levelMap[targetPos[1]][targetPos[0]])
+        {
+            case 2:
+                console.log("Fail");
+                return;
+            case 3:
+                this.CollectShell(targetPos);
+                break;
+        }
+
+        this.levelData.player.style.transform = `translate(${targetPos[0] * this.levelData.stepSizeHorizontal}px, ${(3 - targetPos[1]) * -this.levelData.stepSizeVertical}px) scale(${this.levelData.playerPosition.scale}) scaleX(${this.levelData.playerPosition.direction}`;
+        
+        this.levelData.playerPosition.x = targetPos[0];
+        this.levelData.playerPosition.y = targetPos[1];
     }
 }
-
 
 
 

@@ -138,15 +138,12 @@ export class SceneManager
 
     LoadChapters(chapterTemplate, levelTemplate)
     {   
-        var completionDataRaw = this.GetCookie("completionData");
-        var completionData;
-
         return fetch(`./assets/levels/chapterData.json`).then(response => { return response.json(); }).then( data =>
             {
                 var categoriesRaw = "";
                 var completionDataRaw = this.GetCookie("completionData");
                 var completionData;
-                if(completionDataRaw != "")
+                if(completionDataRaw == "")
                 {
                     console.log("Data is null");
                     completionData = new CookieData();
@@ -168,18 +165,11 @@ export class SceneManager
                     }
 
                     document.cookie = "completionData=" + JSON.stringify(completionData);
-                    console.log(completionData);
                 }
                 else
                 {
                     completionData = JSON.parse(completionDataRaw);
 
-
-                    //THIS IS TESTING
-                    console.log(completionData);
-                    completionData.starCompletion[0][0] = 0;
-                    completionData.starCompletion[0][0] = 0;
-                    completionData.levelCompletion[0][0] = false;
                     document.cookie = "completionData=" + JSON.stringify(completionData);
                 }
 
@@ -375,7 +365,15 @@ export class SceneManager
                     $(category).attr("src", `../assets/blocks/${tempCatagoryString}/block_${tempCatagoryString}_category_locked.png`);
                 }
             });
-            return  itemLocations;
+
+            if(data.characterFacing == "right")
+            {
+                return  [itemLocations, 1];
+            }
+            else
+            {
+                return  [itemLocations, -1];
+            }
         });
     }
 
