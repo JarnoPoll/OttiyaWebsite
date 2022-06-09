@@ -5,10 +5,10 @@
       "blocks": 
       [
         {
-          "function": "move-right"
+          "function": "movement-right"
         },
         {
-          "function": "move-left"
+          "function": "movement-left"
         }
       ]
     }

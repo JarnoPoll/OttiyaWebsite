@@ -5,25 +5,16 @@
       "blocks": 
       [
         {
-          "function": "move-right"
+          "function": "movement-right"
         },
         {
-          "function": "move-up"
+          "function": "movement-left"
         },
         {
-          "function": "move-down"
-        }
-      ]
-    },
-    {
-      "name": "appearance",
-      "blocks": 
-      [
-        {
-          "function": "grow"
+          "function": "movement-jump"
         },
         {
-          "function": "shrink"
+          "function": "movement-up"
         }
       ]
     }

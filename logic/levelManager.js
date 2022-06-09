@@ -15,6 +15,8 @@ class LevelData
     isPaused = false;
     actionIntervalID;
     playerPosition = {x: 0, y: 0, size: 1, currentAction: 0};
+    chapterNumber;
+    levelNumber;
 }
 
 export class LevelManager
@@ -43,6 +45,7 @@ export class LevelManager
     Reset(taskbar, blocks, character, shells)
     {
         this.levelData.playerPosition = {x: 0, y: 0, size: 1};
+        this.collectedShells = 0;
         clearInterval(this.levelData.actionIntervalID);
         for (let index = 0; index < blocks.length; index++) 
         {
@@ -81,25 +84,31 @@ export class LevelManager
     
     ChangeCategory(category)
     {
-        if(this.currentCategory != category)
+        if(this.levelData.currentCategory != category)
         {
-            for (let index = 0; index < this.categories.length; index++) {
-                const element = this.categories[index];
-    
-                if($(element).data("category") == this.currentCategory)
+            for (let index = 0; index < this.levelData.categories.length; index++) {
+                const element = this.levelData.categories[index];
+                console.log(element);
+                if($(element).data("category") == this.levelData.currentCategory)
                 {
                     console.log("Hiding Shown");
+                    //resize button
                     $(element).hide();
                 }
                 else if($(element).data("category") == category)
                 {
                     console.log("Showing New");
+                    //resize button
                     $(element).show();
                 }
             }
             
-            this.currentCategory = category;
+            this.levelData.currentCategory = category;
+
+            return true;
         }
+
+        return false;
     }
 
     PressedPlay()
@@ -110,112 +119,6 @@ export class LevelManager
         this.levelData.actionsRemaining = actions.length;
         this.levelData.shellCount = 0;
         this.levelData.actionIntervalID = setInterval(this.CheckAction.bind(this), 1000, actions)
-        //Read TaskBar
-        /*
-        (function k()
-        {
-            var characterRect = character.getBoundingClientRect();
-            console.log("CharacterLeft: " + characterRect.left + " CharacterBottom: " + characterRect.bottom);
-            if(!varDelay)
-            {
-                setTimeout(k,1000);
-                varDelay = true;
-            }
-            else if(index--)
-            {
-                const element = taskbar.children[taskbar.children.length - index - 1];
-                element.classList.forEach(className => {
-                        switch(className)
-                        {
-                            case "CodeBlock_One":
-                                //Check for obstable.
-                                var obstacle = document.getElementsByClassName('obstacle')[0];
-                                var obstacleRect = obstacle.getBoundingClientRect();
-                                var characterRect = character.getBoundingClientRect();
-                                var distance = obstacleRect.left - Math.abs(characterRect.left);
-                                console.log("Obstacle Check: ObstacleLeft-" + obstacleRect.left + "CharacterLeft-" + characterRect.left);
-                                if(distance > 0 && distance < 150)
-                                {
-                                    console.log("Obstacle Height Check");
-                                    console.log("Obstacle Height Check: ObstacleTop-" + obstacleRect.top + "CharacterBottom-" + Math.abs(characterRect.bottom) + 20);
-                                    //Check height
-                                    if(obstacleRect.top > Math.abs(characterRect.top) + (character.clientHeight / 2))
-                                    {
-                                        //Move
-                                        var positionRaw = character.style.getPropertyValue("transform").match(/(-?[0-9\.]+)/g).toString();
-                                        var position = positionRaw.split(',');
-                                        character.style.setProperty("transform", "translate(" + (+position[0] + 150) + "px, " + +position[1] + "px) scale(" + +position[2] + ")");
-                                        
-                                    }
-                                }
-                                else
-                                {
-                                    var positionRaw = character.style.getPropertyValue("transform").match(/(-?[0-9\.]+)/g).toString();
-                                    var position = positionRaw.split(',');
-                                    character.style.setProperty("transform", "translate(" + (+position[0] + 150) + "px, " + +position[1] + "px) scale(" + +position[2] + ")");
-                                }
-                               break;
-                            case "CodeBlock_Two":
-                                var positionRaw = character.style.getPropertyValue("transform").match(/(-?[0-9\.]+)/g).toString();
-                                var position = positionRaw.split(',');
-                                character.style.setProperty("transform", "translate(" + (+position[0]) + "px, " + (+position[1] - 84) + "px) scale(" + +position[2] + ")");
-                                break;
-                            case "CodeBlock_Three":
-                                var positionRaw = character.style.getPropertyValue("transform").match(/(-?[0-9\.]+)/g).toString();
-                                var position = positionRaw.split(',');
-                                character.style.setProperty("transform", "translate(" + (+position[0]) + "px, " + (+position[1] + 84) + "px) scale(" + +position[2] + ")");
-                                break;
-                            case "CodeBlock_Four":
-                                var positionRaw = character.style.getPropertyValue("transform").match(/(-?[0-9\.]+)/g).toString();
-                                var position = positionRaw.split(',');
-                                character.style.setProperty("transform", "translate(" + (+position[0]) + "px, " + (+position[1] + (character.clientHeight / 4) * position[2]) + "px) scale(" + +position[2] * 0.5 + ")");
-                                break;
-                            case "CodeBlock_Five":
-                                var positionRaw = character.style.getPropertyValue("transform").match(/(-?[0-9\.]+)/g).toString();
-                                var position = positionRaw.split(',');
-                                character.style.setProperty("transform", "translate(" + (+position[0]) + "px, " + (+position[1] - (character.clientHeight / 2) * position[2]) + "px) scale(" + +position[2] * 2 + ")");
-                                break;
-                        }
-
-                        var playerRect = character.getBoundingClientRect();
-                        
-                        for (let index = 0; index < shell1.length; index++) 
-                        {
-                            const element1 = shell1[index];
-                            var element1Rect = element1.getBoundingClientRect();
-                            if((element1Rect.left - 20) < playerRect.left)
-                            {
-                                //Console message that the shell is collected
-                                console.log("Shell collected!");
-                                
-                                //Hide the shell, now to test!
-                                $("#shell1").hide();
-
-                                $("#grayshell1").attr("src","assets/levels/Level_Shell_Color.png");
-                            }
-                        }
-
-                        for (let index = 0; index < shell2.length; index++) 
-                        {
-                            const element2 = shell2[index];
-                            var element2Rect = element2.getBoundingClientRect();
-                            if((element2Rect.left - 20) < playerRect.left)
-                            {
-                                //Console message that the shell is collected
-                                console.log("Shell collected!");
-                                
-                                //Hide the shell, now to test!
-                                $("#shell2").hide();
-
-                                $("#grayshell2").attr("src","assets/levels/Level_Shell_Color.png");
-                            }
-                        }
-                    });
-
-                setTimeout (k,1000);
-            }
-        })();
-        */
     }
 
     MovePlayer()
@@ -235,10 +138,7 @@ export class LevelManager
                     {
                         switch(localData.playerPosition.currentAction)
                         {
-                            case 0:
-                                console.log("Nothing");
-                                break;
-                            case 1: 
+                            case "MovementRight": 
                                 if((index + localData.playerPosition.x) < tempArray.length && result[vertical - localData.playerPosition.y][index + localData.playerPosition.x] == 2)
                                 {
                                     
@@ -260,8 +160,8 @@ export class LevelManager
                                             if(vertical == position[0] && index + localData.playerPosition.x == (position[1]))
                                             {
                                                 $(shell).hide();
-                                                console.log(localData.shellCount);
                                                 $(localData.shells[localData.shellCount]).attr("src", "assets/levels/Level_Shell_Color.png")
+                                                $(localData.shells[localData.shellCount]).attr("data-collected", "true")
                                                 localData.shellCount++;
                                             }
                                         }
@@ -271,56 +171,46 @@ export class LevelManager
                                     
                                 }
                                 break;
-                            case 2: 
+                            case "MovementLeft": 
                                 console.log("left");
                                 if(index > 0 && tempArray[index - 1] == 1)
                                 {
                                     succes = false;
                                 }
                                 break;
-                            case 3:
-                                console.log("up");
-                                //if(result[vertical - 1][index + localData.playerPosition.x] != 4)
-                                //{
-                                //    console.log("Vertical: " + (vertical - 1) + " Horizontal: " + index + " Value: " + result[vertical - 1][index]);
-                                //    succes = false;
-                                //}
-                                //else
-                                //{
-                                    var gravity = -15;
+                            case "MovementUp":
+                                /*
+                                var gravity = -15;
 
-                                    localData.player.style.transform = `translate(${(index + (localData.playerPosition.x - 1)) * localData.stepSizeHorizontal}px, ${(3 - (vertical - localData.playerPosition.y)) * -localData.stepSizeVertical}px) scale(1)`;
+                                localData.player.style.transform = `translate(${(index + (localData.playerPosition.x - 1)) * localData.stepSizeHorizontal}px, ${(3 - (vertical - localData.playerPosition.y)) * -localData.stepSizeVertical}px) scale(1)`;
 
-                                    function k()
-                                    {
-                                        var x = ((index + (localData.playerPosition.x)) * localData.stepSizeHorizontal) - ((localData.stepSizeHorizontal / 30) * (gravity - 15));
-                                        var y;
-                                        if(gravity < 0)
-                                        {
-                                            y = ((3 - (vertical - localData.playerPosition.y)) * - localData.stepSizeVertical) + (10 * gravity);
-                                        }
-                                        else
-                                        {
-                                            y = ((3 - (vertical - localData.playerPosition.y)) * - localData.stepSizeVertical) - (10 * (-15 + gravity));;
-                                        }
-                                        console.log(y);
-                                        localData.player.style.transform = `translate(${x}px, ${y}px) scale(1)`;
-                                        gravity++;
-                                        if(gravity < 15)
-                                        {
-                                            setTimeout(k, 100);
-                                        }
-                                    }
-                                    
-                                    setTimeout(k, 1000);
-                                //}
-                                break;
-                            case 4:
-                                console.log("down");
-                                if(result[vertical + 1][index] != 4)
+                                function k()
                                 {
-                                    succes = false;
+                                    var x = ((index + (localData.playerPosition.x)) * localData.stepSizeHorizontal) - ((localData.stepSizeHorizontal / 30) * (gravity - 15));
+                                    var y;
+                                    if(gravity < 0)
+                                    {
+                                        y = ((3 - (vertical - localData.playerPosition.y)) * - localData.stepSizeVertical) + (10 * gravity);
+                                    }
+                                    else
+                                    {
+                                        y = ((3 - (vertical - localData.playerPosition.y)) * - localData.stepSizeVertical) - (10 * (-15 + gravity));;
+                                    }
+                                    console.log(y);
+                                    localData.player.style.transform = `translate(${x}px, ${y}px) scale(1)`;
+                                    gravity++;
+                                    if(gravity < 15)
+                                    {
+                                        setTimeout(k, 100);
+                                    }
                                 }
+                                
+                                setTimeout(k, 1000);
+                                */
+                                break;
+                            case "MovementDown":
+                                break;
+                            case "MovementJump":
                                 break;
                             default:
                                 break;
@@ -364,40 +254,27 @@ export class LevelManager
         }
     }
 
+    runAction(name)
+    {
+        var sections = name.split('-');
+        var finalName = "";
+        for (let index = 0; index < sections.length; index++) {
+            const element = sections[index];
+            
+            finalName += element.charAt(0).toUpperCase() + element.substring(1);
+        }
+
+        this.levelData.playerPosition.currentAction = finalName;
+
+        this[finalName]();
+    }
+
     CheckAction(actions)
     {
         console.log("Actions Length: " + actions.length + " Actions Remaining: " + this.levelData.actionsRemaining);
         var task = actions[actions.length - this.levelData.actionsRemaining];
 
-        task.classList.forEach(className => {
-            switch(className)
-            {
-                case "CodeBlock_One":
-                    this.levelData.playerPosition.x++;
-                    this.levelData.playerPosition.currentAction = 1;
-                    console.log("Set to [1]");
-                    break;
-                case "CodeBlock_Two":
-                    this.levelData.playerPosition.y += 1;
-                    this.levelData.playerPosition.x++;
-                    this.levelData.playerPosition.currentAction = 3;
-                    console.log("Set to [3]");
-                    break;
-                case "CodeBlock_Three":
-                    this.levelData.playerPosition.y -= 2;
-                    this.levelData.playerPosition.currentAction = 4;
-                    console.log("Set to [4]");
-                    break;
-                case "CodeBlock_Four":
-                    this.levelData.playerPosition.size *= 2;
-                    this.levelData.playerPosition.currentAction = 0;
-                    break;
-                case "CodeBlock_Five":
-                    this.levelData.playerPosition.size /= 2;
-                    this.levelData.playerPosition.currentAction = 0;
-                    break;
-            }
-        });
+        this.runAction($(task).data("function"));
         
         var result = this.MovePlayer();
 
@@ -414,7 +291,63 @@ export class LevelManager
         if(this.levelData.actionsRemaining <= 0)
         {
             clearInterval(this.levelData.actionIntervalID);
+            this.Wait(1000).then(()=> this.CheckCompletion());
         }
+    }
+
+    Wait(ms)
+    {
+        return new Promise(resolve => setTimeout(resolve, ms));  
+    }
+
+    CheckCompletion()
+    {
+        var availableShells = this.levelData.shells.filter(":visible");
+        
+        var collectedShells = $(availableShells).filter(`[data-collected='${true}']`);
+        console.log(collectedShells);
+        var resultWindow = document.getElementById("results-window");
+        var resultShells = $(resultWindow).find(".results-shell");
+        var resultText = $(resultWindow).find(".results-text").first();
+
+        var count = collectedShells.length;
+
+        for (let index = 0; index < resultShells.length; index++) 
+        {
+            if($(resultShells[index]).css('display') != 'none' && count > 0)
+            {
+                $(resultShells[index]).attr("src", "assets/levels/Level_Shell_Color.png");
+                count--;
+            }
+            else
+            {
+                $(resultShells[index]).attr("src", "assets/levels/Level_Shell_Gray.png");
+            }
+        }
+
+        var cookieData = JSON.parse(this.GetCookie("completionData"));
+
+        if(availableShells.length == collectedShells.length)
+        {
+            //won
+            resultText.text("Congratulations!");
+            cookieData.starCompletion[this.levelData.chapterNumber][this.levelData.levelNumber] = collectedShells.length;
+            cookieData.levelCompletion[this.levelData.chapterNumber][this.levelData.levelNumber] = true;
+            if(cookieData.levelCompletion[this.levelData.chapterNumber].length == this.levelData.levelNumber)
+            {
+                cookieData.chapterCompletion[this.levelData.chapterNumber] = true;
+            }
+        }
+        else
+        {
+            //lost
+            resultText.text("Oh no...");
+            cookieData.starCompletion[this.levelData.chapterNumber][this.levelData.levelNumber] = collectedShells.length;
+        }
+        
+        $(resultWindow).show();
+
+        document.cookie = "completionData=" + JSON.stringify(cookieData);
     }
 
     ResetItems(items)
@@ -426,9 +359,11 @@ export class LevelManager
         });
     }
 
-    SetItems(itemData)
+    SetItems(itemData, chapter, level)
     {
         this.levelData.itemData = itemData;
+        this.levelData.chapterNumber = chapter - 1;
+        this.levelData.levelNumber= level - 1;
         var localData = this.levelData;
         localData.shellCount = 0;
         localData.obstacleCount = 0;
@@ -469,7 +404,7 @@ export class LevelManager
                             item.style.transform = `translate(${index * localData.stepSizeHorizontal}px, ${((3 - vertical) + 1) * -localData.stepSizeVertical}px) scale(1)`;
                             $(item).show();
                             var shell = $(localData.shells)[localData.shellCount];
-                            console.log(shell);
+                            $(shell).attr("data-collected", false)
                             $(shell).show();
                             localData.shellCount++;
                             break;
@@ -485,16 +420,68 @@ export class LevelManager
                     }
                 });
             }
+
+            var resultShells = $(".results-shell");
+            $(resultShells).show()
+            console.log(resultShells);
+            switch(localData.shellCount)
+            {
+                case 1:
+                    $(resultShells[0]).hide();
+                    $(resultShells[2]).hide();
+                    break;
+                case 2:
+                    $(resultShells[1]).hide();
+                    break;
+            }
         });
     }
 
-    TransferCodeBlockToTaskbar(element)
-    { 
-        var tempElement = element.outerHTML.replace("button", "il");
-    
-        return tempElement;
+    GetCookie(cname) 
+    {
+        let name = cname + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for(let i = 0; i <ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+
+        return "";
+    }
+
+    MovementRight()
+    {
+        this.levelData.playerPosition.x++;
+    }
+
+    MovementLeft()
+    {
+        this.levelData.playerPosition.x--;
+    }
+
+    MovementUp()
+    {
+        this.levelData.playerPosition.y += 2;
+    }
+
+    MovementDown()
+    {
+        this.levelData.playerPosition.y -= 2;
+    }
+
+    MovementJump()
+    {
+        this.levelData.playerPosition.y += 1;
+        this.levelData.playerPosition.x++;
     }
 }
+
 
 
 

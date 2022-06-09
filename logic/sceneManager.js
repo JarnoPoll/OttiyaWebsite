@@ -7,7 +7,7 @@ class CookieData
 export class SceneManager
 {
     activeScene = "";
-    cookieData = new CookieData();
+    completionData;
     constructor(startingScene)
     {
         this.activeScene = startingScene;
@@ -23,7 +23,101 @@ export class SceneManager
 
         $('#' + this.activeScene).hide();
         this.activeScene = scene;
-        $('#' + this.activeScene).show();
+        switch(this.activeScene)
+        {
+            case "level":
+                $('#loading-screen').show();
+                this.WaitForLevel(0).then(() => //Should be 3000
+                {
+                    $('#' + this.activeScene).show();
+                    $('#loading-screen').hide();
+                });
+                break;
+            case "level-overview":
+                //Update levels and chapters and show scene
+                this.UpdateLevels();
+                $('#' + this.activeScene).show();
+                break;
+            default:
+                $('#' + this.activeScene).show();
+                break;
+        }
+    }
+
+
+    UpdateLevels()
+    {
+        this.completionData = JSON.parse(this.GetCookie("completionData"));
+        console.log(this.completionData);
+
+        /*
+        for (let index = 0; index < completionData.chapterCompletion.length; index++) {
+            const chapterCompletion = completionData.chapterCompletion[index];
+            
+            if(chapterCompletion)
+            {
+                $(".chapter-template")[index]
+            }
+        }
+        */
+       
+        //Chapter Locking
+        //clone.attr("src", `../assets/levels/chapter_${chapter.name}/chapter_backgrounds/chapter_locked.png`);
+        //clone[0].classList.add('locked');
+
+
+        var levelHolders = $(".levelHolder");
+        console.log(levelHolders);
+        for (let chapter = 0; chapter < levelHolders.length; chapter++) {
+            const levelHolder = levelHolders[chapter];
+            var levels = $(levelHolder).children();
+            console.log(levels);
+            for (let index = 0; index < levels.length; index++) {
+                const level = levels[index];
+                $(level)[0].classList.remove('locked');
+                if(this.completionData.levelCompletion[chapter][index])
+                {
+                    $(level).find('img:last').attr("src", `../assets/miscellaneous/level_overview/level_completed.png`);
+                    $(level).find('.levelTemplate-shell').attr("src", `../assets/levels/Level_Shell_Color.png`);
+                    //Set max amount of stars.
+                }
+                else if(index != 0 && !this.completionData.levelCompletion[chapter][index - 1])
+                {
+                    $(level).find('img:last').attr("src", `../assets/miscellaneous/level_overview/level_locked.png`);
+                    $(level).find('.levelTemplate-shell').attr("src", `../assets/levels/Level_Shell_Gray.png`);
+                    $(level)[0].classList.add('locked');
+                }
+                else
+                {
+                    //Set amount of stars equal to completion.
+                    $(level).find('img:last').attr("src", `../assets/miscellaneous/level_overview/level_unlocked.png`);
+                    var shells = $(level).find('.levelTemplate-shell');
+                    for (let j = 0; j < shells.length; j++) {
+                        const shell = shells[j];
+                        
+                        if((this.completionData.starCompletion[chapter][index] - 1) >= j)
+                        {
+                            $(shell).attr("src", `../assets/levels/Level_Shell_Color.png`);
+                        }
+                        else
+                        {
+                            
+                            $(shell).attr("src", `../assets/levels/Level_Shell_Gray.png`);
+                        }
+                    }
+                    
+                }
+            }
+        }
+        //Level Locking
+        //clone.find('img:last').attr("src", `../assets/miscellaneous/level_overview/level_locked.png`);
+        //clone.find('.levelTemplate-shell').attr("src", `../assets/levels/Level_Shell_Gray.png`);
+        //clone[0].classList.add('locked');
+    }
+
+    WaitForLevel(ms)
+    {
+        return new Promise(resolve => setTimeout(resolve, ms));  
     }
 
     SetAvailableBlocksInCategory(category, blocks)
@@ -43,13 +137,16 @@ export class SceneManager
     }
 
     LoadChapters(chapterTemplate, levelTemplate)
-    {
+    {   
+        var completionDataRaw = this.GetCookie("completionData");
+        var completionData;
+
         return fetch(`./assets/levels/chapterData.json`).then(response => { return response.json(); }).then( data =>
             {
                 var categoriesRaw = "";
                 var completionDataRaw = this.GetCookie("completionData");
                 var completionData;
-                if(completionDataRaw == "")
+                if(completionDataRaw != "")
                 {
                     console.log("Data is null");
                     completionData = new CookieData();
@@ -80,9 +177,10 @@ export class SceneManager
 
                     //THIS IS TESTING
                     console.log(completionData);
-                    completionData.starCompletion[0][0] = 3;
-                    completionData.starCompletion[0][1] = 1;
-                    completionData.levelCompletion[0][0] = true;
+                    completionData.starCompletion[0][0] = 0;
+                    completionData.starCompletion[0][0] = 0;
+                    completionData.levelCompletion[0][0] = false;
+                    document.cookie = "completionData=" + JSON.stringify(completionData);
                 }
 
                 for (let index = 0; index < data.chapters.length; index++) {
@@ -108,7 +206,6 @@ export class SceneManager
                        
                         clone.attr("data-chapter", (index + 1));
                         $(chapterTemplate).last().after(clone);
-                        
                     }
                     else
                     {
@@ -126,7 +223,6 @@ export class SceneManager
 
                     //check completed status using cookies.
                     //Create instance for each level.
-
                     var levelHolder = $(".levelHolder").last();
 
                     if(index == 0)
@@ -141,11 +237,36 @@ export class SceneManager
                         levelHolder = $(".levelHolder").last();
                     }
 
-                    for (let i = 0; i < chapter.levels.length; i++) {
-                        const level = chapter.levels[i];
+                    for (let i = 0; i < chapter.levels.length; i++) 
+                    {
                         
-                        console.log("Calling");
+                        const level = chapter.levels[i];
                         var clone = $(levelTemplate).first().clone(true);
+                        var shells = clone.find('.levelTemplate-shell');
+                        for (let j = 0; j < shells.length; j++) 
+                        {
+                            const shell = shells[j];
+                            if((level.starAmount) > j)
+                            {
+                                $(shell).show();
+
+                                if((completionData.starCompletion[index][i] - 1) >= j)
+                                {
+                                    $(shell).attr("src", `../assets/levels/Level_Shell_Color.png`);
+                                }
+                                else
+                                {
+                                    
+                                    $(shell).attr("src", `../assets/levels/Level_Shell_Gray.png`);
+                                }
+                            }
+                            else
+                            {
+                                console.log("Hiding stars");
+                                $(shell).hide();
+                            }
+                        }
+
                         if(completionData.levelCompletion[index][i])
                         {
                             clone.find('img:last').attr("src", `../assets/miscellaneous/level_overview/level_completed.png`);
@@ -165,12 +286,14 @@ export class SceneManager
                             var shells = clone.find('.levelTemplate-shell');
                             for (let j = 0; j < shells.length; j++) {
                                 const shell = shells[j];
+                                
                                 if((completionData.starCompletion[index][i] - 1) >= j)
                                 {
                                     $(shell).attr("src", `../assets/levels/Level_Shell_Color.png`);
                                 }
                                 else
                                 {
+                                    
                                     $(shell).attr("src", `../assets/levels/Level_Shell_Gray.png`);
                                 }
                             }
@@ -178,20 +301,20 @@ export class SceneManager
                         }
                         //clone.find('img:last').attr("src", `../assets/miscellaneous/level_overview/level_unlocked.png`);
                         clone.find('p:last').text(i + 1);
-                        clone.attr("data-level", index + 1);
+                        clone.attr("data-level", i + 1);
                         levelHolder.append(clone);
                     }
 
                     $(levelHolder).hide();
                 }
 
-                $(levelTemplate).first().hide();
+                $(levelTemplate).first().remove();
             });
     }
 
-    LoadLevel(level)
+    LoadLevel(chapter, level)
     {
-        return fetch(`./assets/levels/chapter_${1}/level_${level}/dataFile.json`).then(response => { return response.json(); }).then( data =>
+        return fetch(`./assets/levels/chapter_${chapter}/level_${level}/dataFile.json`).then(response => { return response.json(); }).then( data =>
         {
             var itemLocations = [];
             var categoriesRaw = "";
@@ -217,35 +340,39 @@ export class SceneManager
 
             $(".Category").each(function()
             {
-                var element = $(this);
-                var tempCatagoryString = element.attr("data-category");
+                var category = $(this);
+                var tempCatagoryString = category.attr("data-category");
                 if(categories.includes(tempCatagoryString))
                 {
-                    element.show();
+                    //Enable Category
+                    $(category).attr("src", `../assets/blocks/${tempCatagoryString}/block_${tempCatagoryString}_category_unlocked.png`);
+                    category.attr("data-enabled", "true");
+                    //Enable block for Z Category
                     var blocksRaw = "";
 
-                    data.allowedblocks[categories.indexOf(tempCatagoryString)].blocks.forEach(element => {
-                        blocksRaw += (element.function + ',');
+                    data.allowedblocks[categories.indexOf(tempCatagoryString)].blocks.forEach(category => {
+                        blocksRaw += (category.function + ',');
                     });
 
                     var blocks = blocksRaw.split(',');
-                    
-                    $(`#${tempCatagoryString}-blocks button`).each(function()
+                    console.log();
+                    $(`.category-blocks[data-category='${tempCatagoryString}'] il`).each(function()
                     {
-                        var element = $(this);
-                        if(blocks.includes(element.attr("data-function")))
-                            {
-                                element.show();
-                            }
-                            else
-                            {
-                                element.hide();
-                            }
+                        var block = $(this);
+                        if(blocks.includes(block.attr("data-function")))
+                        {
+                            block.show();
+                        }
+                        else
+                        {
+                            block.hide();
+                        }
                     });
                 }
                 else
                 {
-                    element.hide();
+                    //disable category
+                    $(category).attr("src", `../assets/blocks/${tempCatagoryString}/block_${tempCatagoryString}_category_locked.png`);
                 }
             });
             return  itemLocations;

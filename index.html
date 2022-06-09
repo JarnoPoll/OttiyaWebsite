@@ -56,7 +56,7 @@
             <image class="Play-chapters navigation-button" data-scene="level-overview" src="../assets/miscellaneous/Play button.png"></image>
         </div>
         <div id="Settings-button">
-            <image class="Settings-chapters" src="../assets/miscellaneous/Settings button.png"></image>
+            <image class="Settings-chapters navigation-button" data-scene="settings-screen" src="../assets/miscellaneous/Settings button.png"></image>
         </div>
 
     </div>
@@ -73,7 +73,7 @@
         <div class="grid-levels">
             <div class="levelHolder" data-chapter="1">
                 <div class="levelTemplate"  data-level="">
-                    <div class="levelTemplate-shells ">
+                    <div class="levelTemplate-shells">
                         <img class="levelTemplate-shell" src="">
                         <img class="levelTemplate-shell" src="">
                         <img class="levelTemplate-shell" src="">
@@ -92,7 +92,7 @@
         </div>
 
         <div id="Settings-button">
-            <image class="Settings-levels" src="../assets/miscellaneous/Settings button.png"></image>
+            <image class="Settings-levels navigation-button" data-scene="settings-screen" src="../assets/miscellaneous/Settings button.png"></image>
         </div>
 
     </div>
@@ -100,14 +100,12 @@
         <div id="playfield">
             <div id="ui-window">
                 <div id="shells-counter">
-                    <img class="shellcounter" src="assets/levels/Level_Shell_Gray.png">
-                    <img class="shellcounter" src="assets/levels/Level_Shell_Gray.png">
-                    <img class="shellcounter" src="assets/levels/Level_Shell_Gray.png">
+                    <img class="shellcounter" data-collected="false" src="assets/levels/Level_Shell_Gray.png">
+                    <img class="shellcounter" data-collected="false" src="assets/levels/Level_Shell_Gray.png">
+                    <img class="shellcounter" data-collected="false" src="assets/levels/Level_Shell_Gray.png">
                 </div>
                 <div id="playfield-buttons">
-                    <button class="action-button" data-action="reset">Reset</button>
-                    <button class="action-button" data-action="pause">Pause</button>
-                    <button class="action-button navigation-button" data-action="reset" data-scene="level-overview">Menu</button>
+                    <img class="action-button" data-action="pause" src="assets/miscellaneous/Pause.png">
                 </div>
             </div>
             <div id="character-holder">
@@ -131,66 +129,157 @@
         <div id="logic-window">
             <div id="CodeBlocks">
                 <div id="Category">
-                    <div class="action-button Category" data-category="movement" data-action="category">
-                        <image src="assets/blocks/movement/block_movement_category_icon.png"></image>
-                    </div>
-                    <div class="action-button Category" data-category="appearance" data-action="category">
-                        <image src="assets/blocks/appearance/block_appearance_category_icon.png"></image>
-                    </div>
-                    <button class="action-button Category" data-category="temp" data-action="category">Test2</button>
+                    <img class="action-button Category" data-category="movement" data-action="category" data-enabled="false" src="">
+                    <img class="action-button Category" data-category="appearance" data-action="category" data-enabled="false" src="">
+                    <img class="action-button Category" data-category="control" data-action="category" data-enabled="false" src="">
                 </div>
                 <div class="category-blocks" data-category="movement">
-                    <il class="action-button CodeBlock CodeBlock_One" data-action="codeblock" data-function="move-right">
+                    <il class="action-button CodeBlock CodeBlock_One" data-action="codeblock" data-function="movement-right">
                         <image class="codeblock-background" src="assets/blocks/movement/block_movement_category_right.png">
                     </il>
-                    <il class="action-button CodeBlock CodeBlock_Two" data-action="codeblock" data-function="move-up">
+                    <il class="action-button CodeBlock CodeBlock_One" data-action="codeblock" data-function="movement-left">
+                        <image class="codeblock-background" src="assets/blocks/movement/block_movement_category_left.png">
+                    </il>
+                    <il class="action-button CodeBlock CodeBlock_One" data-action="codeblock" data-function="movement-jump">
+                        <image class="codeblock-background" src="assets/blocks/movement/block_movement_category_jump.png">
+                    </il>
+                    <il class="action-button CodeBlock CodeBlock_Two" data-action="codeblock" data-function="movement-up">
                         <image class="codeblock-background" src="assets/blocks/movement/block_movement_category_up.png"></image>
                     </il>
-                    <il class="action-button CodeBlock CodeBlock_Three" data-action="codeblock" data-function="move-down">
+                    <il class="action-button CodeBlock CodeBlock_Three" data-action="codeblock" data-function="movement-down">
                         <image class="codeblock-background" src="assets/blocks/movement/block_movement_category_down.png"></image>
                     </il>
                 </div>
                 <div class="category-blocks" data-category="appearance">
-                    <il class="action-button CodeBlock CodeBlock_Five" data-action="codeblock" data-function="grow">
+                    <il class="action-button CodeBlock CodeBlock_Five" data-action="codeblock" data-function="appearance-grow">
                         <image class="codeblock-background" src="assets/blocks/appearance/block_appearance_grow.png"></image>
                     </il>
-                    <il class="action-button CodeBlock CodeBlock_Four" data-action="codeblock" data-function="shrink">
+                    <il class="action-button CodeBlock CodeBlock_Four" data-action="codeblock" data-function="appearance-shrink">
                         <image class="codeblock-background" src="assets/blocks/appearance/block_appearance_shrink.png"></image>
+                    </il>
+                    <il class="action-button CodeBlock CodeBlock_Four" data-action="codeblock" data-function="appearance-disappear">
+                        <image class="codeblock-background" src="assets/blocks/appearance/block_appearance_disappear.png"></image>
+                    </il>
+                    <il class="action-button CodeBlock CodeBlock_Four" data-action="codeblock" data-function="appearance-appear">
+                        <image class="codeblock-background" src="assets/blocks/appearance/block_appearance_appear.png"></image>
+                    </il>
+                    <il class="action-button CodeBlock CodeBlock_Four" data-action="codeblock" data-function="appearance-reset">
+                        <image class="codeblock-background" src="assets/blocks/appearance/block_appearance_reset.png"></image>
+                    </il>
+                    <il class="action-button CodeBlock CodeBlock_Four" data-action="codeblock" data-function="appearance-say">
+                        <image class="codeblock-background" src="assets/blocks/appearance/block_appearance_say.png"></image>
+                    </il>
+                </div>
+                <div class="category-blocks" data-category="control">
+                    <il class="action-button CodeBlock CodeBlock_Five" data-action="codeblock" data-function="control-repeat">
+                        <image class="codeblock-background" src="assets/blocks/control/block_control_category_repeat.png"></image>
+                    </il>
+                    <il class="action-button CodeBlock CodeBlock_Five" data-action="codeblock" data-function="control-running">
+                        <image class="codeblock-background" src="assets/blocks/control/block_control_category_running.png"></image>
+                    </il>
+                    <il class="action-button CodeBlock CodeBlock_Five" data-action="codeblock" data-function="control-stop">
+                        <image class="codeblock-background" src="assets/blocks/control/block_control_category_stop.png"></image>
+                    </il>
+                    <il class="action-button CodeBlock CodeBlock_Five" data-action="codeblock" data-function="control-wait">
+                        <image class="codeblock-background" src="assets/blocks/control/block_control_category_wait.png"></image>
+                    </il>
+                    <il class="action-button CodeBlock CodeBlock_Five" data-action="codeblock" data-function="control-walking">
+                        <image class="codeblock-background" src="assets/blocks/control/block_control_category_walking.png"></image>
                     </il>
                 </div>
             </div>   
         </div>
         <div id="execution-window">
-            <image id="trash-icon" class="action-button" data-action="reset" src="assets/miscellaneous/trashcan.png"></image>
+            <image id="trash-icon" class="action-button" data-action="reset" src="assets/miscellaneous/trashcan_closed.png"></image>
             <ol id="Taskbar">
-                <il class="placeholder-codeblock" data-status="disabled"></il>
-                <il class="placeholder-codeblock" data-status="disabled"></il>
-                <il class="placeholder-codeblock" data-status="disabled"></il>
-                <il class="placeholder-codeblock" data-status="disabled"></il>
-                <il class="placeholder-codeblock" data-status="disabled"></il>
-                <il class="placeholder-codeblock" data-status="disabled"></il>
-                <il class="placeholder-codeblock" data-status="disabled"></il>
-                <il class="placeholder-codeblock" data-status="disabled"></il>
-                <il class="placeholder-codeblock" data-status="disabled"></il>
+                <il class="placeholder-codeblock" data-status="disabled">
+                    <img src="assets/levels/codeblock-placeholder.png">
+                    <p>1</p>
+                </il>
+                <il class="placeholder-codeblock" data-status="disabled">
+                    <img src="assets/levels/codeblock-placeholder.png">
+                    <p>2</p>
+                </il>
+                <il class="placeholder-codeblock" data-status="disabled">
+                    <img src="assets/levels/codeblock-placeholder.png">
+                    <p>3</p>
+                </il>
+                <il class="placeholder-codeblock" data-status="disabled">
+                    <img src="assets/levels/codeblock-placeholder.png">
+                    <p>4</p>
+                </il>
+                <il class="placeholder-codeblock" data-status="disabled">
+                    <img src="assets/levels/codeblock-placeholder.png">
+                    <p>5</p>
+                </il>
+                <il class="placeholder-codeblock" data-status="disabled">
+                    <img src="assets/levels/codeblock-placeholder.png">
+                    <p>6</p>
+                </il>
+                <il class="placeholder-codeblock" data-status="disabled">
+                    <img src="assets/levels/codeblock-placeholder.png">
+                    <p>7</p>
+                </il>
+                <il class="placeholder-codeblock" data-status="disabled">
+                    <img src="assets/levels/codeblock-placeholder.png">
+                    <p>8</p>
+                </il>
+                <il class="placeholder-codeblock" data-status="disabled">
+                    <img src="assets/levels/codeblock-placeholder.png">
+                    <p>9</p>
+                </il>
+                <il class="placeholder-codeblock" data-status="disabled">
+                    <img src="assets/levels/codeblock-placeholder.png">
+                    <p>10</p>
+                </il>
             </ol>
-            <button class="action-button" data-action="play">Play</button>
+            <img class="action-button" data-action="play" src="assets/miscellaneous/Playlevel button.png">
         </div>
     </div>
-    <div id="pause-window" style="display: none;">
+    <div id="results-window" style="display: none;">
         <image class="Otto-pausepose" src="../assets/miscellaneous/Otto - chapter pose.png"></image>
-        <div id="pause-screen" class="action-button" data-action="pause">
-            <h1 class="pause-text">Pause</h1>
-            <div id="pause-shells">
-                <img class="pause-shell" data-position="left" src="assets/levels/Level_Shell_Gray.png">
-                <img class="pause-shell" data-position="center" src="assets/levels/Level_Shell_Gray.png">
-                <img class="pause-shell" data-position="right" src="assets/levels/Level_Shell_Gray.png">
+        <div id="results-screen">
+            <h1 class="results-text">Pause</h1>
+            <div id="results-shells">
+                <img class="results-shell" data-position="left" src="assets/levels/Level_Shell_Gray.png">
+                <img class="results-shell" data-position="center" src="assets/levels/Level_Shell_Gray.png">
+                <img class="results-shell" data-position="right" src="assets/levels/Level_Shell_Gray.png">
             </div>
             <div id="pause-buttons">
-                <img class="Home" src="assets/miscellaneous/Home button.png">
-                <img class="Play" src="assets/miscellaneous/Playlevel button.png">
-                <img class="Replay" src="assets/miscellaneous/Replay button.png">
+                <img class="Home action-button navigation-button" data-action="reset" data-scene="level-overview" src="assets/miscellaneous/Home button.png">
+                <img class="Play action-button" data-action="pause" src="assets/miscellaneous/Playlevel button.png">
+                <img class="Replay action-button" data-action="reset" src="assets/miscellaneous/Replay button.png">
             </div>
         </div>
+    </div>
+    <div id="loading-screen" class="scene">
+        <img src="../assets/miscellaneous/loading-screen.png">
+    </div>
+
+    <div id="settings-screen" class="scene">
+
+        <div id="settings-navigation">
+            <image class="navigation-button" data-scene="chapter-overview" src="../assets/miscellaneous/Vector.png"></image>
+            <h1 class="gametitle-levels">Settings</h1>
+        </div>
+
+        <div id="settings-window">
+            
+            <div id="settings-window-content">
+                <h2>Sound</h2>
+                <label class="switch" style="float:right">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+
+            <div id="language">
+                <h2>Language</h2>
+                <image src="../assets/miscellaneous/arrow.png"></image>
+            </div>
+
+        </div>
+
     </div>
 </div>
 

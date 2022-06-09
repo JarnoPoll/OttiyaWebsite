@@ -5,7 +5,7 @@
       "blocks": 
       [
         {
-          "function": "move-right"
+          "function": "movement-right"
         }
       ]
     }

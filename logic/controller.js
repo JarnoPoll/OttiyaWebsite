@@ -7,6 +7,10 @@ $(document).ready(function()
 {
     let sceneManager = new SceneManager("menu");
     let levelManager = new LevelManager(document.getElementById("character"), $("#item-holder img"), $('.category-blocks'),"movement", $("#shells-counter .shellcounter"));
+    var currentCategoryButton = $(`#Category img[data-category=movement]`);
+
+    
+    currentCategoryButton[0].style.setProperty("transform", "scale(1.3)");
 
     $('#Taskbar').sortable(
         {
@@ -48,11 +52,12 @@ $(document).ready(function()
     {
         if(levelSlider.selected != null)
         {
+            var chapter = $(levelSlider.selected).parent().data("chapter");
             var level = $(levelSlider.selected).data("level");
             var scene = $(this).data("scene");
-            var itemData = sceneManager.LoadLevel(level);
+            var itemData = sceneManager.LoadLevel(chapter, level);
             levelManager.ResetItems($("#item-holder img"));
-            levelManager.SetItems(itemData);
+            levelManager.SetItems(itemData, chapter, level);
 
             sceneManager.SwitchScene(scene);
         }
@@ -74,18 +79,38 @@ $(document).ready(function()
                 break;
             case "category":
                 console.log("Attempting to set category to: " + $(this).data("category"));
-                levelManager.ChangeCategory($(this).data("category"));
-                break;
-            case "pause":
-                var pauseWindow = document.getElementById("pause-window");
-                levelManager.TogglePause();
-                if($(pauseWindow).is(":visible"))
+                if($(this).data("enabled"))
                 {
-                    $(pauseWindow).hide();
+                    console.log("category was true");
+                    if(levelManager.ChangeCategory($(this).data("category")))
+                    {
+                        if(currentCategoryButton != null)
+                        {
+                            console.log("Scaling OLD: " + $(currentCategoryButton));
+                            currentCategoryButton[0].style.setProperty("transform", "scale(1)");
+                        }
+                        
+                        currentCategoryButton = $(this);
+                        console.log("Scaling NEW");
+                        this.style.setProperty("transform", "scale(1.3)");
+                    }
                 }
                 else
                 {
-                    $(pauseWindow).show();
+                    console.log("category was false");
+                }
+                break;
+            case "pause":
+                var resultWindow = document.getElementById("results-window");
+
+                levelManager.TogglePause();
+                if($(resultWindow).is(":visible"))
+                {
+                    $(resultWindow).hide();
+                }
+                else
+                {
+                    $(resultWindow).show();
                 }
                 break;    
         }
