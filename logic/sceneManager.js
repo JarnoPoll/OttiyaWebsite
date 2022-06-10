@@ -27,7 +27,7 @@ export class SceneManager
         {
             case "level":
                 $('#loading-screen').show();
-                this.WaitForLevel(0).then(() => //Should be 3000
+                this.WaitForLevel(3000).then(() => //Should be 3000
                 {
                     $('#' + this.activeScene).show();
                     $('#loading-screen').hide();
