@@ -504,11 +504,19 @@ class ActionController
     {
         var playerPos = [this.levelData.playerPosition.x, this.levelData.playerPosition.y]
         var targetPos = [this.Clamp((playerPos[0]), 0, 7), this.Clamp((playerPos[1] - 2), 0, 3)]
-
-        if(this.levelData.levelMap[targetPos[1]][targetPos[0]] != 4)
+        
+        //Check for ladder
+        if(this.levelData.levelMap[targetPos[1] + 1][targetPos[0]] != 4)
         {
             console.log("Fail");
             return;
+        }
+        //Check for Collectables
+        switch(this.levelData.levelMap[targetPos[1]][targetPos[0]])
+        {
+            case 3:
+                this.CollectShell(targetPos);
+                break;
         }
 
         this.levelData.player.style.transform = `translate(${targetPos[0] * this.levelData.stepSizeHorizontal}px, ${(3 - targetPos[1]) * -this.levelData.stepSizeVertical}px) scale(${this.levelData.playerPosition.scale}) scaleX(${this.levelData.playerPosition.direction}`;
@@ -522,10 +530,18 @@ class ActionController
         var playerPos = [this.levelData.playerPosition.x, this.levelData.playerPosition.y]
         var targetPos = [this.Clamp((playerPos[0]), 0, 7), this.Clamp((playerPos[1] + 2), 0, 3)]
 
-        if(this.levelData.levelMap[targetPos[1]][targetPos[0]] != 4)
+        //Check for ladder
+        if(this.levelData.levelMap[targetPos[1] - 1][targetPos[0]] != 4)
         {
             console.log("Fail");
             return;
+        }
+        //Check for Collectables
+        switch(this.levelData.levelMap[targetPos[1]][targetPos[0]])
+        {
+            case 3:
+                this.CollectShell(targetPos);
+                break;
         }
 
         this.levelData.player.style.transform = `translate(${targetPos[0] * this.levelData.stepSizeHorizontal}px, ${(3 - targetPos[1]) * -this.levelData.stepSizeVertical}px) scale(${this.levelData.playerPosition.scale}) scaleX(${this.levelData.playerPosition.direction}`;
@@ -540,7 +556,7 @@ class ActionController
         var direction = (this.levelData.levelMap[playerPos[1]][playerPos[0] + (1 * this.levelData.playerPosition.direction)] == 2 ? -1 : 1);
 
         var targetPos = [this.Clamp((playerPos[0] + (1 * this.levelData.playerPosition.direction)), 0, 7), this.Clamp((playerPos[1] + (1 * direction)), 0, 3)];
-        //console.log("X: " + targetPos[0] + " Y: " + targetPos[1]);
+
         switch(this.levelData.levelMap[targetPos[1]][targetPos[0]])
         {
             case 2:
