@@ -5,13 +5,19 @@
       "blocks": 
       [
         {
-          "function": "move-right"
+          "function": "movement-right"
         },
         {
-          "function": "move-up"
+          "function": "movement-left"
         },
         {
-          "function": "move-down"
+          "function": "movement-jump"
+        },
+        {
+          "function": "movement-up"
+        },
+        {
+          "function": "movement-down"
         }
       ]
     },
@@ -20,10 +26,19 @@
       "blocks": 
       [
         {
-          "function": "grow"
+          "function": "appearance-shrink"
         },
         {
-          "function": "shrink"
+          "function": "appearance-grow"
+        },
+        {
+          "function": "appearance-reset"
+        },
+        {
+          "function": "appearance-appear"
+        },
+        {
+          "function": "appearance-disappear"
         }
       ]
     }
@@ -43,5 +58,6 @@
       "itemsHorizontal": [1,0,2,0,3,0,2,3]
     }
   ],
-  "characterFacing": "right"
+  "characterFacing": "right",
+  "characterScale": "1"
 }

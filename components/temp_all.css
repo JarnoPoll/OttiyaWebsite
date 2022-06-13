@@ -228,15 +228,6 @@ img.logo{
     width: 100px;
 }
 
-#character{
-    width: 84px;
-    height: 120px;
-    background-image: url(/assets/levels/Character_Image.png);
-    background-size:contain;
-    background-color: transparent;
-    transition: all ease-in-out 750ms;
-    margin-right: 80px;
-}
 
 #Ground
 {

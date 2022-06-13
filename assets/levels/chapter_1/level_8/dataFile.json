@@ -37,5 +37,6 @@
       "itemsHorizontal": [0,1,2,0,2,2,3,0]
     }
   ],
-  "characterFacing": "right"
+  "characterFacing": "right",
+  "characterScale": "1"
 }

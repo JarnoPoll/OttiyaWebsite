@@ -50,16 +50,12 @@ export class SceneManager
         this.completionData = JSON.parse(this.GetCookie("completionData"));
         console.log(this.completionData);
 
-        /*
-        for (let index = 0; index < completionData.chapterCompletion.length; index++) {
-            const chapterCompletion = completionData.chapterCompletion[index];
+        var chapterTemplates = $(".chapter-template");
+
+        for (let index = 0; index < chapterTemplates.length; index++) {
+            const chapter = chapterTemplates[index];
             
-            if(chapterCompletion)
-            {
-                $(".chapter-template")[index]
-            }
         }
-        */
        
         //Chapter Locking
         //clone.attr("src", `../assets/levels/chapter_${chapter.name}/chapter_backgrounds/chapter_locked.png`);
@@ -67,7 +63,7 @@ export class SceneManager
 
 
         var levelHolders = $(".levelHolder");
-        console.log(levelHolders);
+
         for (let chapter = 0; chapter < levelHolders.length; chapter++) {
             const levelHolder = levelHolders[chapter];
             var levels = $(levelHolder).children();
@@ -368,11 +364,11 @@ export class SceneManager
 
             if(data.characterFacing == "right")
             {
-                return  [itemLocations, 1];
+                return  [itemLocations, 1, data.characterScale];
             }
             else
             {
-                return  [itemLocations, -1];
+                return  [itemLocations, -1, data.characterScale];
             }
         });
     }

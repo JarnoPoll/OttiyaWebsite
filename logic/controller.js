@@ -42,10 +42,12 @@ $(document).ready(function()
 
             var chapter = $(chapterSlider.selected).data("chapter");
             var holders = $(".levelHolder");
-            console.log(holders);
             $(holders).hide();
             var levelHolder = $(".levelHolder[data-chapter='" + chapter + "']").first();
             $(levelHolder).show();
+            
+            //levelSlider.slider = levelHolder;
+            //console.log(levelSlider.slider);
 
         }
 
@@ -297,6 +299,7 @@ function handleDrag(ev) {
 
 class SliderData
 {
+    holder;
     slider;
     isDown = false;
     moved = false;
@@ -306,58 +309,69 @@ class SliderData
 }
 
 var levelSlider = new SliderData();
-levelSlider.slider = document.querySelector('.levelHolder');
 
-levelSlider.slider.addEventListener('mousedown', (e) => {
+//levelSlider.slider = document.querySelector('.levelHolder');
+levelSlider.holder = document.querySelector('.grid-levels');
+
+levelSlider.holder.addEventListener('mousedown', (e) => 
+{
+    levelSlider.slider = $(levelSlider.holder).children(".levelHolder:visible")[0];
     levelSlider.isDown = true;
     levelSlider.startX = e.pageX - levelSlider.slider.offsetLeft;
     levelSlider.scrollLeft = levelSlider.slider.scrollLeft;
 });
-levelSlider.slider.addEventListener('mouseleave', () => {
+
+levelSlider.holder.addEventListener('mouseleave', () => 
+{
     levelSlider.isDown = false;
     levelSlider.moved = false;
     levelSlider.slider.classList.remove('active');
 });
-levelSlider.slider.addEventListener('mouseup', () => {
-    levelSlider.isDown = false;
-if(!levelSlider.moved)
-{
-    var levelElement = $(document.querySelectorAll( ".levelTemplate:hover" ));
-    if(levelElement.length != 0 && levelElement != levelSlider.selected)
-    {
-        if(levelSlider.selected != null)
-        {
-            levelSlider.selected[0].classList.remove('selected');
-            levelSlider.selected = null;
-            levelSlider.selected = levelElement;
-            levelSlider.selected[0].classList.add('selected');
-        }
-        else if(!$(levelElement).hasClass('locked'))
-        {
-            levelSlider.selected = levelElement;
-            levelSlider.selected[0].classList.add('selected');
-        }
-    }
-    
-}
-else
-{
-    levelSlider.moved = false;
-}
-levelSlider.slider.classList.remove('active');
-});
-levelSlider.slider.addEventListener('mousemove', (e) => {
-if(!levelSlider.isDown) return;
 
-e.preventDefault();
-const x = e.pageX - levelSlider.slider.offsetLeft;
-const walk = (x - levelSlider.startX) * 3; //scroll-fast
-levelSlider.slider.scrollLeft = levelSlider.scrollLeft - walk;
-if(!levelSlider.moved && Math.abs(walk) > 40)
+levelSlider.holder.addEventListener('mouseup', () => 
 {
-    levelSlider.slider.classList.add('active');
-    levelSlider.moved = true;
-}
+    levelSlider.isDown = false;
+    if(!levelSlider.moved)
+    {
+        var levelElement = $(document.querySelectorAll( ".levelTemplate:hover" ));
+        
+        if(levelElement.length != 0 && levelElement != levelSlider.selected)
+        {
+            if(levelSlider.selected != null)
+            {
+                levelSlider.selected[0].classList.remove('selected');
+                levelSlider.selected = null;
+                levelSlider.selected = levelElement;
+                levelSlider.selected[0].classList.add('selected');
+            }
+            else if(!$(levelElement).hasClass('locked'))
+            {
+                levelSlider.selected = levelElement;
+                levelSlider.selected[0].classList.add('selected');
+            }
+        }
+        
+    }
+    else
+    {
+        levelSlider.moved = false;
+    }
+    levelSlider.slider.classList.remove('active');
+});
+
+levelSlider.holder.addEventListener('mousemove', (e) => 
+{
+    if(!levelSlider.isDown) return;
+    console.log("Logging");
+    e.preventDefault();
+    const x = e.pageX - levelSlider.slider.offsetLeft;
+    const walk = (x - levelSlider.startX) * 3; //scroll-fast
+    levelSlider.slider.scrollLeft = levelSlider.scrollLeft - walk;
+    if(!levelSlider.moved && Math.abs(walk) > 40)
+    {
+        levelSlider.slider.classList.add('active');
+        levelSlider.moved = true;
+    }
 });
 
 

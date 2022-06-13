@@ -33,6 +33,8 @@
   }
 #grid-chapters{
     display: grid;
+    height: 500px;
+    margin-top: 50px;
     grid-template-columns: 1fr;
     grid-template-rows: auto;
     color: lighten(gray, 25%);
