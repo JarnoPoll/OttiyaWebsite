@@ -15,8 +15,9 @@ class LevelData
     isPaused = false;
     actionIntervalID;
     levelMap = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]];
-    playerPosition = {x: 0, y: 0, scale: 1, direction: 0};
-    playerStartingPosition = {x: 0, y: 0, scale: 1, direction: 0};
+    playerPosition = {x: 0, y: 0, scale: 0, direction: 0, transparent: false};
+    playerStartingPosition = {x: 0, y: 0, scale: 0, direction: 0, transparent: false};
+    playerHeight = 168;
     chapterNumber;
     levelNumber;
 }
@@ -46,7 +47,17 @@ export class LevelManager
 
     Reset(taskbar, blocks, character, shells)
     {
-        this.levelData.player.style.transform = `translate(${this.levelData.playerStartingPosition.x * this.levelData.stepSizeHorizontal}px, ${(3 - this.levelData.playerStartingPosition.y) * -this.levelData.stepSizeVertical}px) scale(${this.levelData.playerStartingPosition.scale}) scaleX(${this.levelData.playerStartingPosition.direction})`;
+        if(this.levelData.playerStartingPosition.direction == 1)
+        {
+            this.levelData.player.style.backgroundImage = "url('/assets/levels/Character_Image2.png')";
+        }
+        else
+        {
+            this.levelData.player.style.backgroundImage = "url('/assets/levels/Character_Image2R.png')";
+        }
+        this.levelData.player.style.transform = `translate(${this.levelData.playerStartingPosition.x * this.levelData.stepSizeHorizontal}px, ${((3 - this.levelData.playerStartingPosition.y) * -this.levelData.stepSizeVertical) + (1-this.levelData.playerStartingPosition.scale) * (this.levelData.playerHeight / 2)}px) scale(${this.levelData.playerStartingPosition.scale})`;
+        $(this.levelData.player).attr("data-transparent", false);
+        
         this.collectedShells = 0;
 
         clearInterval(this.levelData.actionIntervalID);
@@ -70,6 +81,7 @@ export class LevelManager
         for (let index = 0; index < this.levelData.shells.length; index++) {
             const element = this.levelData.shells[index];
             $(element).attr("src", "assets/levels/Level_Shell_Gray.png");
+            $(element).attr("data-collected", false);
         }
 
         var pickups = $(this.levelData.items).filter(".shell");
@@ -151,7 +163,7 @@ export class LevelManager
             {
                 var taskbarChildren = document.getElementById("Taskbar").children;
                 var actions = $(taskbarChildren).filter(".CodeBlock");
-                this.levelData.actionIntervalID = setInterval(this.CheckAction.bind(this), 1000, actions)
+                this.levelData.actionIntervalID = setInterval(this.CheckAction.bind(this), 1200, actions)
                 this.levelData.isPaused = false;
             }
             else
@@ -243,7 +255,7 @@ export class LevelManager
 
             cookieData.starCompletion[this.levelData.chapterNumber][this.levelData.levelNumber] = collectedShells.length;
             cookieData.levelCompletion[this.levelData.chapterNumber][this.levelData.levelNumber] = true;
-            if(cookieData.levelCompletion[this.levelData.chapterNumber].length == this.levelData.levelNumber)
+            if(cookieData.levelCompletion[this.levelData.chapterNumber].length == this.levelData.levelNumber + 1)
             {
                 cookieData.chapterCompletion[this.levelData.chapterNumber] = true;
             }
@@ -280,8 +292,6 @@ export class LevelManager
 
         var localData = this.levelData;
         localData.shellCount = 0;
-        localData.obstacleCount = 0;
-        localData.ladderCount = 0;
 
         for (let index = 0; index < localData.shells.length; index++) {
             const element = localData.shells[index];
@@ -304,15 +314,25 @@ export class LevelManager
                             localData.playerStartingPosition.x = index;
                             localData.playerStartingPosition.y = vertical;
                             localData.playerStartingPosition.direction = result[1];
-                            localData.playerStartingPosition.scale = 1;
-                            localData.player.style.transform = `translate(${index * localData.stepSizeHorizontal}px, ${(3 - vertical) * -localData.stepSizeVertical}px) scale(${localData.playerStartingPosition.scale}) scaleX(${localData.playerStartingPosition.direction})`;
+                            localData.playerStartingPosition.scale = result[2];
+                            console.log(localData.player.clientHeight / 2);
+                            if(result[1] == 1)
+                            {
+                                localData.player.style.backgroundImage = "url('/assets/levels/Character_Image2.png')";
+                            }
+                            else
+                            {
+                                localData.player.style.backgroundImage = "url('/assets/levels/Character_Image2R.png')";
+                            }
+                            localData.player.style.transform = `translate(${index * localData.stepSizeHorizontal}px, ${((3 - vertical) * -localData.stepSizeVertical) + (1-localData.playerStartingPosition.scale) * (localData.playerHeight / 2)}px) scale(${localData.playerStartingPosition.scale})`;
                             break;
                         case 2:
                             //obstacle
-                            var item = $(localData.items).filter('.obstacle')[localData.obstacleCount];
+                            var template = $(localData.items).filter('.obstacle')[0];
+                            var item = template.cloneNode();
+                            template.after(item);
                             item.style.transform = `translate(${index * localData.stepSizeHorizontal}px, ${((3 - vertical) + 1) * -localData.stepSizeVertical}px) scale(1)`;
                             $(item).show();
-                            localData.obstacleCount++;
                             break;
                         case 3:
                             //shell
@@ -328,10 +348,29 @@ export class LevelManager
                             break;
                         case 4:
                             //ladder
-                            var item = $(localData.items).filter('.ladder')[localData.ladderCount];
+                            var template = $(localData.items).filter('.ladder')[0];
+                            var item = template.cloneNode();
+                            template.after(item);
                             item.style.transform = `translate(${index * localData.stepSizeHorizontal}px, ${((3 - vertical) + 1) * -localData.stepSizeVertical}px) scale(1)`;
                             $(item).show();
-                            localData.ladderCount++;
+                            break;
+                        case 5:
+                            //obstacle + shell
+                            var template = $(localData.items).filter('.obstacle')[0];
+                            var item = template.cloneNode();
+                            template.after(item);
+                            item.style.transform = `translate(${index * localData.stepSizeHorizontal}px, ${((3 - vertical) + 1) * -localData.stepSizeVertical}px) scale(1)`;
+                            $(item).show();
+
+                            var item = $(localData.items).filter('.shell')[localData.shellCount];
+                            console.log(item);
+                            $(item).attr("data-position", `${vertical},${index}`);
+                            item.style.transform = `translate(${index * localData.stepSizeHorizontal}px, ${((3 - vertical) + 1) * -localData.stepSizeVertical}px) scale(1)`;
+                            $(item).show();
+                            var shell = $(localData.shells)[localData.shellCount];
+                            $(shell).attr("data-collected", false)
+                            $(shell).show();
+                            localData.shellCount++;
                             break;
                         default:
                             break;
@@ -409,6 +448,7 @@ class ActionController
                             data.playerPosition.y = i;
                             data.playerPosition.direction = data.playerStartingPosition.direction;
                             data.playerPosition.scale = data.playerStartingPosition.scale;
+                            data.playerPosition.visible = data.playerStartingPosition.visible;
                         }
                     }
                 }
@@ -417,12 +457,6 @@ class ActionController
             classReference[finalName](result[0]);
         });
     }
-
-    //1 player
-    //2 obstacle
-    //3 shell
-    //4 ladder
-
     CollectShell(targetPos)
     {
         var shells = $(this.levelData.items).filter(".shell");
@@ -445,10 +479,24 @@ class ActionController
         }
     }
 
+    Wait(ms)
+    {
+        return new Promise(resolve => setTimeout(resolve, ms));  
+    }
+
     Clamp(num, min, max) 
     {
         return Math.min(Math.max(num, min), max);
-    } 
+    }
+
+    SetPlayerPosition(playerPos, playerScale)
+    {
+        this.levelData.player.style.transform = `translate(${playerPos[0] * this.levelData.stepSizeHorizontal}px, ${((3 - playerPos[1]) * -this.levelData.stepSizeVertical) + (1-playerScale) * (this.levelData.playerHeight / 2)}px) scale(${playerScale})`;
+        
+        this.levelData.playerPosition.x = playerPos[0];
+        this.levelData.playerPosition.y = playerPos[1];
+        this.levelData.playerPosition.scale = playerScale;
+    }
 
     MovementRight(test)
     {
@@ -459,16 +507,26 @@ class ActionController
         {
             case 2:
                 console.log("Fail");
-                return;
+                if(this.levelData.playerPosition.visible)
+                {
+                    return;
+                }
+                break;
             case 3:
+                this.CollectShell(targetPos);
+                break;
+            case 5:
                 this.CollectShell(targetPos);
                 break;
         }
         
-        this.levelData.player.style.transform = `translate(${targetPos[0] * this.levelData.stepSizeHorizontal}px, ${(3 - targetPos[1]) * -this.levelData.stepSizeVertical}px) scale(${this.levelData.playerPosition.scale}) scaleX(${this.levelData.playerPosition.direction}`;
-        
-        this.levelData.playerPosition.x = targetPos[0];
-        this.levelData.playerPosition.y = targetPos[1];
+        if(this.levelData.playerPosition.direction != 1)
+        {
+            this.levelData.player.style.backgroundImage = "url('/assets/levels/Character_Image2.png')";
+            this.levelData.playerPosition.direction = 1;
+        }
+
+        this.SetPlayerPosition(targetPos, this.levelData.playerPosition.scale);
     }
 
     MovementLeft()
@@ -479,8 +537,15 @@ class ActionController
         {
             case 2:
                 console.log("Fail");
-                return;
+                if(this.levelData.playerPosition.visible)
+                {
+                    return;
+                }
+                break;
             case 3:
+                this.CollectShell(targetPos);
+                break;
+            case 5:
                 this.CollectShell(targetPos);
                 break;
         }
@@ -494,10 +559,13 @@ class ActionController
             }
         }
 
-        this.levelData.player.style.transform = `translate(${targetPos[0] * this.levelData.stepSizeHorizontal}px, ${(3 - targetPos[1]) * -this.levelData.stepSizeVertical}px) scale(${this.levelData.playerPosition.scale}) scaleX(${this.levelData.playerPosition.direction}`;
-        
-        this.levelData.playerPosition.x = targetPos[0];
-        this.levelData.playerPosition.y = targetPos[1];
+        if(this.levelData.playerPosition.direction == 1)
+        {
+            this.levelData.player.style.backgroundImage = "url('/assets/levels/Character_Image2R.png')";
+            this.levelData.playerPosition.direction = -1;
+        }
+
+        this.SetPlayerPosition(targetPos, this.levelData.playerPosition.scale);
     }
 
     MovementUp()
@@ -517,12 +585,12 @@ class ActionController
             case 3:
                 this.CollectShell(targetPos);
                 break;
+            case 5:
+                this.CollectShell(targetPos);
+                break;
         }
 
-        this.levelData.player.style.transform = `translate(${targetPos[0] * this.levelData.stepSizeHorizontal}px, ${(3 - targetPos[1]) * -this.levelData.stepSizeVertical}px) scale(${this.levelData.playerPosition.scale}) scaleX(${this.levelData.playerPosition.direction}`;
-        
-        this.levelData.playerPosition.x = targetPos[0];
-        this.levelData.playerPosition.y = targetPos[1];
+        this.SetPlayerPosition(targetPos, this.levelData.playerPosition.scale);
     }
 
     MovementDown()
@@ -542,12 +610,12 @@ class ActionController
             case 3:
                 this.CollectShell(targetPos);
                 break;
+            case 5:
+                this.CollectShell(targetPos);
+                break;
         }
 
-        this.levelData.player.style.transform = `translate(${targetPos[0] * this.levelData.stepSizeHorizontal}px, ${(3 - targetPos[1]) * -this.levelData.stepSizeVertical}px) scale(${this.levelData.playerPosition.scale}) scaleX(${this.levelData.playerPosition.direction}`;
-        
-        this.levelData.playerPosition.x = targetPos[0];
-        this.levelData.playerPosition.y = targetPos[1];
+        this.SetPlayerPosition(targetPos, this.levelData.playerPosition.scale);
     }
 
     MovementJump()
@@ -565,33 +633,54 @@ class ActionController
             case 3:
                 this.CollectShell(targetPos);
                 break;
+            case 5:
+                this.CollectShell(targetPos);
+                break;
         }
 
-        this.levelData.player.style.transform = `translate(${targetPos[0] * this.levelData.stepSizeHorizontal}px, ${(3 - targetPos[1]) * -this.levelData.stepSizeVertical}px) scale(${this.levelData.playerPosition.scale}) scaleX(${this.levelData.playerPosition.direction}`;
-        
-        this.levelData.playerPosition.x = targetPos[0];
-        this.levelData.playerPosition.y = targetPos[1];
+        this.SetPlayerPosition(targetPos, this.levelData.playerPosition.scale);
+    }
+
+    AppearanceGrow()
+    {
+        var playerPos = [this.levelData.playerPosition.x, this.levelData.playerPosition.y]
+        var checkPos = [this.Clamp((playerPos[0]), 0, 7), this.Clamp((playerPos[1] - 1), 0, 3)]
+        var playerScale =  this.Clamp((this.levelData.playerPosition.scale * 2), 0.5, 2);
+
+        switch(this.levelData.levelMap[checkPos[1]][checkPos[0]])
+        {
+            case 2:
+
+                console.log("Fail");
+                return;
+            case 3:
+                this.CollectShell(checkPos);
+                break;
+            case 5:
+                this.CollectShell(targetPos);
+                break;
+        }
+
+        this.SetPlayerPosition(playerPos, playerScale);
+    }
+
+    AppearanceShrink()
+    {
+        var playerPos = [this.levelData.playerPosition.x, this.levelData.playerPosition.y]
+        var playerScale =  this.Clamp((this.levelData.playerPosition.scale / 2), 0.5, 2);
+
+        this.SetPlayerPosition(playerPos, playerScale);
+    }
+
+    AppearanceDisappear()
+    {
+        $(this.levelData.player).attr("data-transparent", true);
+        this.levelData.transparent = true;
+    }
+
+    AppearanceAppear()
+    {
+        $(this.levelData.player).attr("data-transparent", false);
+        this.levelData.transparent = false;
     }
 }
-
-
-
-var basePath = "./assets/levels/";
-
-/*
-function LoadLevel()
-{
-    fetch(CreatePath(1,1)).then(response => { return response.json(); })
-    .then(jsondata => 
-        console.log(jsondata.Time)
-        //Use gathered data.
-        );
-}
-
-function CreatePath(difficulty, level)
-{
-    return basePath + `difficulty_${difficulty}/level_${level}/dataFile.json`;
-}
-*/
-
-

@@ -8,6 +8,7 @@
     border-radius: 30px;
     position: relative;
     align-content: center;
+    z-index: 11;
     margin-top: calc(-1 * var(--height));
 }
 

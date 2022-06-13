@@ -5,13 +5,19 @@
       "blocks": 
       [
         {
-          "function": "move-right"
+          "function": "movement-right"
         },
         {
-          "function": "move-up"
+          "function": "movement-left"
         },
         {
-          "function": "move-down"
+          "function": "movement-jump"
+        },
+        {
+          "function": "movement-up"
+        },
+        {
+          "function": "movement-down"
         }
       ]
     },
@@ -20,10 +26,16 @@
       "blocks": 
       [
         {
-          "function": "grow"
+          "function": "appearance-shrink"
         },
         {
-          "function": "shrink"
+          "function": "appearance-grow"
+        },
+        {
+          "function": "appearance-reset"
+        },
+        {
+          "function": "appearance-disappear"
         }
       ]
     }
@@ -40,8 +52,9 @@
       "itemsHorizontal": [0,2,2,2,2,2,2,2]
     },
     {
-      "itemsHorizontal": [1,2,2,3,2,2,3,2]
+      "itemsHorizontal": [1,2,2,5,2,2,5,2]
     }
   ],
-  "characterFacing": "right"
+  "characterFacing": "right",
+  "characterScale": "1"
 }

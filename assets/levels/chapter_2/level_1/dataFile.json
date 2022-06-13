@@ -5,7 +5,28 @@
       "blocks": 
       [
         {
-          "function": "move-right"
+          "function": "movement-right"
+        },
+        {
+          "function": "movement-left"
+        },
+        {
+          "function": "movement-jump"
+        },
+        {
+          "function": "movement-up"
+        },
+        {
+          "function": "movement-down"
+        }
+      ]
+    },
+    {
+      "name": "appearance",
+      "blocks": 
+      [
+        {
+          "function": "appearance-grow"
         }
       ]
     }
@@ -25,5 +46,6 @@
       "itemsHorizontal": [0,0,0,1,0,0,0,0]
     }
   ],
-  "characterFacing": "right"
+  "characterFacing": "right",
+  "characterScale": "1"
 }
