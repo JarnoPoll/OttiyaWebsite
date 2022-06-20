@@ -1,0 +1,23 @@
+
+.scene#animation-screen
+{
+    background-color: #7B69DC;
+    display: flex;
+    vertical-align: middle;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.animation-playbutton{
+    width: 80px;
+    height: 80px;
+    background-color: white;
+    border-radius: 100%;
+    margin: auto;
+    margin-bottom: 50px;
+}
+
+.video{
+    margin:auto;
+    display: flex;
+}

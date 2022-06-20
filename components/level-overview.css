@@ -1,18 +1,19 @@
-.scene#level-overview
-{
+.scene#level-overview{
     display: flex;
+    justify-content: flex-start;
     align-items: center;
     flex-direction: column;
     background-color: #7B69DC;
 }
-
-.scene#level-overview .navigation-button
-{
-    height: 80px;  
-    width: 80px;
-    border-radius: 100%;
+.scene#level-overview h2{
+    font-family: 'Grandstander';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 158.02%;
+    color: white;
+    margin: 0px;
 }
-
 .scene#level-overview #map-navigation
 {
     height: 100px;
@@ -33,11 +34,11 @@
 .levelHolder {
     position: relative;
     width: 100%;
+    height: 400px;
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
     transition: all 0.2s;
-    transform: scale(0.98);
     will-change: transform;
     user-select: none;
     cursor: pointer;
@@ -46,25 +47,28 @@
 .levelHolder.active {
     cursor: grabbing;
     cursor: -webkit-grabbing;
-    transform: scale(1);
   }
 
 .levelTemplate {
     display: inline-block;
-    margin: 2em 1em;
     overflow: hidden;
     height: 300px;
+    margin-top: 60px;
+    
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 .levelTemplate.selected {
-    height: 360px;
+    height: 330px;
+    margin-top: 30px;
 }
 
 .levelTemplate p{
-    font-size: 180px;
+    font-size: 160px;
     position: relative;
     color: white;
-    top: -350px;
+    top: -330px;
     text-align: center;
     font-family: 'Grandstander', serif;
     margin-bottom: 300px;
@@ -79,9 +83,11 @@
 .levelHolder::-webkit-scrollbar {
     display: none;
   }
+
 .grid-levels{
     display: grid;
-    margin-top: 50px;
+    height: 400px;
+    width: 1020px;
     grid-template-columns: 1fr;
     grid-template-rows: auto;
     color: lighten(gray, 25%);
@@ -90,18 +96,84 @@
     padding: 0;
 }
 
-/*
-.scene#level-overview #map-level-selectors
+#level-overview-top{
+    display: flex;
+    align-items: center;
+  }
+  
+  #level-overview-top .navigation-button[data-scene="chapter-overview"]{
+    width: 70px;
+    height: 60px;
+  }
+  
+  #level-overview-top h1{
+    font-family: 'Grandstander';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 48px;
+    line-height: 158.02%;
+    color: white;
+    margin-left: 300px;
+    margin-right: 250px;
+  }
+
+  #level-overview-bottom{
+    height: 100%;
+  }
+  
+  #level-overview-bottom div{
+    margin-top: -15px;
+  }
+
+  
+/*Level selection screen*/
+.Otto-levelpose
 {
-    height: 100px;
-    margin: auto;
-    margin-top: 150px;
+    position: relative; 
+    bottom: -52px;
+    left: -426px;
 }
-*/
-/*
-.scene#level-overview #map-level-selectors .navigation-button
+
+.Play-levels
 {
-    margin: 15px;
-    font-size: xx-large;
+    position: relative; 
+    bottom: 142px;
+    right: -484px;
 }
-*/
+
+.Settings-levels
+{
+    position: relative; 
+    top: -890px;
+    right: -515px;
+}
+
+.backarrow
+{
+    position: relative;
+    top: 177px;
+    left: -524px;
+}
+
+.levelTemplate-shell{
+    width: 60px;
+    height: 60px;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.levelTemplate-shell[data-position="left"]{
+    transform: rotate(-25deg);
+    margin-top: 20px;
+}
+.levelTemplate-shell[data-position="right"]{
+    transform: rotate(25deg);
+    margin-top: 20px;
+}
+.levelTemplate-shell[data-position="center"]{
+}
+.levelTemplate-shells{
+  display: flex;
+  justify-content: center;
+  margin-bottom: -10px
+}

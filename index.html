@@ -14,86 +14,74 @@
 
 <body>
 
-<!-- Header -->
+<!-- Header 
 <div class="header">
     <a href="https://www.ottiya.com/"><img class="logo"  src="images/LogoPlaceholder.jpeg" alt="Logo"></a>
     <a class="header-button" href="#">Help</a>
     <a class="header-button" href="#">Scratch Course</a>
 </div>
+-->
 
-<div id="CodeBlockTest"></div>
 <!-- Game goes here -->
 <div id="main" class="scene">
-    <div id="loading" class="scene">
-
-    </div>
     <div id="menu" class="scene">
-    <h1 class="gametitlescreen">BRING OTTO HOME</h1>
-    <h2 class="agameby">A game by</h2>
-    <image class="Ottiyalogo-transparent" src="../assets/miscellaneous/Logo Ottiya Transparent.png"></image>
-    <button class="navigation-button" data-scene="chapter-overview">Start Demo</button>
+        <h1 class="gametitlescreen">BRING OTTO HOME</h1>
+        <h2 class="agameby">A game by</h2>
+        <image class="Ottiyalogo-transparent" src="../assets/miscellaneous/Logo Ottiya Transparent.png"></image>
+        <button class="navigation-button" data-scene="chapter-overview">Start Demo</button>
+        <button class="navigation-button" data-scene="animation-screen">Play Animation</button>
     </div>
-
     <div id="chapter-overview" class="scene">
-        <div id="totitlescreen">
-            <img class="backarrow navigation-button" data-scene="menu" src="../assets/miscellaneous/Vector.png">
-        </div>
-        <div id="title">
-            <h1 class="gametitle-chapters">BRING OTTO HOME</h1>
-        </div>
-        <div id="chapter">
-            <h2 id="chapter-selection">Chapters</h2>
+        <div id="chapter-overview-top">
+            <img class="navigation-button" data-scene="menu" src="../assets/miscellaneous/Vector.png">
+            <h1>BRING OTTO HOME</h1>
+            <image class="navigation-button" data-scene="settings-screen" src="../assets/miscellaneous/Settings button.png"></image>
         </div>
         <div id="grid-chapters">
             <div id="chapter-holder">
                 <image class="chapter-template" data-chapter="" src=""></image>
             </div>
         </div>
-        <div id="Otto">
-            <image class="Otto-chapterpose" src="../assets/miscellaneous/Otto - chapter pose.png"></image>
+        <div id="chapter-overview-bottom">
+            <div id="Otto">
+                <image class="Otto-chapterpose" src="../assets/miscellaneous/Otto - chapter pose.png"></image>
+            </div>
+            <div id="Play-button">
+                <image class="Play-chapters navigation-button" data-scene="level-overview" src="../assets/miscellaneous/Play button.png"></image>
+            </div>
         </div>
-        <div id="Play-button">
-            <image class="Play-chapters navigation-button" data-scene="level-overview" src="../assets/miscellaneous/Play button.png"></image>
-        </div>
-        <div id="Settings-button">
-            <image class="Settings-chapters navigation-button" data-scene="settings-screen" src="../assets/miscellaneous/Settings button.png"></image>
-        </div>
-
     </div>
     <div id="level-overview" class="scene">
 
-        <div id="map-navigation">
+        <div id="level-overview-top">
             <image class="navigation-button" data-scene="chapter-overview" src="../assets/miscellaneous/Vector.png"></image>
-            <h1 class="gametitle-levels">BRING OTTO HOME</h1>
+            <h1>BRING OTTO HOME</h1>
+            <image class="navigation-button" data-scene="settings-screen" src="../assets/miscellaneous/Settings button.png"></image>
         </div>
-
-        <div id="chapter name">
-            <h2 class="chapter-name">Chapter 1</h2>
-        </div>
+        <h2 id="chapter-name">Chapter 1</h2>
         <div class="grid-levels">
             <div class="levelHolder" data-chapter="1">
                 <div class="levelTemplate"  data-level="">
                     <div class="levelTemplate-shells">
-                        <img class="levelTemplate-shell" src="">
-                        <img class="levelTemplate-shell" src="">
-                        <img class="levelTemplate-shell" src="">
+                        <img class="levelTemplate-shell" data-position="left" src="">
+                        <img class="levelTemplate-shell" data-position="center" src="">
+                        <img class="levelTemplate-shell" data-position="right" src="">
                     </div>
                     <img class="levelTemplate-button" src="../assets/miscellaneous/level_overview/level_unlocked.png"></img>
                     <p></p>
                 </div>
             </div>
         </div>
-        <div id="Otto">
-            <image class="Otto-levelpose" src="../assets/miscellaneous/Otto - chapter pose.png"></image>
-        </div>
+        <div id="level-overview-bottom">
+            <div id="Otto">
+                <image class="Otto-levelpose" src="../assets/miscellaneous/Otto - chapter pose.png"></image>
+            </div>
 
-        <div id="Play-button">
-            <image class="level-buttons Play-levels" src="../assets/miscellaneous/Play button.png" data-level="1" data-scene="level"></image>
+            <div id="Play-button">
+                <image class="level-buttons Play-levels" src="../assets/miscellaneous/Play button.png" data-level="1" data-scene="level"></image>
+            </div>
         </div>
-
-        <div id="Settings-button">
-            <image class="Settings-levels navigation-button" data-scene="settings-screen" src="../assets/miscellaneous/Settings button.png"></image>
-        </div>
+       
 
     </div>
     <div id="level" class="scene">
@@ -114,9 +102,10 @@
             <div id="item-holder">
                 <image class="obstacle" src="../assets/levels/Ground_Block_Chapter_1.png"></image>
                 <image class="ladder" src="assets/miscellaneous/ladder.png"></image>
-                <image class="shell" src="assets/levels/Level_Shell_Color.png" data-position=""></image>
-                <image class="shell" src="assets/levels/Level_Shell_Color.png" data-position=""></image>
-                <image class="shell" src="assets/levels/Level_Shell_Color.png" data-position=""></image>
+                <image class="shell" src="assets/levels/Level_Shell_Color.png" data-position="" data-hidden="false"></image>
+                <image class="shell" src="assets/levels/Level_Shell_Color.png" data-position="" data-hidden="false"></image>
+                <image class="shell" src="assets/levels/Level_Shell_Color.png" data-position="" data-hidden="false"></image>
+                <image class="goal" src="" data-position="" data-collected="false"></image>
             </div>
             <div id="Ground">
 
@@ -136,8 +125,11 @@
                     <il class="action-button CodeBlock CodeBlock_One" data-action="codeblock" data-function="movement-left">
                         <image class="codeblock-background" src="assets/blocks/movement/block_movement_category_left.png">
                     </il>
-                    <il class="action-button CodeBlock CodeBlock_One" data-action="codeblock" data-function="movement-jump">
-                        <image class="codeblock-background" src="assets/blocks/movement/block_movement_category_jump.png">
+                    <il class="action-button CodeBlock CodeBlock_One" data-action="codeblock" data-function="movement-jump-up">
+                        <image class="codeblock-background" src="assets/blocks/movement/block_movement_category_jump_up.png">
+                    </il>
+                    <il class="action-button CodeBlock CodeBlock_One" data-action="codeblock" data-function="movement-jump-down">
+                        <image class="codeblock-background" src="assets/blocks/movement/block_movement_category_jump_down.png">
                     </il>
                     <il class="action-button CodeBlock CodeBlock_Two" data-action="codeblock" data-function="movement-up">
                         <image class="codeblock-background" src="assets/blocks/movement/block_movement_category_up.png"></image>
@@ -260,7 +252,11 @@
     <div id="loading-screen" class="scene">
         <img src="../assets/miscellaneous/loading-screen.png">
     </div>
-
+    <div id="animation-screen" class="scene">
+        <video class="video" width="1154px" height="834px" controls>
+            <source src="assets/miscellaneous/Animation.mp4" type="video/mp4">
+        </video>
+    </div>
     <div id="settings-screen" class="scene">
 
         <div id="settings-navigation">
@@ -278,8 +274,21 @@
                 </label>
             </div>
 
-            <div id="language">
+            <div id="settings-text">
                 <h2>Language</h2>
+                <h2>Parental controls</h2>
+                <h2>? Help</h2>
+            </div>
+
+            <div id="settings-arrow1">
+                <image src="../assets/miscellaneous/arrow.png"></image>
+            </div>
+
+            <div id="settings-arrow2">
+                <image src="../assets/miscellaneous/arrow.png"></image>
+            </div>
+
+            <div id="settings-arrow3">
                 <image src="../assets/miscellaneous/arrow.png"></image>
             </div>
 
@@ -288,13 +297,13 @@
     </div>
 </div>
 
-<!-- Footer -->
+<!-- Footer
 <div class="footer">
     <div class="logo footer">
         <a href="https://www.ottiya.com/"><img class="logo"  src="images/LogoPlaceholder.jpeg" alt="Logo"></a>
     </div>
 </div>
-
+-->
 </body>
 
 

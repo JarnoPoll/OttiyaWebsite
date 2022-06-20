@@ -29,6 +29,7 @@
     align-items: flex-end;
 }
 
+
 #character{
     width: 138px;
     height: 168px;
@@ -235,6 +236,12 @@
 
 .scene#level #item-holder{
     height: 0px;
+}
+
+.goal{
+    position: absolute;
+    margin-top: -48px;
+    margin-left: 30px;
 }
 
 .shell{

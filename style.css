@@ -1,4 +1,5 @@
 /* Importing used components. */
+@import "components/animation.css";
 @import "components/temp_all.css";
 @import "components/menu.css";
 @import "components/level-overview.css";
