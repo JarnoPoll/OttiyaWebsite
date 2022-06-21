@@ -57,7 +57,7 @@ export class ActionController
 
         return "";
     }
-    
+
     StopTaskbar()
     {
         clearInterval(this.levelData.actionIntervalID);
@@ -257,6 +257,10 @@ export class ActionController
         switch(this.levelData.levelMap[targetPos[1]][targetPos[0]])
         {
             case 2:
+                console.log("Fail");
+                this.StopTaskbar();
+                return false;
+            case 0:
                 console.log("Fail");
                 this.StopTaskbar();
                 return false;
