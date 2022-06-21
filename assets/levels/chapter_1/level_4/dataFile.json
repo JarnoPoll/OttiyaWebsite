@@ -11,7 +11,10 @@
           "function": "movement-left"
         },
         {
-          "function": "movement-jump"
+          "function": "movement-jump-up"
+        },
+        {
+          "function": "movement-jump-down"
         }
       ]
     }

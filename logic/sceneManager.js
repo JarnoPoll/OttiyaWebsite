@@ -12,6 +12,10 @@ export class SceneManager
     {
         this.activeScene = startingScene;
         $('.scene:not(#' + startingScene + ', #main)').hide();
+        $('.scene:not(#' + startingScene + ', #main)').each(function( index ) 
+        {
+            this.style.visibility = "visible";
+        });
     }
 
     SwitchScene(scene)
@@ -36,6 +40,14 @@ export class SceneManager
             case "level-overview":
                 //Update levels and chapters and show scene
                 this.UpdateLevels();
+                $('#' + this.activeScene).show();
+                break;
+            case "animation-screen":
+                var completionData = JSON.parse(this.GetCookie("completionData"));
+                if(completionData.starCompletion[0][0] != 0)
+                {
+                    this.activeScene = "chapter-overview";
+                }
                 $('#' + this.activeScene).show();
                 break;
             default:
@@ -231,10 +243,40 @@ export class SceneManager
                         var shells = clone.find('.levelTemplate-shell');
                         for (let j = 0; j < shells.length; j++) 
                         {
-                            const shell = shells[j];
+                            var shell;
+
+                            if(level.starAmount == 2)
+                            { 
+                                switch(j)
+                                {
+                                    case 0:
+                                        shell = shells[0];
+                                        break;
+                                    case 1:
+                                        shell = shells[1];
+                                        break;
+                                }
+                            }
+                            else
+                            {
+                                switch(j)
+                                {
+                                    case 0:
+                                        shell = shells[1];
+                                        break;
+                                    case 1:
+                                        shell = shells[0];
+                                        break;
+                                    case 2:
+                                        shell = shells[2];
+                                        break;
+                                }
+                            }
+                           
                             if((level.starAmount) > j)
                             {
-                                $(shell).show();
+                                //$(shell).show();
+                                shell.style.visibility = "visible";
 
                                 if((completionData.starCompletion[index][i] - 1) >= j)
                                 {
@@ -249,7 +291,7 @@ export class SceneManager
                             else
                             {
                                 console.log("Hiding stars");
-                                $(shell).hide();
+                                shell.style.visibility = "hidden";
                             }
                         }
 

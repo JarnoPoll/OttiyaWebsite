@@ -11,17 +11,23 @@
 .scene#main
 {
     background-color: black;
-    margin: auto;
     align-items: center;
     justify-content: center;
-    margin-top: 1%;
+    margin: auto;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 5px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
 }
 
 .scene#menu
 {
     background-color: #7B69DC;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    visibility: visible;
 }
+
 
 .scene#menu .navigation-button
 {
@@ -31,18 +37,15 @@
     width: 500px;
     border-radius: 30px;
     font-size: xx-large;
-    top: 501px;
-    right: 321px;
+    margin-top: 40px;
 }
 
 /*Title screen*/
 .Ottiyalogo-transparent
 {
-    height: 150px;
-    width: 150px;
-    position: relative;
-    top: 304px;
-    left: -4px;
+    height: 91px;
+    width: 100;
+    margin-bottom: 40px;
 }
 
 .gametitlescreen
@@ -52,8 +55,8 @@
     font-size: 48px;
     font-family: 'Crete Round', serif;
     position: relative; 
-    top: 127px;
-    left: 396px;
+    margin-bottom: 0px;
+    margin-top: -50px;
 }
 
 .agameby
@@ -62,116 +65,12 @@
     font-family: 'Crete Round', serif;
     font-weight: 400;
     position: relative; 
-    top: 212px;
-    left: 120px;
 }
 
-/*Chapter selection screen*/
-.scene#chapter-overview
-{
+body{
     display: flex;
+    vertical-align: middle;
     justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background-color: #7B69DC;
-}
-
-.scene #chapters
-{
-    position: relative; 
-    top: 109px;
-}
-
-.gametitle-chapters
-{
-    color: white;
-    font-weight: 900;
-    font-size: 48px;
-    font-family: 'Crete Round', serif;
-    position: relative; 
-    top: 100px;
-}
-
-.gametitle-levels
-{
-    color: white;
-    font-weight: 900;
-    font-size: 48px;
-    margin-left: 390px;
-    font-family: 'Crete Round', serif;
-    position: relative; 
-}
-
-.chapter-name
-{
-    color: white;
-    font-family: 'Crete Round', serif;
-    font-weight: 400;
-    position: relative; 
-}
-
-.scene #chapter-selection
-{
-    color: white;
-    font-family: 'Crete Round', serif;
-    font-weight: 400;
-    position: relative;
-    top: 76px;
-}
-
-.Play-chapters
-{
-    position: relative; 
-    bottom: 55px;
-    right: -484px;
-}
-
-.Otto-chapterpose
-{
-    position: relative; 
-    bottom: -144px;
-    left: -426px;
-}
-
-.Settings-chapters
-{
-    position: relative; 
-    top: -846px;
-    right: -515px;
-}
-
-/*Level selection screen*/
-.Otto-levelpose
-{
-    position: relative; 
-    bottom: -52px;
-    left: -426px;
-}
-
-.Play-levels
-{
-    position: relative; 
-    bottom: 140px;
-    right: -484px;
-}
-
-.Settings-levels
-{
-    position: relative; 
-    top: -890px;
-    right: -515px;
-}
-
-.backarrow
-{
-    position: relative;
-    top: 177px;
-    left: -524px;
-}
-
-.scene #shellcounter-level1
-{
-    position: relative;
-    bottom: -76px;
-    left: -100px;
+    height: 100vh;
+    background-image: linear-gradient(326deg, #a4508b 0%, #5f0a87 74%);
 }

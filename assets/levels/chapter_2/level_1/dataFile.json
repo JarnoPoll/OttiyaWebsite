@@ -11,7 +11,10 @@
           "function": "movement-left"
         },
         {
-          "function": "movement-jump"
+          "function": "movement-jump-up"
+        },
+        {
+          "function": "movement-jump-down"
         },
         {
           "function": "movement-up"
@@ -37,10 +40,10 @@
       "itemsHorizontal": [0,0,0,0,0,0,0,0]
     },
     {
-      "itemsHorizontal": [0,0,0,0,0,0,0,0]
+      "itemsHorizontal": [0,0,0,3,0,0,0,0]
     },
     {
-      "itemsHorizontal": [0,0,0,3,0,0,0,0]
+      "itemsHorizontal": [0,0,0,0,0,0,0,0]
     },
     {
       "itemsHorizontal": [0,0,0,1,0,0,0,0]

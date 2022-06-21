@@ -1,3 +1,5 @@
+import {ActionController} from './ActionController.js';
+
 class LevelData
 {
     player;
@@ -120,7 +122,7 @@ export class LevelManager
         {
             for (let index = 0; index < this.levelData.categories.length; index++) {
                 const element = this.levelData.categories[index];
-                console.log(element);
+                
                 if($(element).data("category") == this.levelData.currentCategory)
                 {
                     console.log("Hiding Shown");
@@ -150,6 +152,7 @@ export class LevelManager
 
         this.levelData.actionsRemaining = actions.length;
         this.levelData.shellCount = 0;
+
         var actionController = new ActionController();
         this.levelData.actionIntervalID = setInterval(this.CheckAction.bind(this), 1000, actions, actionController)
     }
@@ -184,22 +187,7 @@ export class LevelManager
         console.log("Actions Length: " + actions.length + " Actions Remaining: " + this.levelData.actionsRemaining);
         var task = actions[actions.length - this.levelData.actionsRemaining];
 
-        //this.runAction($(task).data("function"));
-        
         actionController.CallAction($(task).data("function"), this.levelData);
-
-        /*
-        var result = this.MovePlayer();
-
-        var intervalID = this.levelData.actionIntervalID;
-        result.then(function(result)
-        {
-            if(result == false)
-            {
-                clearInterval(intervalID);
-            }
-        });
-        */
 
         this.levelData.actionsRemaining--;
         if(this.levelData.actionsRemaining <= 0)
@@ -217,9 +205,9 @@ export class LevelManager
     CheckCompletion()
     {
         var availableShells = this.levelData.shells.filter(":visible");
-        
+        var goalCollected = $(this.levelData.items.filter(`.goal:visible`)[0]).attr("data-collected");
+        console.log(goalCollected);
         var collectedShells = $(availableShells).filter(`[data-collected='${true}']`);
-        console.log(collectedShells);
         var resultWindow = document.getElementById("results-window");
         var resultShells = $(resultWindow).find(".results-shell");
         var resultText = $(resultWindow).find(".results-text").first();
@@ -245,7 +233,7 @@ export class LevelManager
 
         var cookieData = JSON.parse(this.GetCookie("completionData"));
 
-        if(availableShells.length == collectedShells.length)
+        if(availableShells.length == collectedShells.length && (goalCollected == true || !window.goalCollected))
         {
             //won
             resultText.text("Congratulations!");
@@ -315,6 +303,7 @@ export class LevelManager
                             localData.playerStartingPosition.y = vertical;
                             localData.playerStartingPosition.direction = result[1];
                             localData.playerStartingPosition.scale = result[2];
+                            localData.playerStartingPosition.transparent = false;
                             console.log(localData.player.clientHeight / 2);
                             if(result[1] == 1)
                             {
@@ -363,14 +352,21 @@ export class LevelManager
                             $(item).show();
 
                             var item = $(localData.items).filter('.shell')[localData.shellCount];
-                            console.log(item);
                             $(item).attr("data-position", `${vertical},${index}`);
+                            $(item).attr("data-hidden", true);
                             item.style.transform = `translate(${index * localData.stepSizeHorizontal}px, ${((3 - vertical) + 1) * -localData.stepSizeVertical}px) scale(1)`;
                             $(item).show();
                             var shell = $(localData.shells)[localData.shellCount];
                             $(shell).attr("data-collected", false)
                             $(shell).show();
                             localData.shellCount++;
+                            break;
+                        case 6:
+                            //Spawn End Goals
+                            var item = $(localData.items).filter('.goal')[0];
+                            $(item).attr("src", `/assets/levels/chapter_${localData.chapterNumber + 1}/chapter_goal.png`)
+                            item.style.transform = `translate(${index * localData.stepSizeHorizontal}px, ${((3 - vertical) + 1) * -localData.stepSizeVertical}px) scale(1)`;
+                            $(item).show();
                             break;
                         default:
                             break;
@@ -415,272 +411,4 @@ export class LevelManager
     }
 
     
-}
-
-class ActionController
-{
-    levelData;
-
-    CallAction(name, data)
-    {
-        var sections = name.split('-');
-        var finalName = "";
-        for (let index = 0; index < sections.length; index++) {
-            const element = sections[index];
-            
-            finalName += element.charAt(0).toUpperCase() + element.substring(1);
-        }
-
-        var classReference = this;
-
-        data.itemData.then(function(result)
-        {
-            if(classReference.levelData == null)
-            {
-                for (let i = 0; i < result[0].length; i++) 
-                {
-                    for (let j = 0; j < result[0][i].length; j++) 
-                    {
-                        data.levelMap[i][j] = result[0][i][j];
-                        if(result[0][i][j] == 1)
-                        {
-                            data.playerPosition.x = j;
-                            data.playerPosition.y = i;
-                            data.playerPosition.direction = data.playerStartingPosition.direction;
-                            data.playerPosition.scale = data.playerStartingPosition.scale;
-                            data.playerPosition.visible = data.playerStartingPosition.visible;
-                        }
-                    }
-                }
-                classReference.levelData = data;
-            }
-            classReference[finalName](result[0]);
-        });
-    }
-    CollectShell(targetPos)
-    {
-        var shells = $(this.levelData.items).filter(".shell");
-            
-        for (let i = 0; i < shells.length; i++) 
-        {
-            const shell = shells[i];
-            var positionRaw = $(shell).attr("data-position");
-            var position = positionRaw.split(',')
-            if(position.length > 0)
-            {
-                if(position[1] == targetPos[0] && position[0] == targetPos[1])
-                {
-                    $(shell).hide();
-                    $(this.levelData.shells[this.levelData.shellCount]).attr("src", "assets/levels/Level_Shell_Color.png")
-                    $(this.levelData.shells[this.levelData.shellCount]).attr("data-collected", "true")
-                    this.levelData.shellCount++;
-                }
-            }
-        }
-    }
-
-    Wait(ms)
-    {
-        return new Promise(resolve => setTimeout(resolve, ms));  
-    }
-
-    Clamp(num, min, max) 
-    {
-        return Math.min(Math.max(num, min), max);
-    }
-
-    SetPlayerPosition(playerPos, playerScale)
-    {
-        this.levelData.player.style.transform = `translate(${playerPos[0] * this.levelData.stepSizeHorizontal}px, ${((3 - playerPos[1]) * -this.levelData.stepSizeVertical) + (1-playerScale) * (this.levelData.playerHeight / 2)}px) scale(${playerScale})`;
-        
-        this.levelData.playerPosition.x = playerPos[0];
-        this.levelData.playerPosition.y = playerPos[1];
-        this.levelData.playerPosition.scale = playerScale;
-    }
-
-    MovementRight(test)
-    {
-        var playerPos = [this.levelData.playerPosition.x, this.levelData.playerPosition.y]
-        var targetPos = [this.Clamp((playerPos[0] + 1), 0, 7), this.Clamp((playerPos[1]), 0, 3)]
-
-        switch(this.levelData.levelMap[targetPos[1]][targetPos[0]])
-        {
-            case 2:
-                console.log("Fail");
-                if(this.levelData.playerPosition.visible)
-                {
-                    return;
-                }
-                break;
-            case 3:
-                this.CollectShell(targetPos);
-                break;
-            case 5:
-                this.CollectShell(targetPos);
-                break;
-        }
-        
-        if(this.levelData.playerPosition.direction != 1)
-        {
-            this.levelData.player.style.backgroundImage = "url('/assets/levels/Character_Image2.png')";
-            this.levelData.playerPosition.direction = 1;
-        }
-
-        this.SetPlayerPosition(targetPos, this.levelData.playerPosition.scale);
-    }
-
-    MovementLeft()
-    {
-        var playerPos = [this.levelData.playerPosition.x, this.levelData.playerPosition.y]
-        var targetPos = [this.Clamp((playerPos[0] - 1), 0, 7), this.Clamp((playerPos[1]), 0, 3)]
-        switch(this.levelData.levelMap[targetPos[1]][targetPos[0]])
-        {
-            case 2:
-                console.log("Fail");
-                if(this.levelData.playerPosition.visible)
-                {
-                    return;
-                }
-                break;
-            case 3:
-                this.CollectShell(targetPos);
-                break;
-            case 5:
-                this.CollectShell(targetPos);
-                break;
-        }
-
-        if(playerPos[1] < 3)
-        {
-            if(this.levelData.levelMap[this.Clamp((playerPos[1] + 1), 0, 3)][targetPos[0]] != 2)
-            {
-                console.log("FLOATING");
-                return;
-            }
-        }
-
-        if(this.levelData.playerPosition.direction == 1)
-        {
-            this.levelData.player.style.backgroundImage = "url('/assets/levels/Character_Image2R.png')";
-            this.levelData.playerPosition.direction = -1;
-        }
-
-        this.SetPlayerPosition(targetPos, this.levelData.playerPosition.scale);
-    }
-
-    MovementUp()
-    {
-        var playerPos = [this.levelData.playerPosition.x, this.levelData.playerPosition.y]
-        var targetPos = [this.Clamp((playerPos[0]), 0, 7), this.Clamp((playerPos[1] - 2), 0, 3)]
-        
-        //Check for ladder
-        if(this.levelData.levelMap[targetPos[1] + 1][targetPos[0]] != 4)
-        {
-            console.log("Fail");
-            return;
-        }
-        //Check for Collectables
-        switch(this.levelData.levelMap[targetPos[1]][targetPos[0]])
-        {
-            case 3:
-                this.CollectShell(targetPos);
-                break;
-            case 5:
-                this.CollectShell(targetPos);
-                break;
-        }
-
-        this.SetPlayerPosition(targetPos, this.levelData.playerPosition.scale);
-    }
-
-    MovementDown()
-    {
-        var playerPos = [this.levelData.playerPosition.x, this.levelData.playerPosition.y]
-        var targetPos = [this.Clamp((playerPos[0]), 0, 7), this.Clamp((playerPos[1] + 2), 0, 3)]
-
-        //Check for ladder
-        if(this.levelData.levelMap[targetPos[1] - 1][targetPos[0]] != 4)
-        {
-            console.log("Fail");
-            return;
-        }
-        //Check for Collectables
-        switch(this.levelData.levelMap[targetPos[1]][targetPos[0]])
-        {
-            case 3:
-                this.CollectShell(targetPos);
-                break;
-            case 5:
-                this.CollectShell(targetPos);
-                break;
-        }
-
-        this.SetPlayerPosition(targetPos, this.levelData.playerPosition.scale);
-    }
-
-    MovementJump()
-    {
-        var playerPos = [this.levelData.playerPosition.x, this.levelData.playerPosition.y];
-        var direction = (this.levelData.levelMap[playerPos[1]][playerPos[0] + (1 * this.levelData.playerPosition.direction)] == 2 ? -1 : 1);
-
-        var targetPos = [this.Clamp((playerPos[0] + (1 * this.levelData.playerPosition.direction)), 0, 7), this.Clamp((playerPos[1] + (1 * direction)), 0, 3)];
-
-        switch(this.levelData.levelMap[targetPos[1]][targetPos[0]])
-        {
-            case 2:
-                console.log("Fail");
-                return;
-            case 3:
-                this.CollectShell(targetPos);
-                break;
-            case 5:
-                this.CollectShell(targetPos);
-                break;
-        }
-
-        this.SetPlayerPosition(targetPos, this.levelData.playerPosition.scale);
-    }
-
-    AppearanceGrow()
-    {
-        var playerPos = [this.levelData.playerPosition.x, this.levelData.playerPosition.y]
-        var checkPos = [this.Clamp((playerPos[0]), 0, 7), this.Clamp((playerPos[1] - 1), 0, 3)]
-        var playerScale =  this.Clamp((this.levelData.playerPosition.scale * 2), 0.5, 2);
-
-        switch(this.levelData.levelMap[checkPos[1]][checkPos[0]])
-        {
-            case 2:
-
-                console.log("Fail");
-                return;
-            case 3:
-                this.CollectShell(checkPos);
-                break;
-            case 5:
-                this.CollectShell(targetPos);
-                break;
-        }
-
-        this.SetPlayerPosition(playerPos, playerScale);
-    }
-
-    AppearanceShrink()
-    {
-        var playerPos = [this.levelData.playerPosition.x, this.levelData.playerPosition.y]
-        var playerScale =  this.Clamp((this.levelData.playerPosition.scale / 2), 0.5, 2);
-
-        this.SetPlayerPosition(playerPos, playerScale);
-    }
-
-    AppearanceDisappear()
-    {
-        $(this.levelData.player).attr("data-transparent", true);
-        this.levelData.transparent = true;
-    }
-
-    AppearanceAppear()
-    {
-        $(this.levelData.player).attr("data-transparent", false);
-        this.levelData.transparent = false;
-    }
 }

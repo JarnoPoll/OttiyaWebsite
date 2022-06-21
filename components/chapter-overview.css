@@ -1,40 +1,119 @@
+.scene#chapter-overview
+{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    background-color: #7B69DC;
+    
+}
+
+.scene #chapters
+{
+    position: relative; 
+    top: 109px;
+}
+
+.gametitle-chapters
+{
+    color: white;
+    font-weight: 900;
+    font-size: 48px;
+    font-family: 'Crete Round', serif;
+    position: relative; 
+    top: 100px;
+}
+
+.gametitle-levels
+{
+    color: white;
+    font-weight: 900;
+    font-size: 48px;
+    margin-left: 390px;
+    font-family: 'Crete Round', serif;
+    position: relative; 
+}
+
+.chapter-name
+{
+    color: white;
+    font-family: 'Crete Round', serif;
+    font-weight: 400;
+    position: relative; 
+}
+
+.Play-chapters
+{
+    position: relative; 
+    bottom: 15px;
+    right: -484px;
+}
+
+.Otto-chapterpose
+{
+    position: relative; 
+    bottom: -144px;
+    left: -426px;
+}
+
+.Settings-chapters
+{
+    position: relative; 
+    top: -846px;
+    right: -515px;
+}
+
+.scene #chapter-selection
+{
+    color: white;
+    font-family: 'Crete Round', serif;
+    font-weight: 400;
+    position: relative;
+    top: 76px;
+}
+
 #chapter-holder {
     position: relative;
-    width: 100%;
+    width: 1000px;
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
     transition: all 0.2s;
-    transform: scale(0.98);
     will-change: transform;
     user-select: none;
     cursor: pointer;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 10px;
+    
 }
 
 #chapter-holder.active {
     cursor: grabbing;
     cursor: -webkit-grabbing;
-    transform: scale(1);
   }
 
 .chapter-template {
     display: inline-block;
-    margin: 2em 1em;
     overflow: hidden;
     height: 300px;
+    width: 280px;
 }
 
 .chapter-template.selected {
-  height: 340px;
+  height: 330px;
+  width: 308px;
 }
 
 #chapter-holder::-webkit-scrollbar {
     display: none;
   }
+
 #grid-chapters{
     display: grid;
-    height: 500px;
-    margin-top: 50px;
+    height: 400px;
+    width: 1000px;
     grid-template-columns: 1fr;
     grid-template-rows: auto;
     color: lighten(gray, 25%);
@@ -43,17 +122,35 @@
     padding: 0;
 }
 
-.levelTemplate-shell{
-    width: 50px;
-    height: 50px;
-}
-.levelTemplate-shells{
-  display: flex;
-  justify-content: space-between;
-  padding-bottom: 20px;
-  padding-left: 20px;
-  padding-right: 20px;
-}
 .locked{
   pointer-events: none;
+}
+
+#chapter-overview-top{
+  display: flex;
+  align-items: center;
+}
+
+#chapter-overview-top .navigation-button[data-scene="menu"]{
+  width: 70px;
+  height: 60px;
+}
+
+#chapter-overview-top h1{
+  font-family: 'Grandstander';
+  font-style: normal;
+  font-weight: 900;
+  font-size: 48px;
+  line-height: 158.02%;
+  color: white;
+  margin-left: 300px;
+  margin-right: 250px;
+}
+
+#chapter-overview-bottom{
+  height: 150px;
+}
+
+#chapter-overview-bottom div{
+  margin-top: -50px;
 }
