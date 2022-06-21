@@ -149,11 +149,24 @@ export class ActionController
         var playerPos = [this.levelData.playerPosition.x, this.levelData.playerPosition.y]
         var targetPos = [this.Clamp((playerPos[0] + 1), 0, 7), this.Clamp((playerPos[1]), 0, 3)]
 
+        if(this.levelData.playerPosition.direction != 1)
+        {
+            this.levelData.player.style.backgroundImage = "url('/assets/levels/Character_Image2.png')";
+            this.levelData.playerPosition.direction = 1;
+        }
+
+        if(playerPos[0] == 7)
+        {
+                console.log("Found End of Map");
+                this.StopTaskbar();
+                return false;
+        }
         if(!this.levelData.playerPosition.transparent)
         {
             if(this.CheckObstacles(targetPos))
             {
                 console.log("Found Obstacle");
+                this.StopTaskbar();
                 return false;
             }
         }
@@ -182,6 +195,18 @@ export class ActionController
     MovementLeft()
     {
         var playerPos = [this.levelData.playerPosition.x, this.levelData.playerPosition.y]
+
+        if(this.levelData.playerPosition.direction == 1)
+        {
+            this.levelData.player.style.backgroundImage = "url('/assets/levels/Character_Image2R.png')";
+            this.levelData.playerPosition.direction = -1;
+        }
+        if(playerPos[0] == 0)
+        {
+            console.log("Found End of Map");
+            this.StopTaskbar();
+            return false;
+        }
         var targetPos = [this.Clamp((playerPos[0] - 1), 0, 7), this.Clamp((playerPos[1]), 0, 3)]
         switch(this.levelData.levelMap[targetPos[1]][targetPos[0]])
         {
@@ -204,11 +229,6 @@ export class ActionController
             }
         }
 
-        if(this.levelData.playerPosition.direction == 1)
-        {
-            this.levelData.player.style.backgroundImage = "url('/assets/levels/Character_Image2R.png')";
-            this.levelData.playerPosition.direction = -1;
-        }
 
         this.CheckShells(targetPos);
         this.SetPlayerPosition(targetPos, this.levelData.playerPosition.scale);
