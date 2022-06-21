@@ -71,7 +71,7 @@ export class ActionController
 
     CheckShells(targetPos, playerScale)
     {
-        var shells = $(this.levelData.items).filter(".shell");
+        var shells = $(this.levelData.items).filter(".shell:visible");
 
         if(!window.playerScale)
         {
@@ -88,12 +88,12 @@ export class ActionController
             {
                 for (let index = 0; index < (playerScale * 2); index++) 
                 {
-                    console.log(position[1] + "," + position[0] + " " +  this.Clamp((targetPos[1] - index), 0, 3) + "," + targetPos[0]);
+                    console.log("TEST: " + position[1] + "=" + targetPos[0] + " && " + position[0] + "=" + this.Clamp((targetPos[1] - index), 0, 3));
                     if(position[1] == targetPos[0] && position[0] == this.Clamp((targetPos[1] - index), 0, 3))
                     {
-                        console.log(this.levelData.playerPosition.transparent.toString());
                         if($(shell).attr("data-hidden") == this.levelData.playerPosition.transparent.toString())
                         {
+                            console.log("Collected Shell");
                             $(shell).hide();
                             $(this.levelData.shells[this.levelData.shellCount]).attr("src", "assets/levels/Level_Shell_Color.png")
                             $(this.levelData.shells[this.levelData.shellCount]).attr("data-collected", "true")
@@ -236,6 +236,12 @@ export class ActionController
         var playerPos = [this.levelData.playerPosition.x, this.levelData.playerPosition.y]
         var targetPos = [this.Clamp((playerPos[0]), 0, 7), this.Clamp((playerPos[1] + 2), 0, 3)]
 
+        if(playerPos[1] > 1)
+        {
+            console.log("Fail");
+            this.StopTaskbar();
+            return false;
+        }
         //Check for ladder
         if(this.levelData.levelMap[targetPos[1] - 1][targetPos[0]] != 4)
         {
