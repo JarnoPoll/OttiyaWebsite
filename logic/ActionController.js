@@ -261,11 +261,13 @@ export class ActionController
                 this.StopTaskbar();
                 return false;
             case 0:
-                console.log("Fail");
-                this.StopTaskbar();
-                return false;
+                if(this.levelData.levelMap[targetPos[1] + 1][targetPos[0]] != 2)
+                {
+                    console.log("Fail");
+                    this.StopTaskbar();
+                    return false;
+                }
         }
-
         this.CheckShells(targetPos);
         this.SetPlayerPosition(targetPos, this.levelData.playerPosition.scale);
     }
