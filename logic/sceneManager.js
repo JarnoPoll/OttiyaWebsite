@@ -66,7 +66,22 @@ export class SceneManager
 
         for (let index = 0; index < chapterTemplates.length; index++) {
             const chapter = chapterTemplates[index];
-            
+            var chapterNumber = $(chapter).attr("data-chapter");
+            if(this.completionData.chapterCompletion[index])
+            {
+                $(chapter).attr("src", `../assets/levels/chapter_${chapterNumber}/chapter_backgrounds/chapter_completed.png`);
+                        
+            }
+            else if(this.completionData.chapterCompletion[index - 1])
+            {
+                $(chapter).attr("src", `../assets/levels/chapter_${chapterNumber}/chapter_backgrounds/chapter_unlocked.png`);
+                chapter.classList.remove('locked');
+            }
+            else
+            {
+                $(chapter).attr("src", `../assets/levels/chapter_${chapterNumber}/chapter_backgrounds/chapter_locked.png`);
+                chapter.classList.add('locked');
+            }
         }
        
         //Chapter Locking
