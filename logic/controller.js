@@ -15,12 +15,14 @@ $(document).ready(function()
             items: "il:not(.placeholder-codeblock)"
         }).disableSelection();
 
-    console.log(document.cookie);
     currentCategoryButton[0].style.setProperty("transform", "scale(1.3)");
 
-    console.log(document.cookie);
     
-        console.log(document.cookie);
+    $("#video")[0].addEventListener("ended", function()
+    {
+        sceneManager.SwitchScene("chapter-overview")
+    });
+
     $('.navigation-button').on("click", function()
     {
         var scene = $(this).data("scene");
@@ -33,7 +35,6 @@ $(document).ready(function()
             levelManager.SetItems(itemData);
         }
         else if(scene == "level-overview")
-
         {
             if(chapterSlider.selected == null)
             {
@@ -103,7 +104,20 @@ $(document).ready(function()
                         }
                         
                         currentCategoryButton = $(this);
-                        console.log("Scaling NEW");
+                        console.log($(this).parent());
+                        switch($(this).data("category"))
+                        {
+                            case "movement":
+                                $(this).parent()[0].style.setProperty("background-color", "#E7F7FD");
+                                break;
+                            case "appearance":
+                                $(this).parent()[0].style.setProperty("background-color", "#F9EAFA");
+                                break;
+                            case "control":
+                                $(this).parent()[0].style.setProperty("background-color", "#FFF3E6");
+                                break;
+                            
+                        }
                         this.style.setProperty("transform", "scale(1.3)");
                     }
                 }
@@ -179,7 +193,7 @@ var isFlickering;
 
 function handleDrag(ev) {
     var elem = ev.target;
-    console.log("Draggom");
+
     if ( ! isDragging ) {
         placeholders = $('#Taskbar il:visible:not(.action-button):not(.main-placeholder-codeblock)');
 

@@ -125,11 +125,13 @@
 
 .scene#level #Category{
     width: 250px;
+    margin-right: 30px;
     height: 90px;
     border-radius: 0px 20px 20px 20px;
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1;
     background-color: #E7F7FD;
 }
 
@@ -156,14 +158,34 @@
 .scene#level .category-blocks{
     display: flex;
     width: 964px;
-    margin-left: -20px;
+    margin-left: -50px;
+    padding-left: 40px;
     height: 90px;
     align-items: center;
-    justify-content: center;
-    background-color: #D4ECF7;
+    justify-content: flex-start;
     border-radius: 0px 0px 20px 0px;
 }
 
+.scene#level .category-blocks[data-category="movement"]{
+    background-color: #D4ECF7;
+}
+.scene#level .category-blocks[data-category="appearance"]{
+    background-color: #F3D6F5;
+}
+.scene#level .category-blocks[data-category="control"]{
+    background-color: #FEE8CD;
+}
+.scene#level .category-blocks div{
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    
+}
+.scene#level .category-blocks div img{
+    height: 70px;
+    width: 70px;
+    margin-right: 30px;
+}
 .CodeBlock{
     left: 0px;
     top: 0px;

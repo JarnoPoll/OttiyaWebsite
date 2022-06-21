@@ -28,8 +28,7 @@
         <img class="logo" src="assets/miscellaneous/game_logo.png" alt="Logo">
         <h2 class="agameby">A game by</h2>
         <image class="Ottiyalogo-transparent" src="../assets/miscellaneous/Logo Ottiya Transparent.png"></image>
-        <button class="navigation-button" data-scene="chapter-overview">Start Demo</button>
-        <button class="navigation-button" data-scene="animation-screen">Play Animation</button>
+        <button class="navigation-button" data-scene="animation-screen">Start Demo</button>
     </div>
     <div id="chapter-overview" class="scene">
         <div id="chapter-overview-top">
@@ -137,6 +136,9 @@
                     <il class="action-button CodeBlock CodeBlock_Three" data-action="codeblock" data-function="movement-down">
                         <image class="codeblock-background" src="assets/blocks/movement/block_movement_category_down.png"></image>
                     </il>
+                    <div>
+                        <img src="assets/miscellaneous/Logo Ottiya Transparent.png">
+                    </div>
                 </div>
                 <div class="category-blocks" data-category="appearance">
                     <il class="action-button CodeBlock CodeBlock_Five" data-action="codeblock" data-function="appearance-grow">
@@ -157,6 +159,9 @@
                     <il class="action-button CodeBlock CodeBlock_Four" data-action="codeblock" data-function="appearance-say">
                         <image class="codeblock-background" src="assets/blocks/appearance/block_appearance_say.png"></image>
                     </il>
+                    <div>
+                        <img src="assets/miscellaneous/Logo Ottiya Transparent.png">
+                    </div>
                 </div>
                 <div class="category-blocks" data-category="control">
                     <il class="action-button CodeBlock CodeBlock_Five" data-action="codeblock" data-function="control-repeat">
@@ -174,6 +179,9 @@
                     <il class="action-button CodeBlock CodeBlock_Five" data-action="codeblock" data-function="control-walking">
                         <image class="codeblock-background" src="assets/blocks/control/block_control_category_walking.png"></image>
                     </il>
+                    <div>
+                        <img src="assets/miscellaneous/Logo Ottiya Transparent.png">
+                    </div>
                 </div>
             </div>   
         </div>
@@ -257,7 +265,8 @@
     </div>
     <div id="animation-screen" class="scene" style="display: none;">
         <img class="animation-shell" src="assets/levels/Level_Shell_Color.png" alt="Shell">
-        <video class="video" width="1154px" height="834px" controls>
+        <img class="animation-shell2" src="assets/levels/Level_Shell_Color.png" alt="Shell">
+        <video id="video" width="1088px" height="612px" controls>
             <source src="assets/miscellaneous/Animation.mp4" type="video/mp4">
         </video>
     </div>

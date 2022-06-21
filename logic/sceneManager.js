@@ -42,6 +42,14 @@ export class SceneManager
                 this.UpdateLevels();
                 $('#' + this.activeScene).show();
                 break;
+            case "animation-screen":
+                var completionData = JSON.parse(this.GetCookie("completionData"));
+                if(completionData.starCompletion[0][0] != 0)
+                {
+                    this.activeScene = "chapter-overview";
+                }
+                $('#' + this.activeScene).show();
+                break;
             default:
                 $('#' + this.activeScene).show();
                 break;

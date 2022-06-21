@@ -122,7 +122,7 @@ export class LevelManager
         {
             for (let index = 0; index < this.levelData.categories.length; index++) {
                 const element = this.levelData.categories[index];
-                console.log(element);
+                
                 if($(element).data("category") == this.levelData.currentCategory)
                 {
                     console.log("Hiding Shown");
