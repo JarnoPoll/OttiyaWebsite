@@ -9,17 +9,17 @@ $(document).ready(function()
     let levelManager = new LevelManager(document.getElementById("character"), $("#item-holder img"), $('.category-blocks'),"movement", $("#shells-counter .shellcounter"));
     var currentCategoryButton = $(`#Category img[data-category=movement]`);
 
-    
-    console.log(document.cookie);
-    currentCategoryButton[0].style.setProperty("transform", "scale(1.3)");
-
-    console.log(document.cookie);
     $('#Taskbar').sortable(
         {
             'axis': 'x',
             items: "il:not(.placeholder-codeblock)"
         }).disableSelection();
 
+    console.log(document.cookie);
+    currentCategoryButton[0].style.setProperty("transform", "scale(1.3)");
+
+    console.log(document.cookie);
+    
         console.log(document.cookie);
     $('.navigation-button').on("click", function()
     {
@@ -134,17 +134,40 @@ $(document).ready(function()
     for (let element of elements) 
     {
         var mc = new Hammer(element);
-        console.log("added");
         mc.add( new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 0 }) );
-        mc.add(new Hammer.Press);
+        mc.add(new Hammer.Tap);
         mc.on("pan", handleDrag);
-        mc.on("press", handlePressed);
+        mc.on("tap", handleTap);
     }
     
     sceneManager.LoadChapters(document.getElementsByClassName('chapter-template'), document.getElementsByClassName('levelTemplate'));    
 });
 
+function handleTap(ev)
+{
+    var elem = ev.target;
 
+    placeholders = $('#Taskbar il:visible:not(.action-button)');
+    if(placeholders.length == 0) return;
+
+    placeholders[0].setAttribute("data-status", "disabled");
+    isFlickering = false;
+    var children = $(placeholders[0]).parent().children(".CodeBlock");
+    var clone = $(elem).clone(true);
+    if(children.length == 0)
+    {
+        $(placeholders[0]).parent().prepend(clone);
+    }
+    else
+    {
+        $(placeholders[0]).parent().children(".CodeBlock").last().after(clone);
+    }
+    var mc = new Hammer(clone[0]);
+    mc.add( new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 0 }) );
+    mc.add(new Hammer.Press);
+    mc.on("pan", handleTaskbarDrag);
+    $(placeholders[0]).hide();
+}
 
 var lastPosX = 0;
 var lastPosY = 0;
@@ -154,20 +177,11 @@ var taskbarPosition;
 var placeholders;
 var isFlickering;
 
-function handlePressed(ev)
-{
-    var duplicate = ev.target.cloneNode(true);
-    duplicate.style = "";
-    var placeholders = $('#Taskbar il:visible:not(.action-button)');
-    placeholders[0].parentNode.insertBefore(duplicate, placeholders[0].nextSibling);
-    $(placeholders[0]).hide();
-}
-
 function handleDrag(ev) {
     var elem = ev.target;
-    
+    console.log("Draggom");
     if ( ! isDragging ) {
-        placeholders = $('#Taskbar il:visible:not(.action-button)');
+        placeholders = $('#Taskbar il:visible:not(.action-button):not(.main-placeholder-codeblock)');
 
         if(placeholders.length == 0)
             return;
@@ -216,64 +230,6 @@ function handleDrag(ev) {
         placeholders[0].setAttribute("data-status", "disabled");
         isFlickering = false;
     }
-    /*
-        var closest;
-        var lastPosition = taskbarPosition;
-        var startingIndex = lastPosition - 1;
-        var endingIndex = lastPosition + 2;
-
-        if(lastPosition == 0)
-        { 
-            startingIndex = lastPosition;
-        }
-        else if(lastPosition == taskbarBlocks.length - 1)
-        {
-            endingIndex = lastPosition + 1;
-        }
-
-        for (let index = startingIndex; index < endingIndex; index++)
-        {
-            const elementRect = taskbarBlocks[index].getBoundingClientRect();
-            var dragRect = elem.getBoundingClientRect();
-            var distance = Math.abs(elementRect.left - dragRect.left);
-
-            if(index == startingIndex)
-            {
-                taskbarPosition = index;
-                closest = distance;
-            }
-            else if(closest > distance)
-            {
-                taskbarPosition = index;
-                closest = distance;
-            }
-            
-            //console.log("Index: " + index + " Current Closest: " + closest + "Distance: " + distance);
-        }
-        
-        if(lastPosition != taskbarPosition)
-        {
-        
-            
-            if(lastPosition < taskbarPosition)
-            {
-                console.log("Move RIGHT");
-                if ($(placeholders[0]).not(':last-child'))
-                $(placeholders[0]).next().after($(taskbarBlocks[taskbarPosition]));
-            }
-            else
-            {
-                console.log("Move LEFT");
-                if ($(placeholders[0]).not(':first-child'))
-                $(placeholders[0]).prev().before($(taskbarBlocks[taskbarPosition]));
-            }
-            
-
-            
-            //placeholders[0].parentNode.insertBefore(taskbarBlocks[taskbarPosition], placeholders[0].nextSibling);
-            taskbarBlocks = $('#Taskbar il:visible');
-        }
-    */
 
     if (ev.isFinal) 
     {
@@ -282,19 +238,173 @@ function handleDrag(ev) {
         elem.style.top = "0px";
         console.log("Finished dragging!");
         
-        if(posY > 40 && posY < 200)
+        if(Math.abs(posX) < 20 && Math.abs(posY) < 20)
         {
             placeholders[0].setAttribute("data-status", "disabled");
             isFlickering = false;
-            var duplicate = elem.cloneNode(true);
-            duplicate.style = "";
-            placeholders[0].parentNode.insertBefore(duplicate, placeholders[0].nextSibling);
+            var children = $(placeholders[0]).parent().children(".CodeBlock");
+            var clone = $(elem).clone(true);
+            if(children.length == 0)
+            {
+                $(placeholders[0]).parent().prepend(clone);
+            }
+            else
+            {
+                $(placeholders[0]).parent().children(".CodeBlock").last().after(clone);
+            }
+            var mc = new Hammer(clone[0]);
+            mc.add( new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: -1 }) );
+            mc.add(new Hammer.Press);
+            mc.on("pan", handleTaskbarDrag);
+            $(placeholders[0]).hide();
+        }
+        else if(posY > 40 && posY < 200)
+        {
+            placeholders[0].setAttribute("data-status", "disabled");
+            isFlickering = false;
+            var children = $(placeholders[0]).parent().children(".CodeBlock");
+            var clone = $(elem).clone(true);
+            if(children.length == 0)
+            {
+                $(placeholders[0]).parent().prepend(clone);
+            }
+            else
+            {
+                $(placeholders[0]).parent().children(".CodeBlock").last().after(clone);
+            }
+            var mc = new Hammer(clone[0]);
+            mc.add( new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 0 }) );
+            mc.add(new Hammer.Press);
+            mc.on("pan", handleTaskbarDrag);
             $(placeholders[0]).hide();
         }
     }
 }
 
+var startingIndex;
 
+function handleTaskbarDrag(ev)
+{
+    var elem = ev.target;
+    var trashcan = document.getElementById("trash-icon");
+    var trashRect = trashcan.getBoundingClientRect();
+    var distance = Math.abs(trashRect.left - elem.getBoundingClientRect().left);
+    
+    if(distance < 50)
+    {
+        //Trash open
+        $(trashcan).attr("src","assets/miscellaneous/trashcan_open.png");
+    }
+    else if(distance < 80)
+    {
+        //Trash closed
+        $(trashcan).attr("src","assets/miscellaneous/trashcan_closed.png");
+    }
+
+    if (ev.isFinal && distance < 50) 
+    {
+        elem.remove();
+        placeholders = $('#Taskbar il:hidden:not(.action-button):not(.main-placeholder-codeblock)');
+        $(placeholders.last()).show();
+        $(trashcan).attr("src","assets/miscellaneous/trashcan_closed.png");
+    }
+    /*
+    
+    
+    if ( ! isDragging ) {
+        elem.style.visibility = "collapse";
+        placeholders = $('#Taskbar il:visible:not(.action-button)');
+        if(placeholders.length == 0)
+            return;
+
+        taskbarBlocks = $('#Taskbar il.action-button');
+
+        var closest;
+
+        for (let index = 0; index < taskbarBlocks.length; index++)
+        {
+            const elementRect = taskbarBlocks[index].getBoundingClientRect();
+            var dragRect = elem.getBoundingClientRect();
+            var distance = Math.abs(elementRect.left - dragRect.left);
+            if(index == 0)
+            {
+                closest = distance
+                taskbarPosition = index;
+            }
+            else if(closest > distance)
+            {
+                taskbarPosition = index;
+                closest = distance;
+            }
+        }
+        console.log(taskbarBlocks[taskbarPosition]);
+        startingIndex == taskbarPosition;
+        isDragging = true;
+    }
+    
+    var posX = ev.deltaX + lastPosX;
+    var posY = ev.deltaY + lastPosY;
+    
+    //elem.style.left = posX + "px";
+    //elem.style.top = posY + "px";
+
+    FindTaskbarLocation(ev);
+
+    if (ev.isFinal) 
+    {
+        isDragging = false;
+        //elem.style.left = "0px";
+        //elem.style.top = "0px";
+        console.log("Finished dragging!");
+        elem.style.visibility = "visible";
+        $(".main-placeholder-codeblock").hide();
+    }
+
+    function FindTaskbarLocation(ev)
+    {
+        console.log("RIP");
+        var closest;
+        var previous = taskbarPosition;
+
+        for (let index = 0; index < taskbarBlocks.length; index++)
+        {
+            if(taskbarBlocks[index] == elem)
+                continue;
+            const elementRect = taskbarBlocks[index].getBoundingClientRect();
+            var distance = Math.abs(elementRect.left - elem.getBoundingClientRect().left);
+
+            if(index == 0)
+            {
+                closest = distance
+                taskbarPosition = index;
+            }
+            else if(closest > distance)
+            {
+                taskbarPosition = index;
+                closest = distance;
+            }
+
+        }
+
+        if(taskbarPosition != previous)
+        {
+            console.log(taskbarPosition + " " + taskbarBlocks.length);
+            if(taskbarPosition == taskbarBlocks.length - 2)
+            {
+                console.log("Last Call");
+                //$(".main-placeholder-codeblock").show();
+                //$(taskbarBlocks[taskbarPosition]).parent()[0].insertBefore($(".main-placeholder-codeblock")[0], $(taskbarBlocks[taskbarPosition]).parent().children[taskbarPosition + 1]);
+            }
+            else
+            {
+                console.log("Call");
+                //$(".main-placeholder-codeblock").show();
+                //$(taskbarBlocks[taskbarPosition]).parent()[0].insertBefore($(".main-placeholder-codeblock")[0], taskbarBlocks[taskbarPosition + 1]);
+            }
+        }
+    }
+    */
+}
 
 
 class SliderData
@@ -323,6 +433,8 @@ levelSlider.holder.addEventListener('mousedown', (e) =>
 
 levelSlider.holder.addEventListener('mouseleave', () => 
 {
+    if(!levelSlider.slider) return;
+
     levelSlider.isDown = false;
     levelSlider.moved = false;
     levelSlider.slider.classList.remove('active');

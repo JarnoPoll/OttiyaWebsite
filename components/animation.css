@@ -21,3 +21,12 @@
     margin:auto;
     display: flex;
 }
+
+.animation-shell{
+    display: inline-flex;
+    justify-content: right;
+    padding: 30px;
+    z-index: 1;
+    height: 100px;
+    width: 100px;
+}

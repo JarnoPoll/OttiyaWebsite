@@ -16,7 +16,7 @@
 
 <!-- Header 
 <div class="header">
-    <a href="https://www.ottiya.com/"><img class="logo"  src="images/LogoPlaceholder.jpeg" alt="Logo"></a>
+    <a href="https://www.ottiya.com/"><img class="logo"  src="assets/miscellaneous/game_logo.png" alt="Logo"></a>
     <a class="header-button" href="#">Help</a>
     <a class="header-button" href="#">Scratch Course</a>
 </div>
@@ -25,7 +25,7 @@
 <!-- Game goes here -->
 <div id="main" class="scene">
     <div id="menu" class="scene">
-        <h1 class="gametitlescreen">BRING OTTO HOME</h1>
+        <img class="logo" src="assets/miscellaneous/game_logo.png" alt="Logo">
         <h2 class="agameby">A game by</h2>
         <image class="Ottiyalogo-transparent" src="../assets/miscellaneous/Logo Ottiya Transparent.png"></image>
         <button class="navigation-button" data-scene="chapter-overview">Start Demo</button>
@@ -220,6 +220,9 @@
                     <img src="assets/levels/codeblock-placeholder.png">
                     <p>10</p>
                 </il>
+                <il class="main-placeholder-codeblock" data-status="disabled">
+                    <img src="assets/levels/codeblock-placeholder.png">
+                </il>
             </ol>
             <img class="action-button" data-action="play" src="assets/miscellaneous/Playlevel button.png">
         </div>
@@ -249,15 +252,16 @@
             </div>
         </div>
     </div>
-    <div id="loading-screen" class="scene">
+    <div id="loading-screen" class="scene" style="display: none;">
         <img src="../assets/miscellaneous/loading-screen.png">
     </div>
-    <div id="animation-screen" class="scene">
+    <div id="animation-screen" class="scene" style="display: none;">
+        <img class="animation-shell" src="assets/levels/Level_Shell_Color.png" alt="Shell">
         <video class="video" width="1154px" height="834px" controls>
             <source src="assets/miscellaneous/Animation.mp4" type="video/mp4">
         </video>
     </div>
-    <div id="settings-screen" class="scene">
+    <div id="settings-screen" class="scene" style="display: none;">
 
         <div id="settings-navigation">
             <image class="navigation-button" data-scene="chapter-overview" src="../assets/miscellaneous/Vector.png"></image>
@@ -300,7 +304,7 @@
 <!-- Footer
 <div class="footer">
     <div class="logo footer">
-        <a href="https://www.ottiya.com/"><img class="logo"  src="images/LogoPlaceholder.jpeg" alt="Logo"></a>
+        <a href="https://www.ottiya.com/"><img class="logo"  src="images/miscellaneous/game_logo.png" alt="Logo"></a>
     </div>
 </div>
 -->

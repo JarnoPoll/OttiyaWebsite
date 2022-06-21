@@ -6,7 +6,6 @@
     height: var(--height);
     border-radius: 30px;
     overflow: hidden;
-    visibility: hidden;
 }
 
 .scene#main
@@ -44,8 +43,8 @@
 /*Title screen*/
 .Ottiyalogo-transparent
 {
-    height: 150px;
-    width: 150px;
+    height: 91px;
+    width: 100;
     margin-bottom: 40px;
 }
 
