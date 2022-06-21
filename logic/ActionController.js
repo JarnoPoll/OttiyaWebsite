@@ -1,8 +1,9 @@
 export class ActionController
 {
     levelData;
+    completionFunction;
 
-    CallAction(name, data)
+    CallAction(name, data, completion)
     {
         var sections = name.split('-');
         var finalName = "";
@@ -13,8 +14,8 @@ export class ActionController
         }
 
         var classReference = this;
-
-        data.itemData.then(function(result)
+        this.completionFunction = completion;
+        var returnData = data.itemData.then(function(result)
         {
             if(classReference.levelData == null)
             {
@@ -39,9 +40,33 @@ export class ActionController
         });
     }
 
+    GetCookie(cname) 
+    {
+        let name = cname + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for(let i = 0; i <ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+
+        return "";
+    }
+    
     StopTaskbar()
     {
         clearInterval(this.levelData.actionIntervalID);
+        this.Wait(1000).then(()=> this.completionFunction());
+    }
+
+    Wait(ms)
+    {
+        return new Promise(resolve => setTimeout(resolve, ms));  
     }
 
     CheckShells(targetPos, playerScale)
@@ -129,7 +154,7 @@ export class ActionController
             if(this.CheckObstacles(targetPos))
             {
                 console.log("Found Obstacle");
-                return;
+                return false;
             }
         }
         
@@ -140,7 +165,7 @@ export class ActionController
             {
                 console.log("FLOATING");
                 this.StopTaskbar();
-                return;
+                return false;
             }
         }
 
@@ -164,7 +189,7 @@ export class ActionController
                 if(!this.levelData.playerPosition.transparent)
                 {
                     this.StopTaskbar();
-                    return;
+                    return false;
                 }
                 break;
         }
@@ -175,7 +200,7 @@ export class ActionController
             {
                 console.log("FLOATING");
                 this.StopTaskbar();
-                return;
+                return false;
             }
         }
 
@@ -199,7 +224,7 @@ export class ActionController
         {
             console.log("Fail");
             this.StopTaskbar();
-            return;
+            return false;
         }
 
     this.CheckShells(targetPos);
@@ -216,7 +241,7 @@ export class ActionController
         {
             console.log("Fail");
             this.StopTaskbar();
-            return;
+            return false;
         }
 
         this.CheckShells(targetPos);
@@ -234,7 +259,7 @@ export class ActionController
             case 2:
                 console.log("Fail");
                 this.StopTaskbar();
-                return;
+                return false;
         }
 
         this.CheckShells(targetPos);
@@ -247,7 +272,7 @@ export class ActionController
 
         if(playerPos[1] == 3)
         {
-            return;
+            return false;
         }
 
         var targetPos = [this.Clamp((playerPos[0] + (1 * this.levelData.playerPosition.direction)), 0, 7), this.Clamp((playerPos[1] + 1), 0, 3)];
@@ -257,7 +282,7 @@ export class ActionController
             case 2:
                 console.log("Fail");
                 this.StopTaskbar();
-                return;
+                return false;
         }
 
         this.CheckShells(targetPos);
@@ -278,7 +303,7 @@ export class ActionController
                     console.log("Fail");
                     this.StopTaskbar();
                 }
-                return;
+                return false;
         }
 
         this.SetPlayerPosition(playerPos, playerScale);
@@ -304,7 +329,7 @@ export class ActionController
             case 2:
                 console.log("Fail");
                 this.StopTaskbar();
-                return;
+                return false;
         }
 
         this.SetPlayerPosition(playerPos, playerScale);

@@ -187,7 +187,7 @@ export class LevelManager
         console.log("Actions Length: " + actions.length + " Actions Remaining: " + this.levelData.actionsRemaining);
         var task = actions[actions.length - this.levelData.actionsRemaining];
 
-        actionController.CallAction($(task).data("function"), this.levelData);
+        actionController.CallAction($(task).data("function"), this.levelData, this.CheckCompletion);
 
         this.levelData.actionsRemaining--;
         if(this.levelData.actionsRemaining <= 0)
