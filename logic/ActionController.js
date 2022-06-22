@@ -113,6 +113,7 @@ export class ActionController
     CheckObstacles(targetPos)
     {
         var playerScale = this.levelData.playerPosition.scale;
+        console.log(playerScale);
         for (let index = 0; index < (playerScale * 2); index++) 
         {
             if(this.levelData.levelMap[this.Clamp((targetPos[1] - index), 0, 3)][targetPos[0]] == 2)
@@ -208,15 +209,15 @@ export class ActionController
             return false;
         }
         var targetPos = [this.Clamp((playerPos[0] - 1), 0, 7), this.Clamp((playerPos[1]), 0, 3)]
-        switch(this.levelData.levelMap[targetPos[1]][targetPos[0]])
+        
+        if(!this.levelData.playerPosition.transparent)
         {
-            case 2:
-                if(!this.levelData.playerPosition.transparent)
-                {
-                    this.StopTaskbar();
-                    return false;
-                }
-                break;
+            if(this.CheckObstacles(targetPos))
+            {
+                console.log("Found Obstacle");
+                this.StopTaskbar();
+                return false;
+            }
         }
 
         if(playerPos[1] < 3)
