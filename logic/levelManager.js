@@ -11,15 +11,15 @@ class LevelData
     obstacleCount = 0;
     shellCount = 0;
     ladderCount = 0;
-    stepSizeHorizontal = 149;
-    stepSizeVertical = 84;
+    stepSizeHorizontal = 120;
+    stepSizeVertical = 68;
     actionsRemaining = 0;
     isPaused = false;
     actionIntervalID;
     levelMap = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]];
     playerPosition = {x: 0, y: 0, scale: 0, direction: 0, transparent: false};
     playerStartingPosition = {x: 0, y: 0, scale: 0, direction: 0, transparent: false};
-    playerHeight = 168;
+    playerHeight = 136;
     chapterNumber;
     levelNumber;
 }

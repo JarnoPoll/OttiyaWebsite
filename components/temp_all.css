@@ -202,16 +202,6 @@ img.logo{
     background-color: transparent;
 }
 
-.category-blocks .CodeBlock{
-    margin: 10px;
-    height: 60px;
-    width: 60px;
-    left: 0px;
-    top: 0px;
-    position: relative;
-    margin: 10px;
-}
-
 #ladder-one{
     position: absolute;
     left: 700px;

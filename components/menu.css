@@ -28,7 +28,11 @@
     visibility: visible;
 }
 
-
+#loading-screen img{
+    background-size: cover;
+    width: var(--width);
+    height: var(--height);
+}
 .scene#menu .navigation-button
 {
     position: relative;

@@ -118,7 +118,7 @@ $(document).ready(function()
                                 break;
                             
                         }
-                        this.style.setProperty("transform", "scale(1.3)");
+                        this.style.setProperty("transform", "scale(1.2)");
                     }
                 }
                 else
