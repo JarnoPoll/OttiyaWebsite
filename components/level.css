@@ -201,6 +201,15 @@
     width: 75px;
     margin-top: -7.0px;
     pointer-events: none;
+    
+}
+
+.green{
+    filter: hue-rotate(270deg) brightness(0.75) contrast(2);
+}
+
+.red{
+    filter: hue-rotate(160deg) brightness(0.75) contrast(2);
 }
 
 .scene#level .placeholder-codeblock[data-status="enabled"] 

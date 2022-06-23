@@ -85,7 +85,7 @@ $(document).ready(function()
             case "reset":
                 var taskbar = document.getElementById("Taskbar");
                 var character = document.getElementById("character");
-                var blocks = $('#Taskbar il.action-button')
+                var blocks = $('#Taskbar il.action-button');
                 levelManager.Reset(taskbar, blocks, character);
                 var resultWindow = document.getElementById("results-window");
                 $(resultWindow).hide();

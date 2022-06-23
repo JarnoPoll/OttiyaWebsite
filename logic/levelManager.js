@@ -64,21 +64,6 @@ export class LevelManager
 
         clearInterval(this.levelData.actionIntervalID);
 
-        for (let index = 0; index < blocks.length; index++) 
-        {
-            const element = blocks[index];
-            taskbar.removeChild(element);
-        }
-
-        for (let index = 0; index < taskbar.children.length; index++) 
-        {
-            const element = taskbar.children[index];
-            
-            if(!$(element).is(':visible'))
-            {
-                $(element).show();
-            }
-        }
 
         for (let index = 0; index < this.levelData.shells.length; index++) {
             const element = this.levelData.shells[index];
@@ -185,7 +170,16 @@ export class LevelManager
     CheckAction(actions, actionController)
     {
         console.log("Actions Length: " + actions.length + " Actions Remaining: " + this.levelData.actionsRemaining);
-        var task = actions[actions.length - this.levelData.actionsRemaining];
+        var currentTaskPosition = actions.length - this.levelData.actionsRemaining;
+        var task = actions[currentTaskPosition];
+        
+        /*
+        if(currentTaskPosition != 0)
+        {
+            actions[currentTaskPosition - 1].classList.add("green");
+        }
+        */
+
         var name = $(task).data("function");
         console.log("Calling function with name: " + name);
         actionController.CallAction(name, this.levelData, this.CheckCompletion);
@@ -241,7 +235,13 @@ export class LevelManager
             pauseButtons.hide();
             failedButtons.hide();
             completedButtons.show();
-
+            /*
+            $("#Taskbar il.CodeBlock:not('.green')").each(function(index)
+            {
+                console.log($(this));
+                $(this)[0].classList.add("green");
+            });
+            */
             cookieData.starCompletion[this.levelData.chapterNumber][this.levelData.levelNumber] = collectedShells.length;
             cookieData.levelCompletion[this.levelData.chapterNumber][this.levelData.levelNumber] = true;
             if(cookieData.levelCompletion[this.levelData.chapterNumber].length == this.levelData.levelNumber + 1)
@@ -253,6 +253,13 @@ export class LevelManager
         {
             //lost
             resultText.text("Oh no...");
+            /*
+            $("#Taskbar il.CodeBlock:not('.green')").each(function(index)
+            {
+                console.log($(this));
+                $(this)[0].classList.add("red");
+            });
+            */
             pauseButtons.hide();
             completedButtons.hide();
             failedButtons.show();
@@ -275,6 +282,24 @@ export class LevelManager
 
     SetItems(itemData, chapter, level)
     {
+        var blocks = $('#Taskbar il.action-button');
+        var taskbar = document.getElementById("Taskbar");
+        for (let index = 0; index < blocks.length; index++) 
+        {
+            const element = blocks[index];
+            taskbar.removeChild(element);
+        }
+
+        for (let index = 0; index < taskbar.children.length; index++) 
+        {
+            const element = taskbar.children[index];
+            
+            if(!$(element).is(':visible'))
+            {
+                $(element).show();
+            }
+        }
+
         this.levelData.itemData = itemData;
         this.levelData.chapterNumber = chapter - 1;
         this.levelData.levelNumber = level - 1;
@@ -286,6 +311,8 @@ export class LevelManager
             const element = localData.shells[index];
             $(element).attr("src", "assets/levels/Level_Shell_Gray.png")
             $(element).hide();
+            $($(localData.items).filter('.shell')[index]).attr("data-position", "");
+            $($(localData.items).filter('.shell')[index]).attr("data-hidden", "false");
         }
 
         itemData.then(function(result)
@@ -315,6 +342,7 @@ export class LevelManager
                                 localData.player.style.backgroundImage = "url('/assets/levels/Character_Image2R.png')";
                             }
                             localData.player.style.transform = `translate(${index * localData.stepSizeHorizontal}px, ${((3 - vertical) * -localData.stepSizeVertical) + (1-localData.playerStartingPosition.scale) * (localData.playerHeight / 2)}px) scale(${localData.playerStartingPosition.scale})`;
+                            $(localData.player).attr("data-transparent", false);
                             break;
                         case 2:
                             //obstacle
