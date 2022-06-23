@@ -5,6 +5,7 @@ export class ActionController
 
     CallAction(name, data, completion)
     {
+        if(!window.name) return;
         var sections = name.split('-');
         var finalName = "";
         for (let index = 0; index < sections.length; index++) {
