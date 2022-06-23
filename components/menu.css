@@ -1,7 +1,7 @@
 .scene
 {
-    max-width: var(--width);
-    max-height: var(--height);
+    min-width: var(--width);
+    min-height: var(--height);
     width: var(--width);
     height: var(--height);
     border-radius: 30px;
