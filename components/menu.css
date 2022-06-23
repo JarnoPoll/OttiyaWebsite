@@ -1,7 +1,7 @@
 .scene
 {
-    max-width: var(--width);
-    max-height: var(--height);
+    min-width: var(--width);
+    min-height: var(--height);
     width: var(--width);
     height: var(--height);
     border-radius: 30px;
@@ -28,11 +28,15 @@
     visibility: visible;
 }
 
-
+#loading-screen img{
+    background-size: cover;
+    width: var(--width);
+    height: var(--height);
+}
 .scene#menu .navigation-button
 {
     position: relative;
-    background-color: pink;
+    background-color: white;
     height: 100px;
     width: 500px;
     border-radius: 30px;
@@ -43,9 +47,8 @@
 /*Title screen*/
 .Ottiyalogo-transparent
 {
-    height: 91px;
-    width: 100;
-    margin-bottom: 40px;
+    height: 150px;
+    width: 150px;
 }
 
 .gametitlescreen

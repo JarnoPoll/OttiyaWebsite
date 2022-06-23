@@ -1,8 +1,9 @@
 export class ActionController
 {
     levelData;
+    completionFunction;
 
-    CallAction(name, data)
+    CallAction(name, data, completion)
     {
         var sections = name.split('-');
         var finalName = "";
@@ -13,8 +14,8 @@ export class ActionController
         }
 
         var classReference = this;
-
-        data.itemData.then(function(result)
+        this.completionFunction = completion;
+        var returnData = data.itemData.then(function(result)
         {
             if(classReference.levelData == null)
             {
@@ -39,14 +40,38 @@ export class ActionController
         });
     }
 
+    GetCookie(cname) 
+    {
+        let name = cname + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for(let i = 0; i <ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+
+        return "";
+    }
+
     StopTaskbar()
     {
         clearInterval(this.levelData.actionIntervalID);
+        this.Wait(1000).then(()=> this.completionFunction());
+    }
+
+    Wait(ms)
+    {
+        return new Promise(resolve => setTimeout(resolve, ms));  
     }
 
     CheckShells(targetPos, playerScale)
     {
-        var shells = $(this.levelData.items).filter(".shell");
+        var shells = $(this.levelData.items).filter(".shell:visible");
 
         if(!window.playerScale)
         {
@@ -63,12 +88,12 @@ export class ActionController
             {
                 for (let index = 0; index < (playerScale * 2); index++) 
                 {
-                    console.log(position[1] + "," + position[0] + " " +  this.Clamp((targetPos[1] - index), 0, 3) + "," + targetPos[0]);
+                    console.log("TEST: " + position[1] + "=" + targetPos[0] + " && " + position[0] + "=" + this.Clamp((targetPos[1] - index), 0, 3));
                     if(position[1] == targetPos[0] && position[0] == this.Clamp((targetPos[1] - index), 0, 3))
                     {
-                        console.log(this.levelData.playerPosition.transparent.toString());
                         if($(shell).attr("data-hidden") == this.levelData.playerPosition.transparent.toString())
                         {
+                            console.log("Collected Shell");
                             $(shell).hide();
                             $(this.levelData.shells[this.levelData.shellCount]).attr("src", "assets/levels/Level_Shell_Color.png")
                             $(this.levelData.shells[this.levelData.shellCount]).attr("data-collected", "true")
@@ -88,6 +113,7 @@ export class ActionController
     CheckObstacles(targetPos)
     {
         var playerScale = this.levelData.playerPosition.scale;
+        console.log(playerScale);
         for (let index = 0; index < (playerScale * 2); index++) 
         {
             if(this.levelData.levelMap[this.Clamp((targetPos[1] - index), 0, 3)][targetPos[0]] == 2)
@@ -124,12 +150,25 @@ export class ActionController
         var playerPos = [this.levelData.playerPosition.x, this.levelData.playerPosition.y]
         var targetPos = [this.Clamp((playerPos[0] + 1), 0, 7), this.Clamp((playerPos[1]), 0, 3)]
 
+        if(this.levelData.playerPosition.direction != 1)
+        {
+            this.levelData.player.style.backgroundImage = "url('/assets/levels/Character_Image2.png')";
+            this.levelData.playerPosition.direction = 1;
+        }
+
+        if(playerPos[0] == 7)
+        {
+                console.log("Found End of Map");
+                this.StopTaskbar();
+                return false;
+        }
         if(!this.levelData.playerPosition.transparent)
         {
             if(this.CheckObstacles(targetPos))
             {
                 console.log("Found Obstacle");
-                return;
+                this.StopTaskbar();
+                return false;
             }
         }
         
@@ -140,7 +179,7 @@ export class ActionController
             {
                 console.log("FLOATING");
                 this.StopTaskbar();
-                return;
+                return false;
             }
         }
 
@@ -157,16 +196,28 @@ export class ActionController
     MovementLeft()
     {
         var playerPos = [this.levelData.playerPosition.x, this.levelData.playerPosition.y]
-        var targetPos = [this.Clamp((playerPos[0] - 1), 0, 7), this.Clamp((playerPos[1]), 0, 3)]
-        switch(this.levelData.levelMap[targetPos[1]][targetPos[0]])
+
+        if(this.levelData.playerPosition.direction == 1)
         {
-            case 2:
-                if(!this.levelData.playerPosition.transparent)
-                {
-                    this.StopTaskbar();
-                    return;
-                }
-                break;
+            this.levelData.player.style.backgroundImage = "url('/assets/levels/Character_Image2R.png')";
+            this.levelData.playerPosition.direction = -1;
+        }
+        if(playerPos[0] == 0)
+        {
+            console.log("Found End of Map");
+            this.StopTaskbar();
+            return false;
+        }
+        var targetPos = [this.Clamp((playerPos[0] - 1), 0, 7), this.Clamp((playerPos[1]), 0, 3)]
+        
+        if(!this.levelData.playerPosition.transparent)
+        {
+            if(this.CheckObstacles(targetPos))
+            {
+                console.log("Found Obstacle");
+                this.StopTaskbar();
+                return false;
+            }
         }
 
         if(playerPos[1] < 3)
@@ -175,15 +226,10 @@ export class ActionController
             {
                 console.log("FLOATING");
                 this.StopTaskbar();
-                return;
+                return false;
             }
         }
 
-        if(this.levelData.playerPosition.direction == 1)
-        {
-            this.levelData.player.style.backgroundImage = "url('/assets/levels/Character_Image2R.png')";
-            this.levelData.playerPosition.direction = -1;
-        }
 
         this.CheckShells(targetPos);
         this.SetPlayerPosition(targetPos, this.levelData.playerPosition.scale);
@@ -199,7 +245,7 @@ export class ActionController
         {
             console.log("Fail");
             this.StopTaskbar();
-            return;
+            return false;
         }
 
     this.CheckShells(targetPos);
@@ -211,12 +257,18 @@ export class ActionController
         var playerPos = [this.levelData.playerPosition.x, this.levelData.playerPosition.y]
         var targetPos = [this.Clamp((playerPos[0]), 0, 7), this.Clamp((playerPos[1] + 2), 0, 3)]
 
+        if(playerPos[1] > 1)
+        {
+            console.log("Fail");
+            this.StopTaskbar();
+            return false;
+        }
         //Check for ladder
         if(this.levelData.levelMap[targetPos[1] - 1][targetPos[0]] != 4)
         {
             console.log("Fail");
             this.StopTaskbar();
-            return;
+            return false;
         }
 
         this.CheckShells(targetPos);
@@ -234,9 +286,15 @@ export class ActionController
             case 2:
                 console.log("Fail");
                 this.StopTaskbar();
-                return;
+                return false;
+            case 0:
+                if(this.levelData.levelMap[targetPos[1] + 1][targetPos[0]] != 2)
+                {
+                    console.log("Fail");
+                    this.StopTaskbar();
+                    return false;
+                }
         }
-
         this.CheckShells(targetPos);
         this.SetPlayerPosition(targetPos, this.levelData.playerPosition.scale);
     }
@@ -247,7 +305,7 @@ export class ActionController
 
         if(playerPos[1] == 3)
         {
-            return;
+            return false;
         }
 
         var targetPos = [this.Clamp((playerPos[0] + (1 * this.levelData.playerPosition.direction)), 0, 7), this.Clamp((playerPos[1] + 1), 0, 3)];
@@ -257,7 +315,7 @@ export class ActionController
             case 2:
                 console.log("Fail");
                 this.StopTaskbar();
-                return;
+                return false;
         }
 
         this.CheckShells(targetPos);
@@ -278,7 +336,7 @@ export class ActionController
                     console.log("Fail");
                     this.StopTaskbar();
                 }
-                return;
+                return false;
         }
 
         this.SetPlayerPosition(playerPos, playerScale);
@@ -304,7 +362,7 @@ export class ActionController
             case 2:
                 console.log("Fail");
                 this.StopTaskbar();
-                return;
+                return false;
         }
 
         this.SetPlayerPosition(playerPos, playerScale);

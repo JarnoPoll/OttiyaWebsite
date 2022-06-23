@@ -26,31 +26,41 @@
 }
 
 .animation-shell{
-    display: flex;
-    align-self: flex-end;
-    justify-content: right;
     transform: rotate(30deg);
-    top: 60px;
-    right: 27px;
-    position: absolute;
-    padding-top: 100px;
-    margin-right: 0px;
+    position: relative;
+    margin: 0;
     z-index: 2;
-    height: 120px;
-    width: 120px;
+    top: 10px;
+    margin-left: -80px;
+    height: 90px;
+    width: 90px;
 }
 
-.animation-shell2{
+.scene#animation-screen .navigation-button
+{
+    position: relative;
+    background-color: white;
+    height: 50px;
+    margin-left: 380px;
+    margin-top: -30px;
+    width: 200px;
+    border-radius: 30px;
+    font-size: xx-large;
+}
+
+.scene#animation-screen div
+{
     display: flex;
-    align-self: flex-end;
-    justify-content: right;
+    margin-left: 30px;
+    margin-top: -50px;
+}
+.animation-shell2{
     transform: rotate(-30deg);
-    top: 720px;
-    right: 1168px;
-    position: absolute;
-    padding-top: 100px;
-    margin-right: 0px;
+    position: relative;
+    margin: 0;
+    margin-right: -100px;
+    margin-top: 550px;
     z-index: 2;
-    height: 100px;
-    width: 100px;
+    height: 80px;
+    width: 80px;
 }

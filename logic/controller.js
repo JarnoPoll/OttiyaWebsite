@@ -45,6 +45,7 @@ $(document).ready(function()
             var holders = $(".levelHolder");
             $(holders).hide();
             var levelHolder = $(".levelHolder[data-chapter='" + chapter + "']").first();
+            $("#chapter-name")[0].innerHTML = `Chapter ${chapter}`;
             $(levelHolder).show();
             
             //levelSlider.slider = levelHolder;
@@ -118,7 +119,7 @@ $(document).ready(function()
                                 break;
                             
                         }
-                        this.style.setProperty("transform", "scale(1.3)");
+                        this.style.setProperty("transform", "scale(1.2)");
                     }
                 }
                 else

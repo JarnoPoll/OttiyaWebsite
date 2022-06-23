@@ -2,8 +2,8 @@
 {
     display: flex;
     flex-direction: column;
-    height: 598px;
-    width: 1194px;
+    height: 70%;
+    width: 100%;
     background-image: url("../assets/levels/Background_Chapter_1.png");
 }
 .scene#level #playfield #playfield-buttons
@@ -22,7 +22,7 @@
 
 .scene#level #playfield #character-holder
 {
-    height: 420px;
+    height: 330px;
     width: 100%;
     margin-bottom: -7px;
     display: flex;
@@ -31,8 +31,8 @@
 
 
 #character{
-    width: 138px;
-    height: 168px;
+    width: 111.7px;
+    height: 136px;
     margin-bottom: 6px;
     order: 2;
     background-image: url(/assets/levels/Character_Image2.png);
@@ -51,6 +51,7 @@
 .scene#level #ui-window{
     display: flex;
     flex-direction: row;
+    height: 80px;
 }
 
 .scene#level #playfield .action-button
@@ -60,14 +61,10 @@
     margin: 15px;
     border-radius: 100%;
 }
-.scene#level #placeholder-codeblock
-{
-    left: 0px;
-}
 
 .scene#level #logic-window{
     width: 100%;
-    height: 90px;
+    height: 12%;
     bottom: 80px;
     margin: 0px;
     background: #372E6B;
@@ -76,8 +73,7 @@
 
 .scene#level #execution-window{
     width: 100%;
-    height: 146px;
-    bottom: 0px;
+    height: 20%;
     margin: 0px;
     background-color:#372E6B;
     display: flex;
@@ -86,11 +82,11 @@
 
 .scene#level #execution-window #trash-icon
 {
-    width: 90px;
-    height: 111px;
+    width: 81px;
+    height: 100px;
     background-size: cover;
-    margin-left: 60px;
-    margin-right: 60px;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 .scene#level #execution-window #Taskbar{
@@ -98,22 +94,19 @@
     align-items: center;
     justify-content: flex-start;
     height: 100%;
-    width: 804px;
+    width: 75%;
     padding: 0px;
     margin: 0px;
-    margin-left: 30px;
-    margin-right: -60px;
+    margin-left: 20px;
     position: relative;
 
 }
 
 .scene#level #execution-window .action-button[data-action="play"]{
-    width: 90px;
-    height: 90px;
+    width: 75px;
+    height: 75px;
     border-radius: 45px;
     background-color: #7FA53D;
-    margin-left: 60px;
-    margin-right: 60px;
 }
 
 .scene#level #CodeBlocks {
@@ -166,6 +159,11 @@
     border-radius: 0px 0px 20px 0px;
 }
 
+.scene#level .category-blocks .CodeBlock{
+    margin-left: 10px;
+    margin-top: 15px;
+}
+
 .scene#level .category-blocks[data-category="movement"]{
     background-color: #D4ECF7;
 }
@@ -187,18 +185,20 @@
     margin-right: 30px;
 }
 .CodeBlock{
+    height: 70px;
+    width: 70px;
     left: 0px;
     top: 0px;
-    width: 70px;
-    height: 70px;
     position: relative;
-    margin-left: -2px;
+    margin: 0px;
+    margin-top: 6px;
+    margin-left: -10px;
 }
 
 .codeblock-background
 {
-    height: 85px;
-    width: 85px;
+    height: 75px;
+    width: 75px;
     margin-top: -7.0px;
     pointer-events: none;
 }
@@ -214,48 +214,18 @@
 }
 
 .scene#level .placeholder-codeblock img{
-    width: 200%;
-    height: 200%;
-    margin-left: -35px;
-    margin-top: -35px;
-    
-}
-
-.scene#level .main-placeholder-codeblock
-{
-
-}
-
-.scene#level .main-placeholder-codeblock[data-status="enabled"] 
-{
-    
-    width: 70px;
-    height: 70px;
-    animation: fadeinout 2s linear forwards infinite;
-    opacity: 0;
-    margin: 1px;
-}
-
-.scene#level .main-placeholder-codeblock[data-status="disabled"] {
-    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5);
-    visibility: collapse;
-    width: 70px;
-    height: 70px;
-    margin: 1px;
-}
-
-.scene#level .main-placeholder-codeblock img{
-    width: 200%;
-    height: 200%;
-    margin-left: -35px;
-    margin-top: -35px;
+    width: 180%;
+    height: 180%;
+    margin-left: -32px;
+    margin-top: -30px;
     
 }
 
 .scene#level .placeholder-codeblock p{
     font-family: 'Grandstander', serif;
     font-size: 60px;
-    margin-top: -100px;
+    margin-top: -93px;
+    margin-left: -5px;
     text-align: center;
     color: white;
 }
@@ -264,6 +234,7 @@
     width: 70px;
     height: 70px;
     margin: 1px;
+    margin-left: -2px;
 }
 
 @keyframes fadeinout {
@@ -272,9 +243,9 @@
 
 .scene#level #Ground
 {
-    height: 84px;
+    height: 68px;
     background-image: url("../assets/levels/Ground_Block_Chapter_1.png");
-    background-size: 149px 84px;
+    background-size: 120px 68px;
     background-repeat:  repeat;
 }
 
@@ -303,11 +274,11 @@
 }
 
 .shell{
-    height: 60px;
-    width: 60px;
-    margin-left: 44.5px;
+    height: 50px;
+    width: 50px;
+    margin-left: 35px;
     margin-top: 12px;
-    margin-right: 44.5px;
+    margin-right: 35px;
     position: absolute;
 }
 

@@ -27,14 +27,13 @@
     <div id="menu" class="scene">
         <img class="logo" src="assets/miscellaneous/game_logo.png" alt="Logo">
         <h2 class="agameby">A game by</h2>
-        <image class="Ottiyalogo-transparent" src="../assets/miscellaneous/Logo Ottiya Transparent.png"></image>
-        <button class="navigation-button" data-scene="animation-screen">Start Demo</button>
+        <image class="Ottiyalogo-transparent" src="../assets/miscellaneous/Logo Ottiya White.png"></image>
+        <button class="navigation-button" data-scene="animation-screen">Start Game</button>
     </div>
     <div id="chapter-overview" class="scene">
         <div id="chapter-overview-top">
             <img class="navigation-button" data-scene="menu" src="../assets/miscellaneous/Vector.png">
             <h1>BRING OTTO HOME</h1>
-            <image class="navigation-button" data-scene="settings-screen" src="../assets/miscellaneous/Settings button.png"></image>
         </div>
         <div id="grid-chapters">
             <div id="chapter-holder">
@@ -55,7 +54,6 @@
         <div id="level-overview-top">
             <image class="navigation-button" data-scene="chapter-overview" src="../assets/miscellaneous/Vector.png"></image>
             <h1>BRING OTTO HOME</h1>
-            <image class="navigation-button" data-scene="settings-screen" src="../assets/miscellaneous/Settings button.png"></image>
         </div>
         <h2 id="chapter-name">Chapter 1</h2>
         <div class="grid-levels">
@@ -228,9 +226,6 @@
                     <img src="assets/levels/codeblock-placeholder.png">
                     <p>10</p>
                 </il>
-                <il class="main-placeholder-codeblock" data-status="disabled">
-                    <img src="assets/levels/codeblock-placeholder.png">
-                </il>
             </ol>
             <img class="action-button" data-action="play" src="assets/miscellaneous/Playlevel button.png">
         </div>
@@ -264,11 +259,14 @@
         <img src="../assets/miscellaneous/loading-screen.png">
     </div>
     <div id="animation-screen" class="scene" style="display: none;">
-        <img class="animation-shell" src="assets/levels/Level_Shell_Color.png" alt="Shell">
-        <img class="animation-shell2" src="assets/levels/Level_Shell_Color.png" alt="Shell">
-        <video id="video" width="1088px" height="612px" controls>
-            <source src="assets/miscellaneous/Animation.mp4" type="video/mp4">
-        </video>
+        <div>
+            <img class="animation-shell2" src="assets/levels/Level_Shell_Color.png" alt="Shell">
+            <video id="video" width="900px" height="506.25px" controls>
+                <source src="assets/miscellaneous/Animation.mp4" type="video/mp4">
+            </video>
+            <img class="animation-shell" src="assets/levels/Level_Shell_Color.png" alt="Shell">
+        </div>
+        <button class="navigation-button" data-scene="chapter-overview">Skip</button>
     </div>
     <div id="settings-screen" class="scene" style="display: none;">
 
