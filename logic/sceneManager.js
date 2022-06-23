@@ -20,7 +20,7 @@ export class SceneManager
 
     SwitchScene(scene)
     {
-        if(scene == this.activeScene)
+        if(scene == this.activeScene && scene != "level")
         { 
             return;
         }
@@ -354,6 +354,15 @@ export class SceneManager
 
     LoadLevel(chapter, level)
     {
+        if(level != 10)
+        {
+            $("#completed-continue-button").data("level", level + 1);
+        }
+        else
+        {
+            $("#completed-continue-button").data("level", "");
+        }
+        
         return fetch(`./assets/levels/chapter_${chapter}/level_${level}/dataFile.json`).then(response => { return response.json(); }).then( data =>
         {
             var itemLocations = [];
@@ -363,7 +372,6 @@ export class SceneManager
                 const element = data.allowedblocks[index];
                 categoriesRaw += (element.name + ",");
             }
-
             for (let y = 0; y < data.itemsVertical.length; y++) {
                 const vertical = data.itemsVertical[y];
 

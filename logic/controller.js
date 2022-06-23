@@ -29,10 +29,24 @@ $(document).ready(function()
         
         if(scene == "level")
         {
-            console.log(+$(this).data('level'));
-            var itemData = sceneManager.LoadLevel($(this).data('level'));
-            levelManager.ResetItems($("#item-holder img"));
-            levelManager.SetItems(itemData);
+            if(levelSlider.selected != null)
+            {
+                var chapter = $(levelSlider.selected).parent().data("chapter");
+                var level = $(this).data("level");
+                if(level == "")
+                {
+                    sceneManager.SwitchScene("level-overview");
+                    return;
+                }
+                var scene = $(this).data("scene");
+                var itemData = sceneManager.LoadLevel(chapter, level);
+                levelManager.ResetItems($("#item-holder img"));
+                
+                console.log(itemData);
+                levelManager.SetItems(itemData, chapter, level);
+
+                sceneManager.SwitchScene(scene);
+            }
         }
         else if(scene == "level-overview")
         {
