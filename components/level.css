@@ -251,16 +251,19 @@
 
 .scene#level .obstacle{
     position: absolute;
-    width: 149px;
-    height: 84px;
+    width: 120px;
+    height: 68px;
     z-index: 0;
 }
 
 .scene#level .ladder{
     position: absolute;
-    margin-top: -58px;
-    margin-left: 15.5px;
-    margin-right: 15.5px;
+    background-size: cover;
+    width: 100px;
+    height: 180px;
+    margin-top: -44px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .scene#level #item-holder{
@@ -269,7 +272,8 @@
 
 .goal{
     position: absolute;
-    margin-top: -48px;
+    width: 70px;
+    margin-top: -38px;
     margin-left: 30px;
 }
 

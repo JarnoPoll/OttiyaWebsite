@@ -36,7 +36,7 @@
 .scene#menu .navigation-button
 {
     position: relative;
-    background-color: white;
+    background-color: pink;
     height: 100px;
     width: 500px;
     border-radius: 30px;
