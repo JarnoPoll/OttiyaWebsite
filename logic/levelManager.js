@@ -280,7 +280,7 @@ export class LevelManager
         });
     }
 
-    SetItems(itemData, chapter, level)
+    ClearTaskbar()
     {
         var blocks = $('#Taskbar il.action-button');
         var taskbar = document.getElementById("Taskbar");
@@ -299,7 +299,12 @@ export class LevelManager
                 $(element).show();
             }
         }
+    }
 
+    SetItems(itemData, chapter, level)
+    {
+        
+        this.ClearTaskbar();
         this.levelData.itemData = itemData;
         this.levelData.chapterNumber = chapter - 1;
         this.levelData.levelNumber = level - 1;

@@ -105,6 +105,13 @@ $(document).ready(function()
                 $(resultWindow).hide();
 
                 break;
+            case "reset-trash":
+                var taskbar = document.getElementById("Taskbar");
+                var character = document.getElementById("character");
+                var blocks = $('#Taskbar il.action-button');
+                levelManager.Reset(taskbar, blocks, character);
+                levelManager.ClearTaskbar();
+                break;
             case "category":
                 console.log("Attempting to set category to: " + $(this).data("category"));
                 if($(this).data("enabled"))
