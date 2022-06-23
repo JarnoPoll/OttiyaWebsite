@@ -71,21 +71,6 @@
           "starAmount": "3"
         }
       ]
-    },
-    {
-      "name": "3",
-      "levels": 
-      [
-        {
-          "starAmount": "1"
-        },
-        {
-          "starAmount": "1"
-        },
-        {
-          "starAmount": "2"
-        }
-      ]
     }
   ]
 }

@@ -5,7 +5,6 @@ export class ActionController
 
     CallAction(name, data, completion)
     {
-        if(!window.name) return;
         var sections = name.split('-');
         var finalName = "";
         for (let index = 0; index < sections.length; index++) {
@@ -77,6 +76,7 @@ export class ActionController
         if(!window.playerScale)
         {
             playerScale = this.levelData.playerPosition.scale;
+            console.log("PLAYER SCALE: " + this.levelData.playerPosition.scale);
         }
 
         for (let i = 0; i < shells.length; i++) 

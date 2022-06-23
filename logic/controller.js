@@ -29,10 +29,24 @@ $(document).ready(function()
         
         if(scene == "level")
         {
-            console.log(+$(this).data('level'));
-            var itemData = sceneManager.LoadLevel($(this).data('level'));
-            levelManager.ResetItems($("#item-holder img"));
-            levelManager.SetItems(itemData);
+            if(levelSlider.selected != null)
+            {
+                var chapter = $(levelSlider.selected).parent().data("chapter");
+                var level = $(this).data("level");
+                if(level == "")
+                {
+                    sceneManager.SwitchScene("level-overview");
+                    return;
+                }
+                var scene = $(this).data("scene");
+                var itemData = sceneManager.LoadLevel(chapter, level);
+                levelManager.ResetItems($("#item-holder img"));
+                
+                console.log(itemData);
+                levelManager.SetItems(itemData, chapter, level);
+
+                sceneManager.SwitchScene(scene);
+            }
         }
         else if(scene == "level-overview")
         {
@@ -85,11 +99,18 @@ $(document).ready(function()
             case "reset":
                 var taskbar = document.getElementById("Taskbar");
                 var character = document.getElementById("character");
-                var blocks = $('#Taskbar il.action-button')
+                var blocks = $('#Taskbar il.action-button');
                 levelManager.Reset(taskbar, blocks, character);
                 var resultWindow = document.getElementById("results-window");
                 $(resultWindow).hide();
 
+                break;
+            case "reset-trash":
+                var taskbar = document.getElementById("Taskbar");
+                var character = document.getElementById("character");
+                var blocks = $('#Taskbar il.action-button');
+                levelManager.Reset(taskbar, blocks, character);
+                levelManager.ClearTaskbar();
                 break;
             case "category":
                 console.log("Attempting to set category to: " + $(this).data("category"));
