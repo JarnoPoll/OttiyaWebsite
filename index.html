@@ -9,7 +9,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://hammerjs.github.io/dist/hammer.js"></script>
-    <script src="jquery.ui.touch-punch.min.js"></script>
     <script type="module" src="logic/controller.js"></script>
 </head>
 
@@ -28,8 +27,8 @@
     <div id="menu" class="scene">
         <img class="logo" src="assets/miscellaneous/game_logo.png" alt="Logo">
         <h2 class="agameby">A game by</h2>
-        <image class="Ottiyalogo-transparent" src="../assets/miscellaneous/Logo Ottiya Transparent.png"></image>
-        <button class="navigation-button" data-scene="animation-screen">Start Demo</button>
+        <image class="Ottiyalogo-transparent" src="../assets/miscellaneous/Logo Ottiya White.png"></image>
+        <button class="navigation-button" data-scene="animation-screen">Start Game</button>
     </div>
     <div id="chapter-overview" class="scene">
         <div id="chapter-overview-top">
@@ -262,11 +261,12 @@
     <div id="animation-screen" class="scene" style="display: none;">
         <div>
             <img class="animation-shell2" src="assets/levels/Level_Shell_Color.png" alt="Shell">
-            <video id="video" width="1088px" height="612px" controls>
+            <video id="video" width="900px" height="506.25px" controls>
                 <source src="assets/miscellaneous/Animation.mp4" type="video/mp4">
             </video>
             <img class="animation-shell" src="assets/levels/Level_Shell_Color.png" alt="Shell">
         </div>
+        <button class="navigation-button" data-scene="chapter-overview">Skip</button>
     </div>
     <div id="settings-screen" class="scene" style="display: none;">
 

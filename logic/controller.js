@@ -45,6 +45,7 @@ $(document).ready(function()
             var holders = $(".levelHolder");
             $(holders).hide();
             var levelHolder = $(".levelHolder[data-chapter='" + chapter + "']").first();
+            $("#chapter-name")[0].innerHTML = `Chapter ${chapter}`;
             $(levelHolder).show();
             
             //levelSlider.slider = levelHolder;

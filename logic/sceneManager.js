@@ -27,6 +27,11 @@ export class SceneManager
 
         $('#' + this.activeScene).hide();
         this.activeScene = scene;
+        var video = $("#video")[0];
+
+        video.pause();
+        video.currentTime = 0;
+
         switch(this.activeScene)
         {
             case "level":
@@ -40,14 +45,6 @@ export class SceneManager
             case "level-overview":
                 //Update levels and chapters and show scene
                 this.UpdateLevels();
-                $('#' + this.activeScene).show();
-                break;
-            case "animation-screen":
-                var completionData = JSON.parse(this.GetCookie("completionData"));
-                if(completionData.starCompletion[0][0] != 0)
-                {
-                    this.activeScene = "chapter-overview";
-                }
                 $('#' + this.activeScene).show();
                 break;
             default:
@@ -67,7 +64,7 @@ export class SceneManager
         for (let index = 0; index < chapterTemplates.length; index++) {
             const chapter = chapterTemplates[index];
             var chapterNumber = $(chapter).attr("data-chapter");
-            if(this.completionData.chapterCompletion[index])
+            if(this.completionData.chapterCompletion[index] || this.completionData.levelCompletion[0][0] == false)
             {
                 $(chapter).attr("src", `../assets/levels/chapter_${chapterNumber}/chapter_backgrounds/chapter_completed.png`);
                         
